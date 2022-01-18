@@ -32,8 +32,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "format": "prettier --write \"src/**/*.{js,jsx}\"",
-    "lint": "eslint \"src/**/*.{js,jsx}\" --quiet"
+    "format": "yarn prettier \"src/**\" --write ",
+    "lint": "yarn eslint src --ext .js,.jsx --quiet"
   },
   "eslintConfig": {
     "extends": [
