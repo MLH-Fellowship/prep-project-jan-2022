@@ -1,0 +1,40 @@
+{
+    "extends": [
+      "airbnb",
+      "plugin:import/errors",
+      "plugin:react/recommended",
+      "plugin:jsx-a11y/recommended",
+      "plugin:react-hooks/recommended",
+      "prettier",
+      "airbnb/hooks"
+    ],
+    "rules": {
+      "react/prop-types": 0,
+      "react/react-in-jsx-scope": 0,
+      "prettier/prettier": ["warn", {}, { "usePrettierrc": true }], // Use .prettierrc file as source
+      "no-unused-vars": "warn",
+      "no-console": "off",
+      "func-names": "off",
+      "no-process-exit": "off",
+      "object-shorthand": "off",
+      "class-methods-use-this": "off"
+    },
+    "plugins": ["prettier","react", "import", "jsx-a11y","react-hooks"],
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "env": {
+      "es6": true,
+      "browser": true,
+      "node": true
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    }
+  }
