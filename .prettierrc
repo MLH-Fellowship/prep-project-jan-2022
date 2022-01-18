@@ -3,6 +3,7 @@
   "semi": true,
   "tabWidth": 2,
   "endOfLine": "lf",
+  "singleQuote": true,
   "overrides": [
     {
       "files": "*.html",
