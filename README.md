@@ -7,3 +7,11 @@ We're using the [OpenWeather API](https://openweathermap.org/current) to get wea
 You'll need to get your own API Key from their website (for free) and add it as an environment variable in a `.env` file. We have a template available as `example.env`.
 
 You'll be using React initially to build this. If you're new to React, check out the [website](https://reactjs.org) for some information on getting started! 
+
+## Setting Up The Project Locally
+- Make sure you have Node.JS and NPM installed.
+- Clone this repository.
+- Install the Yarn package manager with `npm install --global yarn`
+- Install dependencies with `yarn install`
+- Set up your API keys in the `.env` file.
+- Run the app with `yarn start`.
