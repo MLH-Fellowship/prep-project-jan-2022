@@ -1,16 +1,16 @@
-// import objName from '../assets/objName.png'
+// import objName from '../assets/img/objName.png'
+import Cap from "../assets/img/Cap.png";
 
 const items = {
-  Snow: {
-    Cap: Cap,
-    Gloves: Gloves,
-    Jacket: Jacket,
-  },
-  Rain: {
-    Umbrella: Umbrella,
-    RainShoes: RainShoes,
-    Raincoat: RainCoat,
-  },
+  Clear: {
+		Sunglasses: Cap,
+		BaseballCap: Cap,
+		Sunscream: Cap,
+	},
+	Clouds: {
+		BaseballCap: Cap,
+		Watch: Cap,
+	},
   // add other weather conditions
 };
 
