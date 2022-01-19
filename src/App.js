@@ -2,6 +2,12 @@ import { useEffect, useState } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
 
+import { cities } from "@/assets/data/cities.json"
+
+async function getAutoCompleteSuggestions() {
+  return []
+}
+
 function App() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
