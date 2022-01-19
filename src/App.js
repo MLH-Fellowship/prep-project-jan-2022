@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
 
-import { cities } from "@/assets/data/cities.json"
+import { cities } from "./assets/data/cities.json"
 
-async function getAutoCompleteSuggestions() {
+async function getAutoCompleteSuggestions(name) {
   return []
 }
 
@@ -13,6 +13,7 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [city, setCity] = useState("New York City")
   const [results, setResults] = useState(null);
+  const [suggestions, setSuggestions] = useState([])
 
   useEffect(() => {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.REACT_APP_APIKEY}`)
@@ -31,6 +32,9 @@ function App() {
           setError(error);
         }
       )
+    getAutoCompleteSuggestions(city).then((_suggestions) => {
+      setSuggestions(_suggestions)
+    })
   }, [city])
 
   if (error) {
@@ -43,7 +47,22 @@ function App() {
         <input
           type="text"
           value={city}
+          className="autocomplete-input"
           onChange={event => setCity(event.target.value)} />
+        <div className="autocomplete-list">
+          {
+            (suggestions.length > 0) && (
+              <p>Suggestions:</p>
+            )
+          }
+          {
+            suggestions.map(suggestion => {
+              return (
+                <div className="autocomplete-item" onClick={() => setCity(suggestion)}>{suggestion}</div>
+              )
+            })
+          }
+        </div>
         <div className="Results">
           {!isLoaded && <h2>Loading...</h2>}
           {console.log(results)}
