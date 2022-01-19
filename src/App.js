@@ -23,7 +23,7 @@ async function getAutoCompleteSuggestions(incompleteName, maxCount = 5) {
         return false;
       }
 
-      if (regExp.test(city)) {
+      if (regExp.test(city) && incompleteName !== city) {
         matches.push(city);
         matchCount++;
       }
