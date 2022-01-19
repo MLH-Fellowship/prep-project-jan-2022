@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
+import WeatherMap from "./components/WeatherMap"
 
 function App() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [city, setCity] = useState("New York City")
   const [results, setResults] = useState(null);
+  const [currLatitude, setcurrLatitude] = useState(51.505);
+  const [currLongitude, setcurrLongitude] = useState(-0.09);
 
   useEffect(() => {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.REACT_APP_APIKEY}`)
@@ -16,6 +19,10 @@ function App() {
           if (result['cod'] !== 200) {
             setIsLoaded(false)
           } else {
+            console.log
+            console.log(result.coord);
+            setcurrLatitude(result.coord.lat);
+            setcurrLongitude(result.coord.lon);
             setIsLoaded(true);
             setResults(result);
           }
@@ -47,9 +54,16 @@ function App() {
             <i><p>{results.name}, {results.sys.country}</p></i>
           </>}
         </div>
+       
       </div>
+      <div className="Weather-map"  >  <WeatherMap cLatitude = {currLatitude} cLongitude = {currLongitude} /></div>
     </>
+ 
   }
+
+
+
+
 }
 
 export default App;
