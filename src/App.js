@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
 
-import { cities } from "./assets/data/cities.json"
+import cities from "./assets/data/cities.json"
 
 
 /**
@@ -25,6 +25,7 @@ async function getAutoCompleteSuggestions(incompleteName, maxCount = 5) {
 
       if (regExp.test(city)) {
         matches.push(city);
+        matchCount++;
       }
 
       return true;
