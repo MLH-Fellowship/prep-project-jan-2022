@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
+import HourlyWeather from "./components/hourlyWeather";
 
 function App() {
   const [error, setError] = useState(null);
@@ -47,6 +48,13 @@ function App() {
             <i><p>{results.name}, {results.sys.country}</p></i>
           </>}
         </div>
+        <div>
+          {!isLoaded && <h2>Loading...</h2>}
+            {console.log(results)}
+            {isLoaded && results && <>
+              <HourlyWeather city={ results.name } />
+            </>}
+          </div>
       </div>
     </>
   }
