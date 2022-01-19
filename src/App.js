@@ -4,8 +4,33 @@ import logo from './mlh-prep.png'
 
 import { cities } from "@/assets/data/cities.json"
 
-async function getAutoCompleteSuggestions() {
-  return []
+/**
+ * Get autocomplete suggestions for an input location (city).
+ *
+ * @param {string} incompleteName The incomplete input.
+ * @param {number} maxCount Max autocomplete suggestions.
+ * @returns {Promise<*[]>}
+ */
+async function getAutoCompleteSuggestions(incompleteName, maxCount= 5) {
+  let matches = [];
+  let matchCount = 0;
+  let regExp = new RegExp(`.*${incompleteName}.*`);
+
+  cities.every(
+    (city) => {
+      if (matchCount === maxCount) {
+        return false;
+      }
+
+      if (regExp.test(city)) {
+        matches.push(city);
+      }
+
+      return true;
+    }
+  )
+
+  return matches;
 }
 
 function App() {
