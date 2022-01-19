@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
-import Autocomplete from "react-google-autocomplete";
-
 
 function App() {
   const [error, setError] = useState(null);
@@ -34,12 +32,6 @@ function App() {
   } else {
     return <>
       <img className="logo" src={logo} alt="MLH Prep Logo"></img>
-      <Autocomplete
-        apiKey={process.env.REACT_APP_GOOGLE_API_KEY}
-        onPlaceSelected={(place) => {
-          console.log(place);
-        }}
-      />;
       <div>
         <h2>Enter a city below 👇</h2>
         <input
