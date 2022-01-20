@@ -44,10 +44,10 @@ function App() {
             <h3>{results.list[0].weather[0].main}</h3>
             <p>Feels like {results.list[0].main.feels_like}°C</p>
             <i><p>{results.city.name}, {results.city.country}</p></i>
-            <div>
+            <div id="wrapper">
               {results.list.filter(item => item.dt_txt.slice(11) === "09:00:00").map(item => (
-                <div className="Results">
-                <h3>Date: {item.dt_txt.slice(0,10)} Feels like {item.main.feels_like}</h3>
+                <div className="ForecastResults">
+                <h3>{item.dt_txt.slice(0,10)}<br/></h3> <p>Feels like {item.main.feels_like}°C</p>
                 </div>
               ))}
             </div>
