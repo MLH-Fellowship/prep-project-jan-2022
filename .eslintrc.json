@@ -17,14 +17,16 @@
       "func-names": "off",
       "no-process-exit": "off",
       "object-shorthand": "off",
-      "class-methods-use-this": "off"
+      "class-methods-use-this": "off",
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
     },
     "plugins": ["prettier","react", "import", "jsx-a11y","react-hooks"],
     "parserOptions": {
-      "ecmaVersion": "latest",
+      "ecmaVersion": 2021,
       "sourceType": "module",
       "ecmaFeatures": {
-        "jsx": true
+        "jsx": true,
+        "modules": true
       }
     },
     "env": {
@@ -37,5 +39,6 @@
       "react": {
         "version": "detect"
       }
-    }
+    },
+  "ignorePatterns": ["/public/", "*.md"]
   }
