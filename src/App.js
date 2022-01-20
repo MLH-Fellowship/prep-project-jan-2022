@@ -9,11 +9,11 @@ function App() {
   const [results, setResults] = useState(null);
 
   useEffect(() => {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.REACT_APP_APIKEY}`)
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${process.env.REACT_APP_APIKEY}`)
       .then(res => res.json())
       .then(
         (result) => {
-          if (result['cod'] !== 200) {
+          if (result['cod'] !== "200") {
             setIsLoaded(false)
           } else {
             setIsLoaded(true);
@@ -40,11 +40,17 @@ function App() {
           onChange={event => setCity(event.target.value)} />
         <div className="Results">
           {!isLoaded && <h2>Loading...</h2>}
-          {console.log(results)}
-          {isLoaded && results && <>
-            <h3>{results.weather[0].main}</h3>
-            <p>Feels like {results.main.feels_like}°C</p>
-            <i><p>{results.name}, {results.sys.country}</p></i>
+          {isLoaded && results && results.list && <>
+            <h3>{results.list[0].weather[0].main}</h3>
+            <p>Feels like {results.list[0].main.feels_like}°C</p>
+            <i><p>{results.city.name}, {results.city.country}</p></i>
+            <div>
+              {results.list.filter(item => item.dt_txt.slice(11) === "09:00:00").map(item => (
+                <div className="Results">
+                <h3>Date: {item.dt_txt.slice(10)} Feels like {item.main.feels_like}</h3>
+                </div>
+              ))}
+            </div>
           </>}
         </div>
       </div>
