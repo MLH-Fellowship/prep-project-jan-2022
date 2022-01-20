@@ -7,9 +7,9 @@ const HourlyWeather = ({ city }) => {
 
     useEffect(() => {
         async function convertGeoLocation(city) {
-            const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${city}&key=${process.env.REACT_APP_OPEN_CAGE_APIKEY}`).then(value => value.json());
-            const cord = response["results"][0]["geometry"];
-            return [cord["lat"], cord["lng"]];
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.REACT_APP_APIKEY}`).then(value => value.json());
+            const cord = response["coord"];
+            return [cord["lat"], cord["lon"]];
         }
 
         async function fetchWeatherInfo(lat, lon){
