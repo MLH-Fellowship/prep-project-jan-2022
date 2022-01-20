@@ -1,53 +1,119 @@
-import React from 'react';
-import { MapContainer, TileLayer } from 'react-leaflet';
-import {Marker,Popup} from 'react-leaflet';
+import React, { useState, useEffect } from "react";
+import leaflet from "leaflet";
+import "leaflet/dist/leaflet.css";
+import icon from "leaflet/dist/images/marker-icon.png";
+import iconShadow from "leaflet/dist/images/marker-shadow.png";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvent,
+} from "react-leaflet";
 
-const Default_Latitude = 51.505;
-const Default_Longitude = -0.09;
+// const Default_Latitude = 51.505;
+// const Default_Longitude = -0.09;
 
-class WeatherMap extends React.Component {
-    render() {
+let DefaultIcon = leaflet.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+});
 
-        const currLatitude = this.props.cLatitude ? this.props.cLatitude :  Default_Latitude;
-        const currLongitude = this.props.cLongitude ? this.props.cLongitude : Default_Longitude;
-       
-        
-       /*  function SetArrow() {
-          const map = useMapEvent('click', () => {
-            map.setCenter([50.5, 30.5])
-          })
-      
-          return null
-        } */
-        
-         navigator.geolocation.getCurrentPosition( (pos)=>{
-     
-              console.log( pos.coords.latitude);
-              console.log(pos.coords.longitude);
-         }); 
+leaflet.Marker.prototype.options.icon = DefaultIcon;
 
-        return(
-            <MapContainer center={[currLatitude,currLongitude]} zoom = {13} scrollWheelZoom={false}>
-  
-            <TileLayer
-              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-             />
-              
-                <Marker position={[currLatitude,currLongitude]}>
-                <Popup>
-                You are Here !
-               </Popup>
-              </Marker>
-             
-             
-            
-          </MapContainer>
-          
-        )
+const SetMarkerDynamically = ({
+  city,
+  setCity,
+  cityCoordinates,
+  setCityCoordinates,
+}) => {
+  // eslint-disable-next-line no-unused-vars
+  const [position, setPosition] = useState([
+    cityCoordinates.lat,
+    cityCoordinates.lon,
+  ]);
+
+  useEffect(() => {
+    if (cityCoordinates) {
+      setPosition([cityCoordinates.lat, cityCoordinates.lon]);
     }
-}
+  }, [cityCoordinates]);
 
-  export default WeatherMap;
+  useMapEvent("click", (e) => {
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${e.latlng.lat}&lon=${e.latlng.lng}&appid=${process.env.REACT_APP_APIKEY}`
+    )
+      .then((res) => res.json())
+      .then(
+        (res) => {
+          setCityCoordinates({ lat: e.latlng.lat, lon: e.latlng.lng });
+          setCity(res.name);
+        },
+        (err) => window.alert("Location not found.")
+      );
+  });
 
+  return (
+    <Marker position={[cityCoordinates.lat, cityCoordinates.lon]}>
+      <Popup>{city}</Popup>
+    </Marker>
+  );
+};
 
+const WeatherMap = ({ city, setCity, cityCoordinates, setCityCoordinates }) => {
+  const [map, setMap] = useState();
+  const [position, setPosition] = useState({ Lat: "", Long: "", City: "" });
+
+  useEffect(() => {
+    setPosition({
+      Lat: cityCoordinates.lat,
+      Long: cityCoordinates.lon,
+      City: city,
+    });
+  }, [cityCoordinates, city]);
+
+  useEffect(() => {
+    setMap(map);
+  }, [map]);
+
+  useEffect(() => {
+    const mapCenter = [position.Lat, position.Long];
+    if (map) {
+      if (map.getZoom() < 4) {
+        map.setView(mapCenter, 7);
+      } else {
+        map.setView(mapCenter, map.getZoom());
+      }
+    }
+  }, [map, position]);
+
+  return (
+    <React.Fragment>
+      <div>
+        <MapContainer
+          className="map"
+          whenCreated={setMap}
+          center={[position.Lat, position.Long]}
+          doubleClickZoom={true}
+          scrollWheelZoom={true}
+          zoom={7}
+        >
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <SetMarkerDynamically
+            city={city}
+            setCity={setCity}
+            cityCoordinates={cityCoordinates}
+            setCityCoordinates={setCityCoordinates}
+          />
+        </MapContainer>
+      </div>
+    </React.Fragment>
+  );
+};
+
+export default WeatherMap;
