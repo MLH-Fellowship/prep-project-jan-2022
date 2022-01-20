@@ -1,0 +1,22 @@
+.warning-container {
+  background-color: aliceblue;
+  color: black;
+  margin: 20px 30px;
+  border-radius: 6px;
+}
+
+.warning-head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.warning-head img {
+  width: 30px;
+}
+
+.warning-info {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
