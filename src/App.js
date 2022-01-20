@@ -2,45 +2,24 @@ import { useEffect, useState } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
 
-import cities from "./assets/data/cities.json"
+import { ReactSearchAutocomplete } from 'react-search-autocomplete';
+import cities from './assets/data/cities.json';
 
+// We need this transformation because ReactSearchAutocomplete only accepts object lists
+const cityList = (() => {
+  let objectList = [];
+  cities.forEach((city) => {
+    objectList.push({n: city});
+  });
 
-/**
- * Get autocomplete suggestions for an input location (city).
- *
- * @param {string} incompleteName The incomplete input.
- * @param {number} maxCount Max autocomplete suggestions.
- * @returns {Promise<*[]>}
- */
-async function getAutoCompleteSuggestions(incompleteName, maxCount = 5) {
-  let matches = [];
-  let matchCount = 0;
-  let regExp = new RegExp(`.*${incompleteName}.*`);
-
-  cities.every(
-    (city) => {
-      if (matchCount === maxCount) {
-        return false;
-      }
-
-      if (regExp.test(city) && incompleteName !== city) {
-        matches.push(city);
-        matchCount++;
-      }
-
-      return true;
-    }
-  )
-
-  return matches;
-}
+  return objectList;
+})();
 
 function App() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [city, setCity] = useState("New York City")
   const [results, setResults] = useState(null);
-  const [suggestions, setSuggestions] = useState([])
 
   useEffect(() => {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.REACT_APP_APIKEY}`)
@@ -59,9 +38,6 @@ function App() {
           setError(error);
         }
       )
-    getAutoCompleteSuggestions(city).then((_suggestions) => {
-      setSuggestions(_suggestions)
-    })
   }, [city])
 
   if (error) {
@@ -71,24 +47,18 @@ function App() {
       <img className="logo" src={logo} alt="MLH Prep Logo"></img>
       <div>
         <h2>Enter a city below 👇</h2>
-        <input
-          type="text"
-          value={city}
-          className="autocomplete-input"
-          onChange={event => setCity(event.target.value)} />
-        <div className="autocomplete-list">
-          {
-            (suggestions.length > 0) && (
-              <p>Suggestions:</p>
-            )
-          }
-          {
-            suggestions.map(suggestion => {
-              return (
-                <div className="autocomplete-item" onClick={() => setCity(suggestion)}>{suggestion}</div>
-              )
-            })
-          }
+        <div id='weather-location-search'>
+          <ReactSearchAutocomplete
+            items={cityList}
+            fuseOptions={{
+              keys: ["n"],
+            }}
+            resultStringKeyName='n'
+            onSelect={(city) => setCity(city.n)}
+            styling={{
+              borderRadius: '5px',
+            }}
+          />
         </div>
         <div className="Results">
           {!isLoaded && <h2>Loading...</h2>}
