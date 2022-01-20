@@ -10,10 +10,8 @@
     "leaflet": "^1.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-geolocated": "^3.2.0",
     "react-leaflet": "^3.2.5",
     "react-scripts": "4.0.3",
-    "typescript": "^4.5.4",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
