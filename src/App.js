@@ -2,6 +2,19 @@ import { useEffect, useState } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
 
+import { ReactSearchAutocomplete } from 'react-search-autocomplete';
+import cities from './assets/data/cities.json';
+
+// We need this transformation because ReactSearchAutocomplete only accepts object lists
+const cityList = (() => {
+  let objectList = [];
+  cities.forEach((city) => {
+    objectList.push({n: city});
+  });
+
+  return objectList;
+})();
+
 function App() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -34,10 +47,19 @@ function App() {
       <img className="logo" src={logo} alt="MLH Prep Logo"></img>
       <div>
         <h2>Enter a city below 👇</h2>
-        <input
-          type="text"
-          value={city}
-          onChange={event => setCity(event.target.value)} />
+        <div id='weather-location-search'>
+          <ReactSearchAutocomplete
+            items={cityList}
+            fuseOptions={{
+              keys: ["n"],
+            }}
+            resultStringKeyName='n'
+            onSelect={(city) => setCity(city.n)}
+            styling={{
+              borderRadius: '5px',
+            }}
+          />
+        </div>
         <div className="Results">
           {!isLoaded && <h2>Loading...</h2>}
           {console.log(results)}
