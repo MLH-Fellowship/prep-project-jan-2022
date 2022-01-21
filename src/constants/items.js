@@ -2,7 +2,25 @@
 import Cap from "../assets/img/Cap.png";
 
 const items = {
-  Clear: {
+	Thunderstorm: {
+		RainCoat: Cap,
+		RubberBoots: Cap,
+		Flashlight: Cap,
+	},
+	Drizzle: {
+		Umbrella: Cap,
+	},
+	Rain: {
+		RainCoat: Cap,
+		Umbrella: Cap,
+	},
+
+	Snow: {
+		Jacket: Cap,
+		Gloves: Cap,
+		SnowBoots: Cap,
+	},
+  	Clear: {
 		Sunglasses: Cap,
 		BaseballCap: Cap,
 		Sunscream: Cap,
@@ -11,6 +29,15 @@ const items = {
 		BaseballCap: Cap,
 		Watch: Cap,
 	},
+	Mist: {},
+	Smoke: {},
+	Haze: {},
+	Dust: {},
+	Fog: {},
+	Sand: {},
+	Ash: {},
+	Squall: {},
+	Tornado: {},
   // add other weather conditions
 };
 
