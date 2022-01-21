@@ -36,3 +36,8 @@ input {
   height: 300px;
   z-index: 1;
 }
+
+#weather-location-search {
+  width: clamp(20em, 50%, 90%);
+  margin: auto;
+}

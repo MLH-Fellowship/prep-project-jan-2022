@@ -3,6 +3,19 @@ import './App.css';
 import logo from './mlh-prep.png'
 import WeatherMap from './components/WeatherMap';
 
+import { ReactSearchAutocomplete } from 'react-search-autocomplete';
+import cities from './assets/data/cities.json';
+
+// We need this transformation because ReactSearchAutocomplete only accepts object lists
+const cityList = (() => {
+  let objectList = [];
+  cities.forEach((city) => {
+    objectList.push({n: city});
+  });
+
+  return objectList;
+})();
+
 function App() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -41,32 +54,41 @@ function App() {
     return <div>Error: {error.message}</div>;
   } else {
     return <>
-        <img className="logo" src={logo} alt="MLH Prep Logo"></img>
-        <div>
-          <h2>Enter a city below 👇</h2>
-          <input
-            type="text"
-            value={city}
-            onChange={event => setCity(event.target.value)} />
-          <div className="Results">
-            {!isLoaded && <h2>Loading...</h2>}
-            {console.log(results)}
-            {isLoaded && results && <>
-              <h3>{results.weather[0].main}</h3>
-              <p>Feels like {results.main.feels_like}°C</p>
-              <i><p>{results.name}, {results.sys.country}</p></i>
-            </>}
-          </div>
-        </div>
-        <div className="Weather-map">
-          <WeatherMap
-            city={city}
-            setCity={setCity}
-            cityCoordinates={cityCoordinates}
-            setCityCoordinates={setCityCoordinates}
+      <img className="logo" src={logo} alt="MLH Prep Logo"></img>
+      <div>
+        <h2>Enter a city below 👇</h2>
+        <div id='weather-location-search'>
+          <ReactSearchAutocomplete
+            items={cityList}
+            fuseOptions={{
+              keys: ["n"],
+            }}
+            resultStringKeyName='n'
+            onSelect={(city) => setCity(city.n)}
+            styling={{
+              borderRadius: '5px',
+            }}
           />
         </div>
-      </>
+        <div className="Results">
+          {!isLoaded && <h2>Loading...</h2>}
+          {console.log(results)}
+          {isLoaded && results && <>
+            <h3>{results.weather[0].main}</h3>
+            <p>Feels like {results.main.feels_like}°C</p>
+            <i><p>{results.name}, {results.sys.country}</p></i>
+          </>}
+        </div>
+      </div>
+      <div className="Weather-map">
+        <WeatherMap
+          city={city}
+          setCity={setCity}
+          cityCoordinates={cityCoordinates}
+          setCityCoordinates={setCityCoordinates}
+        />
+      </div>
+    </>
   }
 }
 
