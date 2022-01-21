@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
-import WeatherMap from './components/WeatherMap';
+import WeatherMap from './components/WeatherMap/WeatherMap';
 
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import cities from './assets/data/cities.json';
@@ -55,7 +55,7 @@ function App() {
   } else {
     return <>
       <img className="logo" src={logo} alt="MLH Prep Logo"></img>
-      <div>
+      <div style={{display: 'flex', flexDirection: 'column'}}>
         <h2>Enter a city below 👇</h2>
         <div id='weather-location-search'>
           <ReactSearchAutocomplete
@@ -80,7 +80,7 @@ function App() {
           </>}
         </div>
       </div>
-      <div className="Weather-map">
+      <div className="weather-map">
         <WeatherMap
           city={city}
           setCity={setCity}

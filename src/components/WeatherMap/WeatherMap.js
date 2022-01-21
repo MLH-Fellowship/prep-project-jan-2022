@@ -10,9 +10,7 @@ import {
   Popup,
   useMapEvent,
 } from "react-leaflet";
-
-// const Default_Latitude = 51.505;
-// const Default_Longitude = -0.09;
+import "./WeatherMap.css";
 
 let DefaultIcon = leaflet.icon({
   iconUrl: icon,
@@ -64,7 +62,7 @@ const SetMarkerDynamically = ({
 
 const WeatherMap = ({ city, setCity, cityCoordinates, setCityCoordinates }) => {
   const [map, setMap] = useState();
-  const [position, setPosition] = useState({ Lat: "", Long: "", City: "" });
+  const [position, setPosition] = useState({ Lat: 0, Long: 0, City: "" });
 
   useEffect(() => {
     setPosition({
@@ -101,7 +99,7 @@ const WeatherMap = ({ city, setCity, cityCoordinates, setCityCoordinates }) => {
           zoom={7}
         >
           <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <SetMarkerDynamically
