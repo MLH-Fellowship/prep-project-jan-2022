@@ -16,19 +16,6 @@ const cityList = (() => {
   return objectList;
 })();
 
-import { ReactSearchAutocomplete } from 'react-search-autocomplete';
-import cities from './assets/data/cities.json';
-
-// We need this transformation because ReactSearchAutocomplete only accepts object lists
-const cityList = (() => {
-  let objectList = [];
-  cities.forEach((city) => {
-    objectList.push({n: city});
-  });
-
-  return objectList;
-})();
-
 function App() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
