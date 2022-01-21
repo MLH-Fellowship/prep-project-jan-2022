@@ -21,8 +21,8 @@ input {
 
 .Results {
   background-color: white;
-  margin-left: 150px;
-  margin-right: 150px;
+  margin-left: 3rem;
+  margin-right: 3rem;
   margin-top: 20px;
   border-radius: 8px;
   color: black;
@@ -37,8 +37,12 @@ input {
   color: black;
   padding: 10px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  text-align: center;
+  position: relative;
+  margin-bottom: 1rem;;
 }
 
 #wrapper {
   display: flex;
+  flex-wrap: wrap;
 }
