@@ -49,7 +49,7 @@ const SetMarkerDynamically = ({
           setCityCoordinates({ lat: e.latlng.lat, lon: e.latlng.lng });
           setCity(res.name);
         },
-        (err) => window.alert('Location not found.')
+        (err) => console.warn(err)
       );
   });
 
