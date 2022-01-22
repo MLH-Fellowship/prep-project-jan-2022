@@ -1,33 +1,43 @@
 // import objName from '../assets/img/objName.png'
-import Cap from "../assets/img/Cap.png";
+import RainCoat from "../assets/img/RainCoat.jpg";
+import RubberBoots from "../assets/img/RubberBoots.jpg";
+import Flashlight from "../assets/img/Flashlight.jpg";
+import Umbrella from "../assets/img/Umbrella.png";
+import Jacket from "../assets/img/Jacket.jpg";
+import Gloves from "../assets/img/Gloves.jpg";
+import SnowBoots from "../assets/img/SnowBoots.jpg";
+import Sunglasses from "../assets/img/Sunglasses.jpg";
+import BaseballCap from "../assets/img/BaseballCap.jpg";
+import SunCream from "../assets/img/SunCream.jpg";
+import Watch from "../assets/img/Watch.jpg";
+
 
 const items = {
 	Thunderstorm: {
-		RainCoat: Cap,
-		RubberBoots: Cap,
-		Flashlight: Cap,
+		RainCoat: RainCoat,
+		RubberBoots: RubberBoots,
+		Flashlight: Flashlight,
 	},
 	Drizzle: {
-		Umbrella: Cap,
+		Umbrella: Umbrella,
 	},
 	Rain: {
-		RainCoat: Cap,
-		Umbrella: Cap,
+		RainCoat: RainCoat,
+		Umbrella: Umbrella,
 	},
-
 	Snow: {
-		Jacket: Cap,
-		Gloves: Cap,
-		SnowBoots: Cap,
+		Jacket: Jacket,
+		Gloves: Gloves,
+		SnowBoots: SnowBoots,
 	},
   	Clear: {
-		Sunglasses: Cap,
-		BaseballCap: Cap,
-		Sunscream: Cap,
+		Sunglasses: Sunglasses,
+		BaseballCap: BaseballCap,
+		SunCream: SunCream,
 	},
 	Clouds: {
-		BaseballCap: Cap,
-		Watch: Cap,
+		BaseballCap: BaseballCap,
+		Watch: Watch,
 	},
 	Mist: {},
 	Smoke: {},
