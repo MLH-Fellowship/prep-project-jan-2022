@@ -15,7 +15,7 @@ export default function NeededItems(results) {
           <h3>Make sure to carry these today</h3>
           <div className="required-things">
             {Object.keys(items).map((item, i) => (
-              <div>
+              <div className="required-item">
                 <img src={items[item]} />
                 <h3>{item}</h3>
               </div>

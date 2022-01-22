@@ -1,4 +1,3 @@
-// import objName from '../assets/img/objName.png'
 import RainCoat from "../assets/img/RainCoat.jpg";
 import RubberBoots from "../assets/img/RubberBoots.jpg";
 import Flashlight from "../assets/img/Flashlight.jpg";
@@ -48,7 +47,6 @@ const items = {
 	Ash: {},
 	Squall: {},
 	Tornado: {},
-  // add other weather conditions
 };
 
 export default items;
