@@ -1,12 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import './App.css';
-import logo from './mlh-prep.png'
+import { ReactSearchAutocomplete } from 'react-search-autocomplete';
+import logo from './mlh-prep.png';
+import WeatherMap from './components/WeatherMap/WeatherMap';
+
+import cities from './assets/data/cities.json';
+
+// We need this transformation because ReactSearchAutocomplete only accepts object lists
+const cityList = (() => {
+  const objectList = [];
+  cities.forEach((city) => {
+    objectList.push({ n: city });
+  });
+
+  return objectList;
+})();
 
 function App() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [city, setCity] = useState(null)
+  const [city, setCity] = useState('New York City');
   const [results, setResults] = useState(null);
+  const [cityCoordinates, setCityCoordinates] = useState({
+    lat: '51.505',
+    lon: '-0.09',
+  });
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -19,6 +38,10 @@ function App() {
               setIsLoaded(true);
               setResults(result);
               setCity(`${result.name}, ${result.sys.country}`);
+              setCityCoordinates({
+                lat: result.coord.lat,
+                lon: result.coord.lon,
+              });
             }
           )
           .catch(
@@ -41,6 +64,11 @@ function App() {
         (result) => {
           if (result['cod'] === 200) {
             setResults(result);
+            setCity(result.name);
+            setCityCoordinates({
+              lat: result.coord.lat,
+              lon: result.coord.lon,
+            });
           } else {
             setResults(null);
           }
@@ -55,29 +83,54 @@ function App() {
 
   if (error) {
     return <div>Error: {error.message}</div>;
-  } else {
-    return <>
-      <img className="logo" src={logo} alt="MLH Prep Logo"></img>
-      <div>
+  }
+  return (
+    <>
+      <img className="logo" src={logo} alt="MLH Prep Logo" />
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
         <h2>Enter a city below 👇</h2>
-        <input
-          type="text"
-          value={city ?? "Loading Your Location..."}
-          onChange={event => setCity(event.target.value)} />
+        <div id="weather-location-search">
+          <ReactSearchAutocomplete
+            items={cityList}
+            fuseOptions={{
+              keys: ['n'],
+            }}
+            resultStringKeyName="n"
+            onSelect={(selectedCity) => setCity(selectedCity.n)}
+            styling={{
+              borderRadius: '5px',
+            }}
+            value={city ?? "Loading Your Location..."}
+          />
+        </div>
         <div className="Results">
           {!isLoaded && <h2>Loading...</h2>}
-          {isLoaded && results && <>
-            <h3>{results.weather[0].main}</h3>
-            <p>Feels like {results.main.feels_like}°C</p>
-            <i><p>{results.name}, {results.sys.country}</p></i>
-          </>}
+          {isLoaded && results && (
+            <>
+              <h3>{results.weather[0].main}</h3>
+              <p>Feels like {results.main.feels_like}°C</p>
+              <i>
+                <p>
+                  {results.name}, {results.sys.country}
+                </p>
+              </i>
+            </>
+          )}
           {
             isLoaded && !results && <h2>No Results Found</h2>
           }
         </div>
       </div>
+      <div className="weather-map">
+        <WeatherMap
+          city={city}
+          setCity={setCity}
+          cityCoordinates={cityCoordinates}
+          setCityCoordinates={setCityCoordinates}
+        />
+      </div>
     </>
-  }
+  );
 }
 
 export default App;
