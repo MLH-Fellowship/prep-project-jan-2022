@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import './App.css';
 import logo from './mlh-prep.png'
+import WeatherMap from './components/WeatherMap/WeatherMap';
 
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import cities from './assets/data/cities.json';
@@ -18,12 +19,16 @@ const cityList = (() => {
 function App() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [city, setCity] = useState("New York City")
+  const [city, setCity] = useState("New York City");
   const [results, setResults] = useState(null);
+  const [cityCoordinates, setCityCoordinates] = useState({
+    lat: "51.505",
+    lon: "-0.09",
+  });
 
   useEffect(() => {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.REACT_APP_APIKEY}`)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(
         (result) => {
           if (result['cod'] !== 200) {
@@ -31,6 +36,11 @@ function App() {
           } else {
             setIsLoaded(true);
             setResults(result);
+            setCity(result.name);
+            setCityCoordinates({
+              lat: result.coord.lat,
+              lon: result.coord.lon,
+            });
           }
         },
         (error) => {
@@ -45,7 +55,7 @@ function App() {
   } else {
     return <>
       <img className="logo" src={logo} alt="MLH Prep Logo"></img>
-      <div>
+      <div style={{display: 'flex', flexDirection: 'column'}}>
         <h2>Enter a city below 👇</h2>
         <div id='weather-location-search'>
           <ReactSearchAutocomplete
@@ -69,6 +79,14 @@ function App() {
             <i><p>{results.name}, {results.sys.country}</p></i>
           </>}
         </div>
+      </div>
+      <div className="weather-map">
+        <WeatherMap
+          city={city}
+          setCity={setCity}
+          cityCoordinates={cityCoordinates}
+          setCityCoordinates={setCityCoordinates}
+        />
       </div>
     </>
   }
