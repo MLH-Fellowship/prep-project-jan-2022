@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import leaflet from "leaflet";
-import "leaflet/dist/leaflet.css";
-import icon from "leaflet/dist/images/marker-icon.png";
-import iconShadow from "leaflet/dist/images/marker-shadow.png";
+import React, { useState, useEffect } from 'react';
+import leaflet from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import {
   MapContainer,
   TileLayer,
   Marker,
   Popup,
   useMapEvent,
-} from "react-leaflet";
-import "./WeatherMap.css";
+} from 'react-leaflet';
+import './WeatherMap.css';
 
-let DefaultIcon = leaflet.icon({
+const DefaultIcon = leaflet.icon({
   iconUrl: icon,
   shadowUrl: iconShadow,
   iconSize: [25, 41],
@@ -39,7 +39,7 @@ const SetMarkerDynamically = ({
     }
   }, [cityCoordinates]);
 
-  useMapEvent("click", (e) => {
+  useMapEvent('click', (e) => {
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?lat=${e.latlng.lat}&lon=${e.latlng.lng}&appid=${process.env.REACT_APP_APIKEY}`
     )
@@ -49,7 +49,7 @@ const SetMarkerDynamically = ({
           setCityCoordinates({ lat: e.latlng.lat, lon: e.latlng.lng });
           setCity(res.name);
         },
-        (err) => window.alert("Location not found.")
+        (err) => window.alert('Location not found.')
       );
   });
 
@@ -62,7 +62,7 @@ const SetMarkerDynamically = ({
 
 const WeatherMap = ({ city, setCity, cityCoordinates, setCityCoordinates }) => {
   const [map, setMap] = useState();
-  const [position, setPosition] = useState({ Lat: 0, Long: 0, City: "" });
+  const [position, setPosition] = useState({ Lat: 0, Long: 0, City: '' });
 
   useEffect(() => {
     setPosition({
@@ -88,14 +88,14 @@ const WeatherMap = ({ city, setCity, cityCoordinates, setCityCoordinates }) => {
   }, [map, position]);
 
   return (
-    <React.Fragment>
+    <>
       <div>
         <MapContainer
           className="map"
           whenCreated={setMap}
           center={[position.Lat, position.Long]}
-          doubleClickZoom={true}
-          scrollWheelZoom={true}
+          doubleClickZoom
+          scrollWheelZoom
           zoom={7}
         >
           <TileLayer
@@ -110,7 +110,7 @@ const WeatherMap = ({ city, setCity, cityCoordinates, setCityCoordinates }) => {
           />
         </MapContainer>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 
