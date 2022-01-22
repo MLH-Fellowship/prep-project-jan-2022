@@ -4,3 +4,9 @@
   width: 80%;
   height: 300px;
 }
+
+@media (max-width: 844px) {
+  .leaflet-container {
+    width: 100%;
+  }
+}
