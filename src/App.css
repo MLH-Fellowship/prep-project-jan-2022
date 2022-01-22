@@ -40,3 +40,9 @@ input {
     width: 85%;
   }
 }
+
+#weather-location-search {
+  width: clamp(20em, 50%, 90%);
+  margin: auto;
+  z-index: 100;
+}
