@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import rain from './assets/audio/LightRain.mp3';
+import snow from './assets/audio/Snow.mp3';
 import drizzle from './assets/audio/RainBackVerandah.mp3';
 import thunderstorm from './assets/audio/RollingThunder.mp3';
 import {Howl} from "howler";
@@ -41,9 +42,9 @@ function Sound(props) {
             case 'Rain':
                 weatherSound = rain;
                 break;
-            // case 'Snow':
-            //     weatherSound = snow;
-            //     break;
+             case 'Snow':
+                 weatherSound = snow;
+                 break;
             default:
                 weatherSound = null;
         }
