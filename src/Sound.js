@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import rain from './assets/audio/LightRain.mp3';
+import drizzle from './assets/audio/RainBackVerandah.mp3';
+import thunderstorm from './assets/audio/RollingThunder.mp3';
 import {Howl} from "howler";
 
 function Sound(props) {
 
-    //const weatherName = props.results.weather[0].main;
+    const weatherName = props.results.weather[0].main;
 
     let isSoundOn = true;
 
@@ -25,11 +27,29 @@ function Sound(props) {
 
     useEffect(() => {
 
-        // Error: UseEffect is being called multiple times
         console.log("useEffect called");
+
+        let weatherSound = null;
+
+        switch (weatherName) {
+            case 'Thunderstorm':
+                weatherSound = thunderstorm;
+                break;
+            case 'Drizzle':
+                weatherSound = drizzle;
+                break;
+            case 'Rain':
+                weatherSound = rain;
+                break;
+            // case 'Snow':
+            //     weatherSound = snow;
+            //     break;
+            default:
+                weatherSound = null;
+        }
         
         sound = new Howl({
-            src: [rain]
+            src: [weatherSound]
         });
 
         sound.play();

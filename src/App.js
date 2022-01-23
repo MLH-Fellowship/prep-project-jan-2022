@@ -69,8 +69,8 @@ function App() {
             <h3>{results.weather[0].main}</h3>
             <p>Feels like {results.main.feels_like}°C</p>
             <i><p>{results.name}, {results.sys.country}</p></i>
+            <Sound results={results}/>
           </>}
-          <Sound results={results}/>
         </div>
       </div>
     </>
