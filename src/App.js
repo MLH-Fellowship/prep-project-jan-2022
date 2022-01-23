@@ -5,6 +5,8 @@ import logo from './mlh-prep.png'
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import cities from './assets/data/cities.json';
 
+import Sound from './Sound.js';
+
 // We need this transformation because ReactSearchAutocomplete only accepts object lists
 const cityList = (() => {
   let objectList = [];
@@ -68,6 +70,7 @@ function App() {
             <p>Feels like {results.main.feels_like}°C</p>
             <i><p>{results.name}, {results.sys.country}</p></i>
           </>}
+          <Sound results={results}/>
         </div>
       </div>
     </>
