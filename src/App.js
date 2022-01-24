@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import { ReactSearchAutocomplete } from 'react-search-autocomplete';
-import logo from './mlh-prep.png';
 import WeatherMap from './components/WeatherMap/WeatherMap';
 
 import cities from './assets/data/cities.json';
+import Header from './components/Header';
 
 // We need this transformation because ReactSearchAutocomplete only accepts object lists
 const cityList = (() => {
@@ -89,46 +88,31 @@ function App() {
   }
   return (
     <>
-      <img className="logo" src={logo} alt="MLH Prep Logo" />
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <h2>Enter a city below 👇</h2>
-        <div id="weather-location-search">
-          <ReactSearchAutocomplete
-            items={[
-              {
-                n: currentSearch,
-              },
-              ...cityList,
-            ]}
-            fuseOptions={{
-              keys: ['n'],
-            }}
-            resultStringKeyName="n"
-            onSelect={(selectedCity) => setCity(selectedCity.n)}
-            onSearch={(search) => setCurrentSearch(search)}
-            styling={{
-              borderRadius: '5px',
-            }}
-            inputSearchString={city ?? 'Loading Your Location...'}
-          />
+      <Header
+        city={city}
+        setCity={setCity}
+        currentSearch={currentSearch}
+        cityList={cityList}
+        setCurrentSearch={setCurrentSearch}
+      />
+      <article>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div className="Results main-element">
+            {!isLoaded && <h2>Loading...</h2>}
+            {isLoaded && results && (
+              <>
+                <h3>{results.weather[0].main}</h3>
+                <p>Feels like {results.main.feels_like}°C</p>
+                <i>
+                  <p>
+                    {results.name}, {results.sys.country}
+                  </p>
+                </i>
+              </>
+            )}
+            {isLoaded && !results && <h2>No Results Found</h2>}
+          </div>
         </div>
-        <div className="Results">
-          {!isLoaded && <h2>Loading...</h2>}
-          {isLoaded && results && (
-            <>
-              <h3>{results.weather[0].main}</h3>
-              <p>Feels like {results.main.feels_like}°C</p>
-              <i>
-                <p>
-                  {results.name}, {results.sys.country}
-                </p>
-              </i>
-            </>
-          )}
-          {isLoaded && !results && <h2>No Results Found</h2>}
-        </div>
-      </div>
-      <div className="weather-map">
         {(!isLoaded || results) && (
           <WeatherMap
             city={city}
@@ -137,7 +121,7 @@ function App() {
             setCityCoordinates={setCityCoordinates}
           />
         )}
-      </div>
+      </article>
     </>
   );
 }

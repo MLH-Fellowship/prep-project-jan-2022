@@ -91,7 +91,7 @@ const WeatherMap = ({ city, setCity, cityCoordinates, setCityCoordinates }) => {
     <>
       <div>
         <MapContainer
-          className="map"
+          className="map main-element"
           whenCreated={setMap}
           center={[position.Lat, position.Long]}
           doubleClickZoom

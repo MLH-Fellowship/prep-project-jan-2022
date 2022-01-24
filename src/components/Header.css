@@ -1,0 +1,17 @@
+.header {
+  display: flex;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  justify-content: space-between;
+
+  align-items: center;
+}
+.header .logo {
+  height: 44px;
+  width: auto;
+}
+.header #weather-location-search {
+  max-width: 400px;
+  min-width: 300px;
+  margin: 0;
+}
