@@ -1,9 +1,9 @@
 import React from "react";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-import Fade from '@mui/material/Fade';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import './WeatherAlerts.css';
+import Snackbar from '@mui/material/Snackbar';
+
 
 function WeatherAlerts({weather,stats}){
     
@@ -72,8 +72,10 @@ function WeatherAlerts({weather,stats}){
     console.log("islaert :  ",isalertmsg);
   
     if(isalertmsg){
-        if(alertmsg === '')
+        
+       if(alertmsg === '')
        alertmsg = weather.main;
+
     }
 
 
@@ -84,28 +86,29 @@ function WeatherAlerts({weather,stats}){
     else
     imgpath = `http://openweathermap.org/img/wn/10d@2x.png`;
 
+    const [open, setOpen] = React.useState(true);
+
+        const handleClose = (event, reason) => {
+            if (reason === 'clickaway') {
+            return;
+            }
+            setOpen(false);
+        };
+
+
     return (
 
         <div className="WeatherAlertsSection">
 
-        <h1>This is the Weather Alerts Section </h1>
-
-        <p>{weather.main}</p>
-        <p>{weather.description}</p>
-        <p>{weather.id}</p>
-        <p>{alertmsg}</p>
-        <img src={imgpath} alt="" />
-
         {isalertmsg && <>
-        <Alert variant="filled" severity="error" className ="werror--alert" 
-        
-        onClose={() => {
 
-        }}
-        >
-        <AlertTitle className ="werror--alert--title">{weather.main} <img src={imgpath} className ='werror--alert--logo' alt="" /></AlertTitle>
-        <div className="werror--alert-content">{alertmsg}  </div>     
-        </Alert>
+            <Snackbar open={open} autoHideDuration={10000} onClose={handleClose} className ="werror--alert" >
+            <Alert  onClose={handleClose} sx={{ width: '100%' }} variant="filled" severity="error" >
+            <AlertTitle className ="werror--alert--title">{weather.main} <img src={imgpath} className ='werror--alert--logo' alt="" /></AlertTitle>
+            <div className="werror--alert-content">{alertmsg}  </div>   
+            </Alert>
+            </Snackbar>
+
         </>
         }
 
