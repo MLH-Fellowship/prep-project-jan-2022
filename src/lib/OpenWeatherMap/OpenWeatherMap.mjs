@@ -6,35 +6,21 @@
 
 /**
  * Base URL for the OpenWeatherMap API
- * @type {String}
+ * @type {string}
  */
 const baseUrl = 'https://api.openweathermap.org/';
 
 /**
  * Relative endpoint for the One Call API. {parameters} need to be substituted.
- * @type {String}
+ * @type {string}
  */
 const oneCallEndpoint = 'data/2.5/onecall?lat={lat}&lon={lon}&appid={apiKey}';
 
 /**
  * Relative endpoint for the Direct Geocoding API. {parameters} need to be substituted.
- * @type {String}
+ * @type {string}
  */
 const geocodingEndpoint = 'geo/1.0/direct?q={name}&limit=1&appid={apiKey}'
-
-/**
- * Geolocation (lat, long) for a location.
- * @class
- * @private
- * @constructor
- */
-class Geolocation {
-  constructor(lat, long) {
-    this.lat = lat;
-    this.lon = long;
-  }
-}
-
 
 /**
  * API class for OpenWeatherMap
@@ -58,7 +44,7 @@ export default class OpenWeatherMap {
 
   /**
    * Cache of responses from the Direct Geocoding API.
-   * @type {Map<String, Geolocation>}
+   * @type {Map<string, Geolocation>}
    */
   #geoCodingCache;
 
@@ -72,12 +58,12 @@ export default class OpenWeatherMap {
   }
 
   /**
-   * Get the one-call API response for a set of coordinates. Checks the cache
-   * and calls {@see #getDataGeo()} if not cached.
+   * Get the one-call API response for a set of coordinates. Checks the cache,
+   * calling the API only if the response is not cached.
    * @param {Geolocation|string} location  The location, either as a string or as a {lat, lon} object.
    * @returns {object} The API response, somewhat parsed.
    */
-  async getDataGeo(location) {
+  async getData(location) {
     const coordinates = (typeof location === 'string') ?
       this.#resolveLocationName(location) :
       location;
@@ -97,7 +83,7 @@ export default class OpenWeatherMap {
     const parsedResponse =  {
       /** @type {Geolocation} */
       location: coordinates,
-      /** {@type {String}} */
+      /** {@type {string}} */
       tz: timezone,
        /** @type {number} */
       tzOffset: timezone_offset,
@@ -119,9 +105,17 @@ export default class OpenWeatherMap {
   }
 
   /**
+   * Clear the API call cache.
+   * @returns {void}
+   */
+  clearCallCache() {
+    this.#callCache.clear();
+  }
+
+  /**
    * Get the url for the One Call API endpoint for a set of coordinates.
    * @param {Geolocation} coordinates
-   * @returns {String}
+   * @returns {string}
    */
   #getOneCallEndpointUrl(coordinates) {
     const url = baseUrl + oneCallEndpoint;
@@ -132,20 +126,8 @@ export default class OpenWeatherMap {
   }
 
   /**
-   * Get the url for the Direct Geocoding API endpoint for a location name.
-   * @param name
-   * @returns {string}
-   */
-  #getGeocodingEndpointUrl(name) {
-    const url = baseUrl + geocodingEndpoint;
-
-    return url.replace('{name}', name)
-      .replace('{apiKey}', this.#apiKey);
-  }
-
-  /**
    * Resolve a location (by name) to a {@see Geolocation} instance.
-   * @param {String} name
+   * @param {string} name
    * @throws {Error} On failure to resolve location.
    * @returns {Geolocation}
    */
@@ -170,5 +152,31 @@ export default class OpenWeatherMap {
     }
 
     throw new Error("cannot resolve name to location");
+  }
+
+  /**
+   * Get the url for the Direct Geocoding API endpoint for a location name.
+   * @param name
+   * @returns {string}
+   */
+  #getGeocodingEndpointUrl(name) {
+    const url = baseUrl + geocodingEndpoint;
+
+    return url.replace('{name}', name)
+      .replace('{apiKey}', this.#apiKey);
+  }
+}
+
+
+/**
+ * Geolocation (lat, long) for a location.
+ * @class
+ * @private
+ * @constructor
+ */
+class Geolocation {
+  constructor(lat, long) {
+    this.lat = lat;
+    this.lon = long;
   }
 }
