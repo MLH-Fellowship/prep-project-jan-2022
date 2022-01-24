@@ -1,7 +1,7 @@
 body {
-    background-color: #133667;
-    color: white;
-    text-align: center;
+  background-color: #133667;
+  color: white;
+  text-align: center;
 }
 
 .logo {
@@ -16,21 +16,33 @@ input {
   padding: 10px;
   border-radius: 4px;
   border: 10px;
-  width: 200px
+  width: 200px;
 }
 
 .Results {
   background-color: white;
-  margin-left: 150px;
-  margin-right: 150px;
+  margin: 0 auto;
+  width: 60%;
   margin-top: 20px;
   border-radius: 8px;
   color: black;
   padding: 10px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+@media (max-width: 1224px) {
+  .Results {
+    width: 70%;
+  }
+}
+@media (max-width: 844px) {
+  .Results {
+    width: 85%;
+  }
 }
 
 #weather-location-search {
   width: clamp(20em, 50%, 90%);
   margin: auto;
+  z-index: 100;
 }
