@@ -75,7 +75,6 @@ function WeatherAlerts({weather}){
          isalertmsg  = false;
         }
     }
-    console.log(weatherDescription);
     checkAlert();
 
     return (

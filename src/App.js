@@ -52,7 +52,6 @@ function App() {
               weather : result.weather[0],
               stats : result.main
             });
-            console.log(result);
           })
           .catch((err) => {
             setIsLoaded(true);
@@ -85,7 +84,6 @@ function App() {
               weather : result.weather[0],
               stats : result.main
             });
-            console.log(result);
           } else {
             setResults(null);
           }
