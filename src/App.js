@@ -3,7 +3,7 @@ import './App.css';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import logo from './mlh-prep.png';
 import WeatherMap from './components/WeatherMap/WeatherMap';
-
+import WeatherAlerts from './components/WeatherAlerts/WeatherAlerts';
 import cities from './assets/data/cities.json';
 
 // We need this transformation because ReactSearchAutocomplete only accepts object lists
@@ -25,7 +25,11 @@ function App() {
     lat: '51.505',
     lon: '-0.09',
   });
+
   const [currentSearch, setCurrentSearch] = useState('');
+  const [Weatherobject, setWeatherobject] = useState({
+    weather: null,
+  });
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -42,6 +46,10 @@ function App() {
             setCityCoordinates({
               lat: result.coord.lat,
               lon: result.coord.lon,
+            });
+            setWeatherobject({
+              weather: result.weather[0],
+              stats: result.main,
             });
           })
           .catch((err) => {
@@ -70,6 +78,10 @@ function App() {
             setCityCoordinates({
               lat: result.coord.lat,
               lon: result.coord.lon,
+            });
+            setWeatherobject({
+              weather: result.weather[0],
+              stats: result.main,
             });
           } else {
             setResults(null);
@@ -136,6 +148,11 @@ function App() {
             cityCoordinates={cityCoordinates}
             setCityCoordinates={setCityCoordinates}
           />
+        )}
+      </div>
+      <div className="weather-alerts">
+        {isLoaded && results && Weatherobject.weather !== null && (
+          <WeatherAlerts weather={Weatherobject.weather} />
         )}
       </div>
     </>
