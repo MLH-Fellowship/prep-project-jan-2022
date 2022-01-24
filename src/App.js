@@ -28,8 +28,7 @@ function App() {
   
   const [currentSearch, setCurrentSearch] = useState('');
   const [Weatherobject,setWeatherobject] = useState({
-    weather : null,
-    stats : null
+    weather : null
   });
 
 
@@ -156,7 +155,7 @@ function App() {
       </div>
         <div className="weather-alerts">
         {(isLoaded && results && (Weatherobject.weather !==null) ) && (  
-          <WeatherAlerts weather = {Weatherobject.weather} stats = {Weatherobject.stats}  />
+          <WeatherAlerts weather = {Weatherobject.weather}  />
         )}
         </div>
     </>
