@@ -25,12 +25,11 @@ function App() {
     lat: '51.505',
     lon: '-0.09',
   });
-  
-  const [currentSearch, setCurrentSearch] = useState('');
-  const [Weatherobject,setWeatherobject] = useState({
-    weather : null
-  });
 
+  const [currentSearch, setCurrentSearch] = useState('');
+  const [Weatherobject, setWeatherobject] = useState({
+    weather: null,
+  });
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -49,8 +48,8 @@ function App() {
               lon: result.coord.lon,
             });
             setWeatherobject({
-              weather : result.weather[0],
-              stats : result.main
+              weather: result.weather[0],
+              stats: result.main,
             });
           })
           .catch((err) => {
@@ -81,8 +80,8 @@ function App() {
               lon: result.coord.lon,
             });
             setWeatherobject({
-              weather : result.weather[0],
-              stats : result.main
+              weather: result.weather[0],
+              stats: result.main,
             });
           } else {
             setResults(null);
@@ -91,7 +90,7 @@ function App() {
         (err) => {
           setError(err);
         }
-      ) 
+      )
       .finally(() => {
         setIsLoaded(true);
       });
@@ -151,11 +150,11 @@ function App() {
           />
         )}
       </div>
-        <div className="weather-alerts">
-        {(isLoaded && results && (Weatherobject.weather !==null) ) && (  
-          <WeatherAlerts weather = {Weatherobject.weather}  />
+      <div className="weather-alerts">
+        {isLoaded && results && Weatherobject.weather !== null && (
+          <WeatherAlerts weather={Weatherobject.weather} />
         )}
-        </div>
+      </div>
     </>
   );
 }
