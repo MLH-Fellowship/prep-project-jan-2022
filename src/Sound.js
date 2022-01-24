@@ -60,7 +60,10 @@ function Sound(props) {
 
     return(
         <div className="soundButton">
-            <button type="button" onClick={toggleSound}>Toggle Sound</button>
+            <label className="switch">
+                <input type="checkbox" defaultChecked onChange={toggleSound}/>
+                <span className="slider round"></span>
+            </label>
         </div>
     );
 }
