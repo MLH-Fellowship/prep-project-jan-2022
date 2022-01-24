@@ -1,5 +1,9 @@
 import React from "react";
-
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import Fade from '@mui/material/Fade';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import './WeatherAlerts.css';
 
 function WeatherAlerts({weather,stats}){
     
@@ -92,6 +96,18 @@ function WeatherAlerts({weather,stats}){
         <p>{alertmsg}</p>
         <img src={imgpath} alt="" />
 
+        {isalertmsg && <>
+        <Alert variant="filled" severity="error" className ="werror--alert" 
+        
+        onClose={() => {
+
+        }}
+        >
+        <AlertTitle className ="werror--alert--title">{weather.main} <img src={imgpath} className ='werror--alert--logo' alt="" /></AlertTitle>
+        <div className="werror--alert-content">{alertmsg}  </div>     
+        </Alert>
+        </>
+        }
 
         </div>
 
