@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.soundButton {
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+}

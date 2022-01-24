@@ -50,16 +50,16 @@ function Sound(props) {
         }
         
         sound = new Howl({
-            src: [weatherSound]
+            src: [weatherSound],
+            autoplay: true,
+            loop: true
         });
-
-        sound.play();
 
     });
 
 
     return(
-        <div>
+        <div className="soundButton">
             <button type="button" onClick={toggleSound}>Toggle Sound</button>
         </div>
     );
