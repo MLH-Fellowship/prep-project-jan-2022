@@ -1,20 +1,41 @@
-import { useEffect } from "react";
+import { Howl } from 'howler';
 import rain from './assets/audio/LightRain.mp3';
 import snow from './assets/audio/Snow.mp3';
 import drizzle from './assets/audio/RainBackVerandah.mp3';
 import thunderstorm from './assets/audio/RollingThunder.mp3';
-import {Howl} from "howler";
 
-function Sound(props) {
+function Sound({ weatherName }) {
+    let isSoundOn = false;
 
-    const weatherName = props.results.weather[0].main;
+    let weatherSound = null;
 
-    let isSoundOn = true;
+    switch (weatherName) {
+        case 'Thunderstorm':
+            weatherSound = thunderstorm;
+            break;
+        case 'Drizzle':
+            weatherSound = drizzle;
+            break;
+        case 'Rain':
+            weatherSound = rain;
+            break;
+            case 'Snow':
+                weatherSound = snow;
+                break;
+        default:
+            weatherSound = null;
+    }
 
-    let sound = null;
+    const sound = new Howl({
+        src: [weatherSound],
+        loop: true
+    });
 
     const toggleSound = () => {
+
         isSoundOn = !isSoundOn;
+
+        console.log(isSoundOn);
 
         if (isSoundOn) {
               
@@ -26,43 +47,12 @@ function Sound(props) {
         }
     }
 
-    useEffect(() => {
-
-        console.log("useEffect called");
-
-        let weatherSound = null;
-
-        switch (weatherName) {
-            case 'Thunderstorm':
-                weatherSound = thunderstorm;
-                break;
-            case 'Drizzle':
-                weatherSound = drizzle;
-                break;
-            case 'Rain':
-                weatherSound = rain;
-                break;
-             case 'Snow':
-                 weatherSound = snow;
-                 break;
-            default:
-                weatherSound = null;
-        }
-        
-        sound = new Howl({
-            src: [weatherSound],
-            autoplay: true,
-            loop: true
-        });
-
-    });
-
 
     return(
         <div className="soundButton">
-            <label className="switch">
-                <input type="checkbox" defaultChecked onChange={toggleSound}/>
-                <span className="slider round"></span>
+            <label className="switch" htmlFor="soundCheckbox">
+                <input type="checkbox" id="soundCheckbox" onChange={toggleSound}/>
+                <span className="slider round" />
             </label>
         </div>
     );

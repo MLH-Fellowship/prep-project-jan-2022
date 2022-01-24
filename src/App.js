@@ -6,7 +6,7 @@ import WeatherMap from './components/WeatherMap/WeatherMap';
 
 import cities from './assets/data/cities.json';
 
-import Sound from './Sound.js';
+import Sound from './Sound';
 
 // We need this transformation because ReactSearchAutocomplete only accepts object lists
 const cityList = (() => {
@@ -129,7 +129,7 @@ function App() {
           )}
           {isLoaded && !results && <h2>No Results Found</h2>}
         </div>
-        {isLoaded && results && <Sound results = {results} />}
+        {isLoaded && results && <Sound weatherName={results.weather[0].main} />}
       </div>
       <div className="weather-map">
         {(!isLoaded || results) && (
