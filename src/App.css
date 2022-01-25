@@ -20,29 +20,43 @@ input {
 }
 
 .Results {
-  background-color: white;
-  margin: 0 auto;
-  width: 60%;
-  margin-top: 20px;
+  background-image: url(./components/WeatherSuggestions/clouds.jpeg);
+  background-position: bottom;
+  margin: 30px 20px;
+  width: 50%;
   border-radius: 8px;
-  color: black;
+  color: white;
   padding: 10px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 @media (max-width: 1224px) {
   .Results {
-    width: 70%;
+    width: 100%;
   }
 }
-@media (max-width: 844px) {
+@media (max-width: 884px) {
   .Results {
-    width: 85%;
+    width: 50%;
   }
 }
 
 #weather-location-search {
-  width: clamp(20em, 50%, 90%);
+  width: clamp(20em, 95%, 80%);
   margin: auto;
   z-index: 100;
+}
+
+.weather-map {
+  margin: 30px 0px;
+  margin-right: 20px;
+  width: clamp(20em, 60%, 80%);
+  border-radius: 10px;
+  border: solid rgba(0, 0, 0, 0.16) 7px;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.carousel {
+  display: flex;
+  flex-direction: row;
 }

@@ -5,6 +5,7 @@ import logo from './mlh-prep.png';
 import WeatherMap from './components/WeatherMap/WeatherMap';
 import WeatherAlerts from './components/WeatherAlerts/WeatherAlerts';
 import cities from './assets/data/cities.json';
+import WeatherSuggestions from './components/WeatherSuggestions/WeatherSuggestions';
 
 // We need this transformation because ReactSearchAutocomplete only accepts object lists
 const cityList = (() => {
@@ -19,7 +20,7 @@ const cityList = (() => {
 function App() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [city, setCity] = useState(null);
+  const [city, setCity] = useState('New York City');
   const [results, setResults] = useState(null);
   const [cityCoordinates, setCityCoordinates] = useState({
     lat: '51.505',
@@ -124,32 +125,35 @@ function App() {
             inputSearchString={city ?? 'Loading Your Location...'}
           />
         </div>
-        <div className="Results">
-          {!isLoaded && <h2>Loading...</h2>}
-          {isLoaded && results && (
-            <>
-              <h3>{results.weather[0].main}</h3>
-              <p>Feels like {results.main.feels_like}°C</p>
-              <i>
-                <p>
-                  {results.name}, {results.sys.country}
-                </p>
-              </i>
-            </>
-          )}
-          {isLoaded && !results && <h2>No Results Found</h2>}
+        <div className="carousel">
+          <div className="Results">
+            {!isLoaded && <h2>Loading...</h2>}
+            {isLoaded && results && (
+              <>
+                <h3>{results.weather[0].main}</h3>
+                <p>Feels like {results.main.feels_like}°C</p>
+                <i>
+                  <p>
+                    {results.name}, {results.sys.country}
+                  </p>
+                </i>
+              </>
+            )}
+            {isLoaded && !results && <h2>No Results Found</h2>}
+          </div>
+          <div className="weather-map">
+            {(!isLoaded || results) && (
+              <WeatherMap
+                city={city}
+                setCity={setCity}
+                cityCoordinates={cityCoordinates}
+                setCityCoordinates={setCityCoordinates}
+              />
+            )}
+          </div>
         </div>
       </div>
-      <div className="weather-map">
-        {(!isLoaded || results) && (
-          <WeatherMap
-            city={city}
-            setCity={setCity}
-            cityCoordinates={cityCoordinates}
-            setCityCoordinates={setCityCoordinates}
-          />
-        )}
-      </div>
+      <WeatherSuggestions />
       <div className="weather-alerts">
         {isLoaded && results && Weatherobject.weather !== null && (
           <WeatherAlerts weather={Weatherobject.weather} />

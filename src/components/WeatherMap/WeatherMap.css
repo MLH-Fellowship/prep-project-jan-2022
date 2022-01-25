@@ -1,11 +1,15 @@
 .leaflet-container {
   contain: paint;
-  margin: 14px auto;
   width: 80%;
-  height: 300px;
+  height: 200px;
 }
 
 @media (max-width: 844px) {
+  .leaflet-container {
+    width: 100%;
+  }
+}
+@media (max-width: 1444px) {
   .leaflet-container {
     width: 100%;
   }

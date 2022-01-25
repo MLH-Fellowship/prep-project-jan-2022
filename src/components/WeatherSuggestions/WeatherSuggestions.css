@@ -1,0 +1,45 @@
+.weather-suggestions h1 {
+  display: flex;
+  justify-content: flex-start;
+}
+
+h1 {
+  padding: 10px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bolder;
+  font-size: large;
+}
+
+.weather-suggestions ul {
+  display: flex;
+  flex-direction: column;
+}
+.weather-suggestions {
+  margin: 10px;
+  height: 200px;
+  overflow: hidden;
+  background-image: url(./rain.jpeg);
+  background-position: center;
+  background-color: 0.8;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.ws {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.share-suggestions {
+  background-color: black;
+  width: 700px;
+}
+
+.share-suggestions h1 {
+  position: absolute;
+  bottom: 90px;
+}
+
+Card {
+  background-color: black;
+}
