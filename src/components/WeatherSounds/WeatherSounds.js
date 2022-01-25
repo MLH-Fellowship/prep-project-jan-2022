@@ -4,6 +4,7 @@ import rain from '../../assets/audio/LightRain.mp3';
 import snow from '../../assets/audio/Snow.mp3';
 import drizzle from '../../assets/audio/RainBackVerandah.mp3';
 import thunderstorm from '../../assets/audio/RollingThunder.mp3';
+import dummyWind from '../../assets/audio/dummyWind.mp3';
 
 const soundMap = {
   Thunderstorm: thunderstorm,
@@ -15,7 +16,7 @@ const soundMap = {
 function WeatherSounds({ weatherName }) {
   let isSoundOn = false;
 
-  const weatherSound = soundMap[weatherName];
+  const weatherSound = soundMap[weatherName] ?? dummyWind;
 
   const sound = weatherSound
     ? new Howl({
