@@ -1,0 +1,49 @@
+* {
+  font-family: 'Quicksand';
+}
+.cs-container {
+  width: auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.cs-bg {
+  opacity: 0.8;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+}
+
+.cs-content {
+  position: relative;
+}
+
+.cs-basics {
+  display: flex;
+  align-items: center;
+  gap: 54px;
+}
+/* 
+<span className="temp">21C</span>
+<span className="feels-like">15C</span>
+<span className="weather">Cloudy</span>
+<img
+  className="icon" */
+.cs-basics .temp {
+  font-size: 144px;
+}
+.cs-basics .weather {
+  font-weight: bold;
+}
+.cs-basics .cs-info span {
+  text-align: left;
+  display: block;
+  font-size: 32px;
+  line-height: 1.2;
+}
+.cs-basics .wi {
+  margin-left: auto;
+  height: 100%;
+}
