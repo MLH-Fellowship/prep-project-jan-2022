@@ -5,40 +5,34 @@ import snow from '../../assets/audio/Snow.mp3';
 import drizzle from '../../assets/audio/RainBackVerandah.mp3';
 import thunderstorm from '../../assets/audio/RollingThunder.mp3';
 
+const soundMap = {
+  Thunderstorm: thunderstorm,
+  Drizzle: drizzle,
+  Rain: rain,
+  Snow: snow,
+};
+
 function WeatherSounds({ weatherName }) {
   let isSoundOn = false;
 
-  let weatherSound = null;
+  const weatherSound = soundMap[weatherName];
 
-  switch (weatherName) {
-    case 'Thunderstorm':
-      weatherSound = thunderstorm;
-      break;
-    case 'Drizzle':
-      weatherSound = drizzle;
-      break;
-    case 'Rain':
-      weatherSound = rain;
-      break;
-    case 'Snow':
-      weatherSound = snow;
-      break;
-    default:
-      weatherSound = null;
-  }
-
-  const sound = new Howl({
-    src: [weatherSound],
-    loop: true,
-  });
+  const sound = weatherSound
+    ? new Howl({
+        src: [weatherSound],
+        loop: true,
+      })
+    : null;
 
   const toggleSound = () => {
     isSoundOn = !isSoundOn;
 
-    if (isSoundOn) {
-      sound.play();
-    } else {
-      sound.stop();
+    if (sound !== null) {
+      if (isSoundOn) {
+        sound.play(undefined, false);
+      } else {
+        sound.stop(undefined, false);
+      }
     }
   };
 

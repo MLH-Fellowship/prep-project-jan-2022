@@ -129,9 +129,7 @@ function App() {
           )}
           {isLoaded && !results && <h2>No Results Found</h2>}
         </div>
-        {isLoaded && results && (
-          <WeatherSounds weatherName={results.weather[0].main} />
-        )}
+        <WeatherSounds weatherName={results?.weather[0].main} />
       </div>
       <div className="weather-map">
         {(!isLoaded || results) && (
