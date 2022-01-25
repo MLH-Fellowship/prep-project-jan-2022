@@ -17,7 +17,28 @@ export default function CurrentStatus() {
             <i className="wi wi-day-lightning" />
           </div>
         </div>
-        <div className="cs-more">more</div>
+        <div className="cs-more">
+          <div className="cs-more-content">
+            <span className="cs-more-title">VISIBILITY</span>
+            <span className="cs-more-value">2 km</span>
+          </div>
+          <div className="cs-more-content">
+            <span className="cs-more-title">AIR QUALITY</span>
+            <span className="cs-more-value">45</span>
+          </div>
+          <div className="cs-more-content">
+            <span className="cs-more-title">WIND SPEED</span>
+            <span className="cs-more-value">45 Km/h</span>
+          </div>
+          <div className="cs-more-content">
+            <span className="cs-more-title">AIR QUALITY</span>
+            <span className="cs-more-value">45</span>
+          </div>
+          <div className="cs-more-content">
+            <span className="cs-more-title">HUMIDITY</span>
+            <span className="cs-more-value">15000</span>
+          </div>
+        </div>
       </div>
     </div>
   );

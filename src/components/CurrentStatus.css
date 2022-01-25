@@ -1,10 +1,14 @@
 * {
   font-family: 'Quicksand';
+  box-sizing: border-box;
 }
 .cs-container {
   width: auto;
   overflow: hidden;
   position: relative;
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 20px;
 }
 
 .cs-bg {
@@ -18,12 +22,14 @@
 
 .cs-content {
   position: relative;
+  padding: 42px;
 }
 
 .cs-basics {
   display: flex;
   align-items: center;
   gap: 54px;
+  margin-bottom: 16px;
 }
 /* 
 <span className="temp">21C</span>
@@ -45,5 +51,16 @@
 }
 .cs-basics .wi {
   margin-left: auto;
-  height: 100%;
+  font-size: 104px;
+}
+
+.cs-more {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  font-size: 18px;
+}
+.cs-more .cs-more-content span {
+  display: block;
+  text-align: center;
 }
