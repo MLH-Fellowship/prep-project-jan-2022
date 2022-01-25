@@ -1,5 +1,6 @@
 import './CurrentStatus.css';
 import bg from '../assets/cs-bg.png';
+import 'weather-icons/css/weather-icons.css';
 
 export default function CurrentStatus() {
   return (
