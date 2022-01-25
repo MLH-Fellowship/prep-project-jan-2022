@@ -1,14 +1,20 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import App from './App';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+
+import Demo from './components/playground/Demo';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root")
+  <Router>
+    <Routes>
+      <Route path="/" element={<App />} />
+      <Route path="/playground" element={<Demo />} />
+    </Routes>
+  </Router>,
+  document.getElementById('root')
 );
 
 serviceWorkerRegistration.register();
