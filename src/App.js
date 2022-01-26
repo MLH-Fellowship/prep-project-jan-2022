@@ -52,7 +52,8 @@ function App() {
           {!isLoaded && <h2>Loading...</h2>}
             {console.log(results)}
             {isLoaded && results && <>
-              <HourlyWeather city={ results.name } />
+            {/* Pass through null for testing */}
+              <HourlyWeather />
             </>}
           </div>
       </div>

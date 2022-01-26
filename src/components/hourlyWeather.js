@@ -1,68 +1,45 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const HourlyWeather = ({ city }) => {
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [hourlyData, setHourlyData] = useState([]);
+// temporary -- please remove
+/* eslint-disable */
 
-    useEffect(() => {
-        async function convertGeoLocation(city) {
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.REACT_APP_APIKEY}`).then(value => value.json());
-            const cord = response["coord"];
-            return [cord["lat"], cord["lon"]];
-        }
+const dummyData = [
+    {
+      humidity: 200,
+      temp: 20,
+      pressure: 400,
+    },
+    {
+      humidity: 200,
+      temp: 20,
+      pressure: 400,
+    },
+  ];
 
-        async function fetchWeatherInfo(lat, lon){
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_APIKEY}&units=metric`).then(value=>value.json());
-            console.log(response["hourly"])
-            return response["hourly"];
-        }
+function HourlyWeather(data) {
+  if (!data instanceof Array) {
+    data = dummyData;
+  }
 
-        async function fetchHourlyWeather(city) {
-            const [latitude, longitude] = await convertGeoLocation(city);
-            const hourlyInfo = await fetchWeatherInfo(latitude, longitude);
+  const [hourlyData, setHourlyData] = useState(dummyData);
 
-            const NUMBER_OF_HOURS = 4;
-            const temperature_info = [];
-            for (let hour_idx = 0; hour_idx < NUMBER_OF_HOURS; ++hour_idx) {
-                temperature_info.push(hourlyInfo[hour_idx]["temp"]);
-            }
-            return temperature_info;
-        }
-
-        fetchHourlyWeather(city).then(
-            (result) => {
-                setIsLoaded(true);
-                setHourlyData([...result]);
-            },
-            (error) => {
-                setIsLoaded(true);
-                setError(error);
-            }
-        )
-    }, [city]);
-
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    } else {
+  return (
+    <>
+      <div className="title">Hourly Forecast</div>
+      {"This is what's up: " + typeof hourlyData}
+      {console.log('"hourlyData" is' +  JSON.stringify(hourlyData))}
+      {hourlyData && hourlyData.map((data) => {
         return (
-            <>
-                <div className="title">Hourly Forecast</div>
-                {!isLoaded && <h2>Loading...</h2>}
-                {isLoaded && hourlyData && hourlyData.map((temperature, hour) => {
-                    return <div key={hour}>
-                        <div>
-                            {"+" + (hour + 1) + " hr:"}
-                        </div>
-                        <div>
-                            {(temperature).toFixed(2) + "°C"}
-                        </div>
-                    </div>
-                })
-                }
-            </>
+          <div>
+            <div>{/* {"+" + (hour + 1) + " hr:"} */}</div>
+            <div>temp: {data["temp"].toFixed(2) + "°C"}</div>
+            <div>humidity: {data["humidity"]}</div>
+          </div>
         );
-    }
+      })}
+
+    </>
+  );
 }
 
 export default HourlyWeather;
