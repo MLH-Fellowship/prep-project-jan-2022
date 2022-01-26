@@ -23,7 +23,8 @@ const oneCallEndpoint = 'data/2.5/onecall?lat={lat}&lon={lon}&appid={apiKey}';
 const geocodingEndpoint = 'geo/1.0/direct?q={name}&limit=1&appid={apiKey}'
 
 /**
- * API class for OpenWeatherMap
+ * Minimal API Wrapper for the OpenWeatherMap API with built-in caching.
+ *
  * @class
  * @public
  * @constructor
@@ -176,7 +177,7 @@ export default class OpenWeatherMap {
  * @private
  * @constructor
  */
-class Geolocation {
+export class Geolocation {
   constructor(lat, long) {
     this.lat = lat;
     this.lon = long;
