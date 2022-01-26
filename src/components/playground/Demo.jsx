@@ -1,211 +1,100 @@
-import { useEffect, useState } from 'react';
-import './Demo.css';
-import { ReactSearchAutocomplete } from 'react-search-autocomplete';
-import MyLocationRoundedIcon from '@mui/icons-material/MyLocationRounded';
-import WeatherMap from '../WeatherMap/WeatherMap';
-import WeatherAlerts from '../WeatherAlerts/WeatherAlerts';
-import cities from '../../assets/data/cities.json';
-import CurrentStatus from '../CurrentStatus';
-import Alert from '../CriticalAlerts/Alert';
-import alertsInfo from '../WeatherInfo/info.json';
-
-import ForecastCarousel from '../carousel/ForecastCarousel';
-
-// We need this transformation because ReactSearchAutocomplete only accepts object lists
-const cityList = (() => {
-  const objectList = [];
-  cities.forEach((city) => {
-    objectList.push({ n: city });
-  });
-
-  return objectList;
-})();
+import React from 'react';
+import styled from '@emotion/styled';
+import { Container } from '@mui/material';
 
 function Demo() {
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [city, setCity] = useState(null);
-  const [results, setResults] = useState(null);
-  const [cityCoordinates, setCityCoordinates] = useState({
-    lat: '51.505',
-    lon: '-0.09',
-  });
+  const Main = styled.main`
+    /** @todo: Get rid of the min height later */
+    min-height: 100vh;
+    display: grid;
+    grid-auto-rows: max-content;
+    gap: 2% 2%;
+    grid-auto-flow: row;
 
-  const [currentSearch, setCurrentSearch] = useState('');
-  const [Weatherobject, setWeatherobject] = useState({
-    weather: null,
-  });
+    & * {
+      border: 1px solid red;
+      position: relative;
+    }
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_APIKEY}`
-        )
-          .then((res) => res.json())
-          .then((result) => {
-            console.log(result);
-            setIsLoaded(true);
-            setResults(result);
+    /* @remove Content placeholders -- remove once we have things in place */
+    & *:after {
+      content: attr(class);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      align-items: center;
+      justify-content: center;
+    }
+  `;
+  const SearchBarWrapper = styled.div`
+    //grid-area: search-bar;
+    height: 2em;
+  `;
+  const WeatherAndMapContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  `;
+  const WeatherCurrentWrapper = styled.div`
+    //grid-area: current-weather;
+    height: 469px;
+    width: 100%;
+    min-width: 300px;
+    flex: 2;
+  `;
+  const MapWrapper = styled.div`
+    //grid-area: map;
+    height: 469px;
+    width: 100%;
+    min-width: 300px;
+    flex: 1;
+  `;
+  const WeatherWarningsWrapper = styled.div`
+    //grid-area: weather-warnings;
+    /**@todo remove this static height when placing the component */
+    height: 400px;
+  `;
+  const ForecastWrapper = styled.div`
+    //grid-area: weather-forecast;
+    height: 400px;
+  `;
+  const SuggestionsWrapper = styled.div`
+    //grid-area: weather-suggestions;
+    height: 371px;
+  `;
 
-            setCity(`${result.name}, ${result.sys.country}`);
-            setCityCoordinates({
-              lat: result.coord.lat,
-              lon: result.coord.lon,
-            });
-            setWeatherobject({
-              weather: result.weather[0],
-              stats: result.main,
-            });
-          })
-          .catch((err) => {
-            setIsLoaded(true);
-            setError(err);
-          });
-      },
-      () => {
-        setCity('');
-      }
-    );
-  }, []);
-
-  useEffect(() => {
-    setResults(null);
-    setIsLoaded(false);
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.REACT_APP_APIKEY}`
-    )
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          if (result.cod === 200) {
-            console.log(result);
-            setResults(result);
-            setCity(`${result.name}, ${result.sys.country}`);
-            setCityCoordinates({
-              lat: result.coord.lat,
-              lon: result.coord.lon,
-            });
-            setWeatherobject({
-              weather: result.weather[0],
-              stats: result.main,
-            });
-          } else {
-            setResults(null);
-          }
-        },
-        (err) => {
-          setError(err);
-        }
-      )
-      .finally(() => {
-        setIsLoaded(true);
-      });
-  }, [city]);
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  const weatherInfo = alertsInfo.alerts.map((item) => (
-    <Alert key="id" item={item} />
-  ));
-
+  /* eslint-disable -- @todo get rid of this later */
   return (
-    <div className="page-container">
-      <img className="logo" src="/mlh-prep.png" alt="MLH Prep Logo" />
-      <div className="searchBar">
-        <div className="weather-location-search">
-          <ReactSearchAutocomplete
-            items={[
-              {
-                n: currentSearch,
-              },
-              ...cityList,
-            ]}
-            fuseOptions={{
-              keys: ['n'],
-            }}
-            resultStringKeyName="n"
-            onSelect={(selectedCity) => setCity(selectedCity.n)}
-            onSearch={(search) => setCurrentSearch(search)}
-            styling={{
-              borderRadius: '5px',
-            }}
-            inputSearchString={city ?? 'Loading Your Location...'}
-          />
-        </div>
-        <MyLocationRoundedIcon
-          fontSize="inherit"
-          style={{ fontSize: '46px' }}
-          className="fetchLocationBtn"
-          onClick={() =>
-            navigator.geolocation.getCurrentPosition(
-              (position) => {
-                const { latitude, longitude } = position.coords;
-                fetch(
-                  `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_APIKEY}`
-                )
-                  .then((res) => res.json())
-                  .then((result) => {
-                    setIsLoaded(true);
-                    setResults(result);
-                    setCity(`${result.name}, ${result.sys.country}`);
-                    setCityCoordinates({
-                      lat: result.coord.lat,
-                      lon: result.coord.lon,
-                    });
-                    setWeatherobject({
-                      weather: result.weather[0],
-                      stats: result.main,
-                    });
-                  })
-                  .catch((err) => {
-                    setIsLoaded(true);
-                    setError(err);
-                  });
-              },
-              () => {
-                setCity('');
-              }
-            )
-          }
-        />
-      </div>
-      <div className="result-map-container">
-        {!isLoaded && <h2>Loading...</h2>}
-        {isLoaded && results && (
-          <CurrentStatus
-            temp={results.main.temp}
-            weatherStatus={results.weather[0].main}
-            feelsLike={results.main.feels_like}
-            visibility={results.visibility}
-            windSpeed={results.wind.speed}
-            humidity={results.main.humidity}
-            pressure={results.main.pressure}
-          />
-        )}
-        {isLoaded && !results && <h2>No Results Found</h2>}
-        <div className="weather-map">
-          {(!isLoaded || results) && (
-            <WeatherMap
-              city={city}
-              setCity={setCity}
-              cityCoordinates={cityCoordinates}
-              setCityCoordinates={setCityCoordinates}
-            />
-          )}
-        </div>
-      </div>
-      <div>{weatherInfo}</div>
-      <div className="weather-alerts">
-        {isLoaded && results && Weatherobject.weather !== null && (
-          <WeatherAlerts weather={Weatherobject.weather} />
-        )}
-      </div>
-      <ForecastCarousel />
-    </div>
+    <>
+      <Container maxWidth={'md'}>
+        <Main>
+          <SearchBarWrapper>
+
+          </SearchBarWrapper>
+          <WeatherAndMapContainer>
+            <WeatherCurrentWrapper>
+
+            </WeatherCurrentWrapper>
+            <MapWrapper>
+
+            </MapWrapper>
+          </WeatherAndMapContainer>
+
+          <WeatherWarningsWrapper>
+
+          </WeatherWarningsWrapper>
+          <ForecastWrapper>
+
+          </ForecastWrapper>
+          <SuggestionsWrapper>
+
+          </SuggestionsWrapper>
+        </Main>
+      </Container>
+    </>
   );
 }
 
