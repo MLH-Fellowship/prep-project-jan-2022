@@ -132,6 +132,8 @@ export default class OpenWeatherMap {
    * @returns {Geolocation}
    */
   async #resolveLocationName(name) {
+    name = encodeURIComponent(name);
+
     if (this.#geoCodingCache.has(name)) {
       return this.#geoCodingCache.get(name);
     }
