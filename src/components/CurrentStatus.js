@@ -12,10 +12,9 @@ export default function CurrentStatus() {
             <span className="temp">21C</span>
             <div className="cs-info">
               <span className="weather">Cloudy</span>
-              <span className="stop">Stops around 2</span>
               <span className="feels-like">FEELS LIKE 15C</span>
+              <i className="wi wi-day-cloudy" />
             </div>
-            <i className="wi wi-day-lightning" />
           </div>
         </div>
         <div className="cs-more">

@@ -6,7 +6,7 @@
   width: auto;
   overflow: hidden;
   position: relative;
-  width: 90%;
+  width: 60%;
   margin: 0 auto;
   border-radius: 20px;
 }
@@ -22,7 +22,7 @@
 
 .cs-content {
   position: relative;
-  padding: 42px;
+  padding: 42px 84px;
 }
 
 .cs-basics {
@@ -31,29 +31,34 @@
   gap: 54px;
   margin-bottom: 16px;
 }
-/* 
-<span className="temp">21C</span>
-<span className="feels-like">15C</span>
-<span className="weather">Cloudy</span>
-<img
-  className="icon" */
 .cs-basics .temp {
   font-size: 144px;
 }
-.cs-basics .weather {
-  font-weight: bold;
-}
-.cs-basics .cs-info span {
-  text-align: left;
-  display: block;
-  font-size: 32px;
-  line-height: 1.2;
-}
-.cs-basics .wi {
+
+.cs-basics .cs-info {
+  display: grid;
+  grid-template-areas:
+    'weather icon'
+    'feels feels';
+  font-size: 36px;
   margin-left: auto;
-  font-size: 104px;
 }
 
+.cs-info .weather {
+  font-weight: bold;
+  grid-area: weather;
+  justify-self: left;
+}
+
+.cs-info .wi {
+  grid-area: icon;
+  justify-self: end;
+  font-size: 52px;
+}
+
+.cs-info .feels-like {
+  grid-area: feels;
+}
 .cs-more {
   display: flex;
   justify-content: center;
