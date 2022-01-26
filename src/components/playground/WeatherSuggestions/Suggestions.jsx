@@ -21,7 +21,7 @@ export default function WeatherSuggestions(results) {
             {Object.keys(items).map((item, i) => (
               <div key={item} className="required-item">
                 {/* <img src={items[item]} /> */}
-                <LottieControl animationData={animationData}/>
+                <LottieControl animationData={animationData} />
                 <h3>{item}</h3>
               </div>
             ))}
