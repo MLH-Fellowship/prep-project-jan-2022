@@ -4,7 +4,7 @@ import rain from '../assets/images/cs-bg.png';
 
 export default function CurrentStatus({
   temp = '21C',
-  feelsLike = '20C',
+  feelsLike = '20.32',
   iconClass = 'wi-day-sunny',
   background = rain,
   weatherStatus = 'Raining',
@@ -24,7 +24,10 @@ export default function CurrentStatus({
             <span className="temp">{temp}</span>
             <div className="cs-info">
               <span className="weather">{weatherStatus}</span>
-              <span className="feels-like">{`FEELS LIKE ${feelsLike}`}</span>
+              <span className="feels-like">{`FEELS LIKE ${parseInt(
+                feelsLike,
+                10
+              )}°`}</span>
               <i className={`wi  ${iconClass}`} />
             </div>
           </div>

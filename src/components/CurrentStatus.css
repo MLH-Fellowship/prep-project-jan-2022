@@ -3,12 +3,10 @@
   box-sizing: border-box;
 }
 .cs-container {
-  width: auto;
   overflow: hidden;
   position: relative;
-  width: 60%;
-  margin: 0 auto;
-  border-radius: 20px;
+  border-radius: 10px;
+  width: 100%;
 }
 
 .cs-bg {
@@ -22,7 +20,7 @@
 
 .cs-content {
   position: relative;
-  padding: 42px 84px;
+  padding: 24px 48px;
 }
 
 .cs-basics {
@@ -40,8 +38,9 @@
   grid-template-areas:
     'weather icon'
     'feels feels';
-  font-size: 36px;
+  font-size: 28px;
   margin-left: auto;
+  gap: 8px;
 }
 
 .cs-info .weather {
