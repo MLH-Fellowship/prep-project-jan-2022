@@ -5,6 +5,8 @@ import logo from './mlh-prep.png';
 import WeatherMap from './components/WeatherMap/WeatherMap';
 import WeatherAlerts from './components/WeatherAlerts/WeatherAlerts';
 import cities from './assets/data/cities.json';
+import Alert from './components/Alert';
+import CurrentStatus from './components/CurrentStatus';
 
 // We need this transformation because ReactSearchAutocomplete only accepts object lists
 const cityList = (() => {
@@ -101,6 +103,8 @@ function App() {
   }
   return (
     <>
+      <CurrentStatus />
+      <Alert />
       <img className="logo" src={logo} alt="MLH Prep Logo" />
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <h2>Enter a city below 👇</h2>

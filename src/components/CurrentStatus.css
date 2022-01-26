@@ -1,0 +1,70 @@
+* {
+  font-family: 'Quicksand';
+  box-sizing: border-box;
+}
+.cs-container {
+  overflow: hidden;
+  position: relative;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.cs-bg {
+  opacity: 0.8;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+}
+
+.cs-content {
+  position: relative;
+  padding: 24px 48px;
+}
+
+.cs-basics {
+  display: flex;
+  align-items: center;
+  gap: 54px;
+  margin-bottom: 16px;
+}
+.cs-basics .temp {
+  font-size: 144px;
+}
+
+.cs-basics .cs-info {
+  display: grid;
+  grid-template-areas:
+    'weather icon'
+    'feels feels';
+  font-size: 28px;
+  margin-left: auto;
+  gap: 8px;
+}
+
+.cs-info .weather {
+  font-weight: bold;
+  grid-area: weather;
+  justify-self: left;
+}
+
+.cs-info .wi {
+  grid-area: icon;
+  justify-self: end;
+  font-size: 52px;
+}
+
+.cs-info .feels-like {
+  grid-area: feels;
+}
+.cs-more {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  font-size: 18px;
+}
+.cs-more .cs-more-content span {
+  display: block;
+  text-align: center;
+}

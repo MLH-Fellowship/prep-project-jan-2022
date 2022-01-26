@@ -1,0 +1,38 @@
+.forecast-container {
+  display: flex;
+  flex-direction: column;
+}
+.forecast-container .selector {
+  text-align: left;
+  display: block;
+  font-size: 24px;
+  margin-bottom: 14px;
+
+  padding: 8px;
+  border-radius: 10px;
+}
+.forecast-container .selector select {
+  box-sizing: border-box;
+  background: rgba(246, 251, 255, 1);
+  font-size: 24px;
+  padding: 8px;
+  border-radius: 10px;
+  margin-left: -16px;
+}
+.selector .label {
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.23);
+  padding: 8px;
+  padding-right: 32px;
+  border-radius: 10px;
+}
+.forecast-container .content {
+  flex: 1;
+  display: flex;
+  overflow: auto;
+}
+.forecasts {
+  display: flex;
+  min-height: min-content;
+  gap: 14px;
+}
