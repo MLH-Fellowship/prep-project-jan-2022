@@ -128,7 +128,7 @@ function Demo() {
         </div>
         <MyLocationRoundedIcon
           fontSize="inherit"
-          style={{ fontSize: '50px' }}
+          style={{ fontSize: '46px' }}
           className="fetchLocationBtn"
           onClick={() =>
             navigator.geolocation.getCurrentPosition(

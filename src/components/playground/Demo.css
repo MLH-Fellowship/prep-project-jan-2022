@@ -66,6 +66,9 @@ input {
   display: flex;
 }
 .fetchLocationBtn {
+  color: #133667;
+  background-color: white;
+  border-radius: 5px;
   margin-left: 2%;
   padding: 10px;
 }
