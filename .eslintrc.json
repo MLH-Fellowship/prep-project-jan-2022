@@ -15,6 +15,7 @@
       "jsx-a11y/accessible-emoji": "off",
       "no-unused-vars": "warn",
       "no-console": "off",
+      "no-underscore-dangle": "off",
       "func-names": "off",
       "no-process-exit": "off",
       "object-shorthand": "off",
