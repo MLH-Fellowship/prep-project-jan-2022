@@ -5,7 +5,7 @@ import WeatherMap from '../WeatherMap/WeatherMap';
 import WeatherAlerts from '../WeatherAlerts/WeatherAlerts';
 import cities from '../../assets/data/cities.json';
 import CurrentStatus from '../CurrentStatus';
-import Alert from '../Alert';
+import Alert from '../CriticalAlerts/Alert';
 import Forecast from '../Forecast';
 import alertsInfo from '../WeatherInfo/info.json';
 // We need this transformation because ReactSearchAutocomplete only accepts object lists
@@ -103,7 +103,9 @@ function Demo() {
     return <div>Error: {error.message}</div>;
   }
 
-  const weatherInfo = alertsInfo.map((item) => <Alert key="id" item={item} />);
+  const weatherInfo = alertsInfo.alerts.map((item) => (
+    <Alert key="id" item={item} />
+  ));
 
   return (
     <div className="page-container">

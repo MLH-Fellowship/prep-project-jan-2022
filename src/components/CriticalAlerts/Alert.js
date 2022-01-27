@@ -4,6 +4,14 @@ export default function Alert({ item }) {
   const { event, start, end, senderName, tags, description } = item;
   const startTime = new Date(start);
   const endTime = new Date(end);
+
+  // We need to parse newlines in the description or insert it as unsafe HTML, this should be simpler.
+  const descriptionArray = [];
+  description.split('\n').forEach((line, index) => {
+    if (index % 2 === 0) descriptionArray.push(<br />);
+    descriptionArray.push(line);
+  });
+
   return (
     <div className="alert-container">
       <p className="alert-category">{event.toUpperCase()}</p>
@@ -20,7 +28,7 @@ export default function Alert({ item }) {
         </span>
       </p>
       <h2 className="alert-title">{tags}</h2>
-      <h4 className="alert-description">{description}</h4>
+      <h4 className="alert-description">{descriptionArray}</h4>
     </div>
   );
 }
