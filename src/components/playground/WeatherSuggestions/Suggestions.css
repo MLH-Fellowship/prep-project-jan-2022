@@ -1,3 +1,35 @@
+.suggestions-container {
+  display: flex;
+  border: 2px solid black;
+}
 .carousel {
   width: 50%;
+  height: 30em;
+}
+.suggestions-list-container {
+  padding: 1.5em 2em;
+  background-color: black;
+  width: 50%;
+  height: 30em;
+  text-align: start;
+}
+
+.suggestions-list-container h2 {
+  font-size: 34px;
+}
+
+.suggestions-list-container p {
+  font-size: 24px;
+}
+
+.suggestions-list {
+  height: 65%;
+}
+
+.share-container {
+  display: flex;
+}
+
+.share-heading {
+  margin-right: 40%;
 }
