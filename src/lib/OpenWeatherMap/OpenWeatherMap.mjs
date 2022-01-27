@@ -4,6 +4,8 @@
  * @module OpenWeatherMap
  */
 
+import Geolocation from './Geolocation.mjs';
+
 /**
  * Base URL for the OpenWeatherMap API
  * @type {string}
@@ -20,7 +22,7 @@ const oneCallEndpoint = 'data/2.5/onecall?lat={lat}&lon={lon}&appid={apiKey}';
  * Relative endpoint for the Direct Geocoding API. {parameters} need to be substituted.
  * @type {string}
  */
-const geocodingEndpoint = 'geo/1.0/direct?q={name}&limit=1&appid={apiKey}'
+const geocodingEndpoint = 'geo/1.0/direct?q={name}&limit=1&appid={apiKey}';
 
 /**
  * Minimal API Wrapper for the OpenWeatherMap API with built-in caching.
@@ -30,32 +32,27 @@ const geocodingEndpoint = 'geo/1.0/direct?q={name}&limit=1&appid={apiKey}'
  * @constructor
  */
 export default class OpenWeatherMap {
-
-  /**
-   * OpenWeatherMap API key.
-   * @type {string}
-   */
-  #apiKey;
-
-  /**
-   * Cache of responses to the One Call API.
-   * @type {Map<Geolocation, Object>}
-   */
-  #callCache;
-
-  /**
-   * Cache of responses from the Direct Geocoding API.
-   * @type {Map<string, Geolocation>}
-   */
-  #geoCodingCache;
-
   /**
    * @param apiKey An API key for https://openweathermap.org
    */
   constructor(apiKey) {
-    this.#apiKey = apiKey;
-    this.#callCache = new Map();
-    this.#geoCodingCache = new Map();
+    /**
+     * OpenWeatherMap API key.
+     * @type {string}
+     */
+    this._apiKey = apiKey;
+
+    /**
+     * Cache of responses to the One Call API.
+     * @type {Map<Geolocation, Object>}
+     */
+    this._callCache = new Map();
+
+    /**
+     * Cache of responses from the Direct Geocoding API.
+     * @type {Map<string, Geolocation>}
+     */
+    this._geoCodingCache = new Map();
   }
 
   /**
@@ -65,29 +62,35 @@ export default class OpenWeatherMap {
    * @returns {object} The API response, somewhat parsed.
    */
   async getData(location) {
-    const coordinates = (typeof location === 'string') ?
-      this.#resolveLocationName(location) :
-      location;
+    const coordinates =
+      typeof location === 'string'
+        ? this._resolveLocationName(location)
+        : location;
 
-    if (this.#callCache.has(coordinates)) {
-      return this.#callCache.get(coordinates);
+    if (this._callCache.has(coordinates)) {
+      return this._callCache.get(coordinates);
     }
 
-    const callUrl = this.#getOneCallEndpointUrl(coordinates);
+    const callUrl = this._getOneCallEndpointUrl(coordinates);
     const response = await (await fetch(callUrl)).json();
 
     const {
-      timezone, timezone_offset, current, minutely, hourly,
-      daily, alerts,
+      timezone,
+      timezone_offset: tzOffset,
+      current,
+      minutely,
+      hourly,
+      daily,
+      alerts,
     } = response;
 
-    const parsedResponse =  {
+    const parsedResponse = {
       /** @type {Geolocation} */
       location: coordinates,
       /** {@type {string}} */
       tz: timezone,
-       /** @type {number} */
-      tzOffset: timezone_offset,
+      /** @type {number} */
+      tzOffset: tzOffset,
       /** @type {object} */
       current: current,
       /** @type {object} */
@@ -98,9 +101,9 @@ export default class OpenWeatherMap {
       daily: daily,
       /** @type {object} */
       alerts: alerts,
-    }
+    };
 
-    this.#callCache.set(coordinates, parsedResponse);
+    this._callCache.set(coordinates, parsedResponse);
 
     return parsedResponse;
   }
@@ -110,7 +113,7 @@ export default class OpenWeatherMap {
    * @returns {void}
    */
   clearCallCache() {
-    this.#callCache.clear();
+    this._callCache.clear();
   }
 
   /**
@@ -118,12 +121,13 @@ export default class OpenWeatherMap {
    * @param {Geolocation} coordinates
    * @returns {string}
    */
-  #getOneCallEndpointUrl(coordinates) {
+  _getOneCallEndpointUrl(coordinates) {
     const url = baseUrl + oneCallEndpoint;
 
-    return url.replace('{lat}', coordinates.lat)
+    return url
+      .replace('{lat}', coordinates.lat)
       .replace('{lon}', coordinates.lon)
-      .replace("{apiKey}", this.#apiKey);
+      .replace('{apiKey}', this._apiKey);
   }
 
   /**
@@ -132,29 +136,28 @@ export default class OpenWeatherMap {
    * @throws {Error} On failure to resolve location.
    * @returns {Geolocation}
    */
-  async #resolveLocationName(name) {
-    name = encodeURIComponent(name);
+  async _resolveLocationName(name) {
+    const cleanName = encodeURIComponent(name);
 
-    if (this.#geoCodingCache.has(name)) {
-      return this.#geoCodingCache.get(name);
+    if (this._geoCodingCache.has(cleanName)) {
+      return this._geoCodingCache.get(cleanName);
     }
 
-    const url = this.#getGeocodingEndpointUrl(name);
+    const url = this._getGeoCodingEndpointUrl(cleanName);
 
     const response = await (await fetch(url)).json();
 
     if (response[0] !== undefined) {
-      const { /** @type {number} */ lat,
-        /** @type {number} */ lon,
-      } = response[0];
+      const { /** @type {number} */ lat, /** @type {number} */ lon } =
+        response[0];
       const coordinates = new Geolocation(lat, lon);
 
-      this.#geoCodingCache.set(name, coordinates)
+      this._geoCodingCache.set(cleanName, coordinates);
 
       return coordinates;
     }
 
-    throw new Error("cannot resolve name to location");
+    throw new Error('cannot resolve name to location');
   }
 
   /**
@@ -162,24 +165,9 @@ export default class OpenWeatherMap {
    * @param name
    * @returns {string}
    */
-  #getGeocodingEndpointUrl(name) {
+  _getGeoCodingEndpointUrl(name) {
     const url = baseUrl + geocodingEndpoint;
 
-    return url.replace('{name}', name)
-      .replace('{apiKey}', this.#apiKey);
-  }
-}
-
-
-/**
- * Geolocation (lat, long) for a location.
- * @class
- * @private
- * @constructor
- */
-export class Geolocation {
-  constructor(lat, long) {
-    this.lat = lat;
-    this.lon = long;
+    return url.replace('{name}', name).replace('{apiKey}', this._apiKey);
   }
 }
