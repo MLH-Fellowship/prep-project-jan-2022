@@ -68,3 +68,7 @@
   display: block;
   text-align: center;
 }
+
+.cs-more .cs-more-content .cs-more-title {
+  text-transform: uppercase;
+}
