@@ -21,7 +21,7 @@ function ForecastCarousel() {
           }}
         >
           {selector.map((value) => (
-            <option key={value} value={value}>
+            <option key={value} value={value} className="option-card">
               {value}
             </option>
             // {setSelectedValue(value)}
