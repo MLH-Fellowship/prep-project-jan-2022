@@ -44,6 +44,7 @@ function Demo() {
         )
           .then((res) => res.json())
           .then((result) => {
+            console.log(result);
             setIsLoaded(true);
             setResults(result);
             setCity(`${result.name}, ${result.sys.country}`);
@@ -77,6 +78,7 @@ function Demo() {
       .then(
         (result) => {
           if (result.cod === 200) {
+            console.log(result);
             setResults(result);
             setCity(`${result.name}, ${result.sys.country}`);
             setCityCoordinates({
@@ -168,8 +170,13 @@ function Demo() {
         {!isLoaded && <h2>Loading...</h2>}
         {isLoaded && results && (
           <CurrentStatus
+            temp={results.main.temp}
             weatherStatus={results.weather[0].main}
             feelsLike={results.main.feels_like}
+            visibility={results.visibility}
+            windSpeed={results.wind.speed}
+            humidity={results.main.humidity}
+            pressure={results.main.pressure}
           />
         )}
         {isLoaded && !results && <h2>No Results Found</h2>}
