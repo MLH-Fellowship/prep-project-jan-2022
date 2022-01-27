@@ -11,6 +11,7 @@ import {
   Legend,
   Filler,
 } from 'chart.js';
+import Carousel from 'react-grid-carousel';
 
 import { Line } from 'react-chartjs-2';
 import weatherData from './chartData.json';
@@ -49,46 +50,70 @@ export const options = {
 };
 
 function Charts({ data }) {
-  const chartData = {
-    labels: data.hourly.slice(0, 10).map(({ dt }) =>
-      new Date(dt * 1000).toLocaleTimeString(navigator.language, {
-        hour: '2-digit',
-        minute: '2-digit',
-      })
-    ),
+  const labelData = data.hourly.slice(0, 10).map(({ dt }) =>
+    new Date(dt * 1000).toLocaleTimeString(navigator.language, {
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+  );
+
+  const chartDataOne = {
+    labels: labelData,
     datasets: [
-      {
-        label: 'Pressure',
-        data: weatherData.hourly.map(({ pressure }) => pressure),
-        fill: true,
-        backgroundColor: 'rgba(75,192,192,0.2)',
-        borderColor: 'rgba(75,192,192,1)',
-      },
       {
         label: 'Humidity',
         data: data.hourly.map(({ humidity }) => humidity),
         borderColor: 'rgb(53, 162, 235)',
         fill: true,
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        backgroundColor: 'rgba(53, 162, 235, 0.4)',
       },
+    ],
+  };
+  const chartDataTwo = {
+    labels: labelData,
+    datasets: [
       {
         label: 'Temperature',
         data: data.hourly.map(({ humidity }) => humidity),
-        borderColor: 'rgb(53, 262, 135)',
+        borderColor: 'rgb(255, 99, 132)',
         fill: true,
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        backgroundColor: 'rgba(255, 99, 132, 0.4)',
+      },
+    ],
+  };
+  const chartDataThree = {
+    labels: labelData,
+    datasets: [
+      {
+        label: 'Pressure',
+        data: weatherData.hourly.map(({ pressure }) => pressure),
+        fill: true,
+        borderColor: 'rgba(75,192,192,1)',
+        backgroundColor: 'rgba(75,192,192,0.4)',
       },
     ],
   };
 
   return (
     <div className="chart-container">
-      {chartData && (
-        <>
-          <Line data={chartData} options={options} />
-        </>
-      )}
-      <h1>Chart</h1>
+      <Carousel
+        cols={1}
+        rows={1}
+        gap={5}
+        loop={false}
+        hideArrow={false}
+        showDots
+      >
+        <Carousel.Item>
+          <Line data={chartDataOne} options={options} />
+        </Carousel.Item>
+        <Carousel.Item>
+          <Line data={chartDataTwo} options={options} />
+        </Carousel.Item>
+        <Carousel.Item>
+          <Line data={chartDataThree} options={options} />
+        </Carousel.Item>
+      </Carousel>
     </div>
   );
 }
