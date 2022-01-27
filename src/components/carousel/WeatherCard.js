@@ -24,12 +24,12 @@ export default function WeatherCard(
             <i className={`wi  ${iconClass}`} />
             <div className="low">
               <span>
-                High <b>{high}°</b>
+                High <b>{high}°C</b>
               </span>
             </div>
             <div className="high">
               <span>
-                Low <b>{low}°</b>
+                Low <b>{low}°C</b>
               </span>
             </div>
           </div>
@@ -50,7 +50,7 @@ export default function WeatherCard(
             </div>
             <div className="high">
               <span>
-                Low <b>{low}°</b>
+                Temp <b>{low}°C</b>
               </span>
             </div>
           </div>
