@@ -29,7 +29,7 @@ function ForecastCarousel() {
         </select>
       </div>
       <Carousel
-        cols={3}
+        cols={4}
         rows={1}
         gap={5}
         loop={false}
