@@ -9,8 +9,16 @@
  * @constructor
  */
 export default class Geolocation {
-  constructor(lat, long) {
+  /**
+   * @param {number} lat
+   * @param {number} long
+   * @param {string} name
+   * @param {string} country
+   */
+  constructor(lat, long, name, country) {
     this.lat = lat;
     this.lon = long;
+    this.name = name;
+    this.country = country;
   }
 }
