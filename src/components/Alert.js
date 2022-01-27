@@ -1,21 +1,26 @@
 import './Alert.css';
 
-export default function Alert({
-  category = 'SEVERE WEATHER WARNING',
-  date = 'Jan 22 | BUREAU OF METEOROLOGY',
-  title = 'Minor Flood Warning for the Lachlan River',
-  description = `MINOR FLOODING CONTINUES AT BOOLIGAL Releases from Brewster Weir have
-caused minor flooding along the Lachlan River at Booligal. The Lachlan
-River at Hillston fell below the minor flood level on Saturday morning,
-22 January. Lower Lachlan River downstream of Euabalong to Booligal
-Weir: Minor flooding is occurring at Booligal...`,
-}) {
+export default function Alert({ item }) {
+  const { event, start, end, senderName, tags, description } = item;
+  const startTime = new Date(start);
+  const endTime = new Date(end);
   return (
     <div className="alert-container">
-      <p className="alert-category">{category}</p>
-      <p className="alert-date">{date}</p>
-      <h2 className="alert-title">{title}</h2>
-      <p className="alert-description">{description}</p>
+      <p className="alert-category">{event.toUpperCase()}</p>
+      <span>
+        {' '}
+        <strong>by:</strong> {senderName}
+      </span>
+      <p className="alert-date">
+        <strong>Start Time:</strong> {startTime.getUTCHours()} :{' '}
+        {startTime.getUTCMinutes()}
+        <span className="alert-date">
+          <strong> End Time:</strong> {endTime.getUTCHours()} :{' '}
+          {endTime.getUTCMinutes()}
+        </span>
+      </p>
+      <h2 className="alert-title">{tags}</h2>
+      <h4 className="alert-description">{description}</h4>
     </div>
   );
 }

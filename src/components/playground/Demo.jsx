@@ -7,7 +7,7 @@ import cities from '../../assets/data/cities.json';
 import CurrentStatus from '../CurrentStatus';
 import Alert from '../Alert';
 import Forecast from '../Forecast';
-
+import alertsInfo from '../WeatherInfo/info.json';
 // We need this transformation because ReactSearchAutocomplete only accepts object lists
 const cityList = (() => {
   const objectList = [];
@@ -44,6 +44,7 @@ function Demo() {
           .then((result) => {
             setIsLoaded(true);
             setResults(result);
+
             setCity(`${result.name}, ${result.sys.country}`);
             setCityCoordinates({
               lat: result.coord.lat,
@@ -101,6 +102,9 @@ function Demo() {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+
+  const weatherInfo = alertsInfo.map((item) => <Alert key="id" item={item} />);
+
   return (
     <div className="page-container">
       <img className="logo" src="/mlh-prep.png" alt="MLH Prep Logo" />
@@ -144,7 +148,7 @@ function Demo() {
           )}
         </div>
       </div>
-      <Alert />
+      <div>{weatherInfo}</div>
       <div className="weather-alerts">
         {isLoaded && results && Weatherobject.weather !== null && (
           <WeatherAlerts weather={Weatherobject.weather} />
