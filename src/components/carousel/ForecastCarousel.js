@@ -13,10 +13,9 @@ function ForecastCarousel() {
     <>
       <div className="selector">
         <span className="label">Showing weather for next</span>
-        <select >
+        <select>
           {selector.map((value) => (
             <option key={value} value={value}>
-              
               {value}
             </option>
             // {setSelectedValue(value)}

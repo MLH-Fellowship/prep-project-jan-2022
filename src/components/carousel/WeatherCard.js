@@ -12,9 +12,9 @@ export default function WeatherCard(
 ) {
   // const value = props.value;
 
-  if (value === '7 Days') {
+
     return (
-      <>
+         {value ==='7 Days' &&  <>
         <div className="container">
           <div className="time">
             <span className="day">{day}</span>
@@ -32,30 +32,27 @@ export default function WeatherCard(
             </span>
           </div>
         </div>
-      </>
+      </>}
+      {value ==='7 Hours' &&  <>
+      <>
+       <div className="container">
+        <div className="time">
+          <span className="day">{day}</span>
+          <span className="date">{date}</span>
+        </div>
+        <i className={`wi  ${iconClass}`} />
+        <div className="low">
+          <span>
+            Humidity <b>{high}°</b>
+          </span>
+        </div>
+        <div className="high">
+          <span>
+            Low <b>{low}°</b>
+          </span>
+        </div>
+      </div>
+      </>}
     );
-  }
-  // else if(value==="7 Hours"){
-  //   return (
-  //     <>
-  //     <div className="container">
-  //       <div className="time">
-  //         <span className="day">{day}</span>
-  //         <span className="date">{date}</span>
-  //       </div>
-  //       <i className={`wi  ${iconClass}`} />
-  //       <div className="low">
-  //         <span>
-  //           Humidity <b>{high}°</b>
-  //         </span>
-  //       </div>
-  //       <div className="high">
-  //         <span>
-  //           Low <b>{low}°</b>
-  //         </span>
-  //       </div>
-  //     </div>
-  //     </>
-  //   );
-  // }
-}
+
+    }
