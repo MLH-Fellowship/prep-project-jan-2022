@@ -136,6 +136,7 @@ function Demo() {
             visibility={results.visibility}
             windSpeed={results.wind.speed}
             humidity={results.main.humidity}
+            pressure={results.main.pressure}
           />
         )}
         {isLoaded && !results && <h2>No Results Found</h2>}

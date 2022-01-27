@@ -1,76 +1,78 @@
 import './CurrentStatus.css';
 import 'weather-icons/css/weather-icons.css';
 import rain from '../assets/images/cs-bg.png';
+import clouds from '../assets/images/clouds.png';
+import clear from '../assets/images/clear.jpg';
+import fog from '../assets/images/fog.jpg';
+import thunderstorm from '../assets/images/thunderstorm.png';
+import drizzle from '../assets/images/drizzle.jpg';
+import dust from '../assets/images/dust.jpg';
+import snow from '../assets/images/snow.jpg';
+import shower from '../assets/images/shower.jpg';
+import mist from '../assets/images/mist.jpeg';
+import smoke from '../assets/images/smoke.jpg';
+import sunny from '../assets/images/sunny.jpg';
 
 export default function CurrentStatus({
   temp,
   feelsLike,
   weatherStatus,
+  pressure,
   visibility,
   windSpeed,
   humidity,
 }) {
-
   // To change background image and weather symbol based on the weather type
   let background = rain;
   let iconClass = 'wi-night-clear';
 
-  if (weatherStatus === 'Clouds'){  
-    background = rain
-    iconClass = 'wi-cloudy'
-  }
-  else if (weatherStatus === 'Clear'){
-    background = rain
-    iconClass = 'wi-cloud'
-  }
-  else if (weatherStatus === 'Dust'){
-    background = rain
-    iconClass = 'wi-dust'
-  }
-  else if (weatherStatus === 'Fog'){
-    background = rain
-    iconClass = 'wi-fog'
-  }
-  else if (weatherStatus === 'Haze'){
-    background = rain
-    iconClass = 'wi-haze'
-  }
-  else if (weatherStatus === 'Mist'){
-    background = rain
-    iconClass = 'wi-windy'
-  }
-  else if (weatherStatus === 'Rain'){
-    background = rain
-    iconClass = 'wi-rain'
-  }
-  else if (weatherStatus === 'Shower'){
-    background = rain
-    iconClass = 'wi-showers'
-  }
-  else if (weatherStatus === 'Smoke'){
-    background = rain
-    iconClass = 'wi-smoke'
-  }
-  else if (weatherStatus === 'Snow'){
-    background = rain
-    iconClass = 'wi-snow'
-  }
-  else if (weatherStatus === 'Squall'){
-    background = rain
-    iconClass = 'wi-strong-wind'
-  }
-  else if (weatherStatus === 'Thunderstorm'){
-    background = rain
-    iconClass = 'wi-thunderstorm'
-  }
-  else if (weatherStatus === 'Tornado'){
-      background = rain
-      iconClass = 'wi-tornado'
+  if (weatherStatus === 'Clouds') {
+    background = clouds;
+    iconClass = 'wi-cloudy';
+  } else if (weatherStatus === 'Clear') {
+    background = clear;
+    iconClass = 'wi-cloud';
+  } else if (weatherStatus === 'Drizzle') {
+    background = drizzle;
+    iconClass = 'wi-rain';
+  } else if (weatherStatus === 'Dust') {
+    background = dust;
+    iconClass = 'wi-dust';
+  } else if (weatherStatus === 'Fog') {
+    background = fog;
+    iconClass = 'wi-fog';
+  } else if (weatherStatus === 'Haze') {
+    background = rain;
+    iconClass = 'wi-haze';
+  } else if (weatherStatus === 'Mist') {
+    background = mist;
+    iconClass = 'wi-windy';
+  } else if (weatherStatus === 'Rain') {
+    background = rain;
+    iconClass = 'wi-rain';
+  } else if (weatherStatus === 'Shower') {
+    background = shower;
+    iconClass = 'wi-showers';
+  } else if (weatherStatus === 'Smoke') {
+    background = smoke;
+    iconClass = 'wi-smoke';
+  } else if (weatherStatus === 'Snow') {
+    background = snow;
+    iconClass = 'wi-snow';
+  } else if (weatherStatus === 'Sunny') {
+    background = sunny;
+    iconClass = 'wi-day-sunny';
+  } else if (weatherStatus === 'Squall') {
+    background = rain;
+    iconClass = 'wi-strong-wind';
+  } else if (weatherStatus === 'Thunderstorm') {
+    background = thunderstorm;
+    iconClass = 'wi-thunderstorm';
+  } else if (weatherStatus === 'Tornado') {
+    background = rain;
+    iconClass = 'wi-tornado';
   }
 
-
-  
-      
   return (
     <div className="cs-container">
       <img className="cs-bg" src={background} alt="weather status background" />
@@ -94,8 +96,8 @@ export default function CurrentStatus({
             <span className="cs-more-value"> {visibility} </span>
           </div>
           <div className="cs-more-content">
-            <span className="cs-more-title"> AIR QUALITY </span>
-            <span className="cs-more-value"> N.A. </span>
+            <span className="cs-more-title"> PRESSURE </span>
+            <span className="cs-more-value"> {pressure} </span>
           </div>
           <div className="cs-more-content">
             <span className="cs-more-title"> WIND SPEED </span>
