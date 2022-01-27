@@ -1,29 +1,61 @@
 import './WeatherCard.css';
 
-export default function WeatherCard({
-  day = 'Today',
-  date = 'Feb 22',
-  iconClass = 'wi-day-sunny',
-  low = '12',
-  high = '33',
-}) {
-  return (
-    <div className="container">
-      <div className="time">
-        <span className="day">{day}</span>
-        <span className="date">{date}</span>
-      </div>
-      <i className={`wi  ${iconClass}`} />
-      <div className="low">
-        <span>
-          High <b>{high}°</b>
-        </span>
-      </div>
-      <div className="high">
-        <span>
-          Low <b>{low}°</b>
-        </span>
-      </div>
-    </div>
-  );
+export default function WeatherCard(
+  { value },
+  {
+    day = 'Today',
+    date = 'Feb 22',
+    iconClass = 'wi-day-sunny',
+    low = '12',
+    high = '33',
+  }
+) {
+  // const value = props.value;
+
+  if (value === '7 Days') {
+    return (
+      <>
+        <div className="container">
+          <div className="time">
+            <span className="day">{day}</span>
+            <span className="date">{date}</span>
+          </div>
+          <i className={`wi  ${iconClass}`} />
+          <div className="low">
+            <span>
+              High <b>{high}°</b>
+            </span>
+          </div>
+          <div className="high">
+            <span>
+              Low <b>{low}°</b>
+            </span>
+          </div>
+        </div>
+      </>
+    );
+  }
+  // else if(value==="7 Hours"){
+  //   return (
+  //     <>
+  //     <div className="container">
+  //       <div className="time">
+  //         <span className="day">{day}</span>
+  //         <span className="date">{date}</span>
+  //       </div>
+  //       <i className={`wi  ${iconClass}`} />
+  //       <div className="low">
+  //         <span>
+  //           Humidity <b>{high}°</b>
+  //         </span>
+  //       </div>
+  //       <div className="high">
+  //         <span>
+  //           Low <b>{low}°</b>
+  //         </span>
+  //       </div>
+  //     </div>
+  //     </>
+  //   );
+  // }
 }

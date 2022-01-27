@@ -7,16 +7,19 @@ import WeatherCard from './WeatherCard';
 function ForecastCarousel() {
   const [items, setItems] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
   const [selector, setSelector] = useState(['7 Days', '7 Hours']);
+  const [selectedValue, setSelectedValue] = useState('7 Days');
 
   return (
     <>
       <div className="selector">
         <span className="label">Showing weather for next</span>
-        <select>
+        <select >
           {selector.map((value) => (
             <option key={value} value={value}>
+              
               {value}
             </option>
+            // {setSelectedValue(value)}
           ))}
         </select>
       </div>
@@ -39,7 +42,7 @@ function ForecastCarousel() {
       >
         {items.map((item) => (
           <Carousel.Item key={item}>
-            <WeatherCard />
+            <WeatherCard value={selectedValue} />
           </Carousel.Item>
         ))}
       </Carousel>
