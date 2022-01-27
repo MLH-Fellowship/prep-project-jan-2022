@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './Demo.css';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
+import MyLocationRoundedIcon from '@mui/icons-material/MyLocationRounded';
 import WeatherMap from '../WeatherMap/WeatherMap';
 import WeatherAlerts from '../WeatherAlerts/WeatherAlerts';
 import cities from '../../assets/data/cities.json';
@@ -105,24 +106,62 @@ function Demo() {
   return (
     <div className="page-container">
       <img className="logo" src="/mlh-prep.png" alt="MLH Prep Logo" />
-      <div className="weather-location-search">
-        <ReactSearchAutocomplete
-          items={[
-            {
-              n: currentSearch,
-            },
-            ...cityList,
-          ]}
-          fuseOptions={{
-            keys: ['n'],
-          }}
-          resultStringKeyName="n"
-          onSelect={(selectedCity) => setCity(selectedCity.n)}
-          onSearch={(search) => setCurrentSearch(search)}
-          styling={{
-            borderRadius: '5px',
-          }}
-          inputSearchString={city ?? 'Loading Your Location...'}
+      <div className="searchBar">
+        <div className="weather-location-search">
+          <ReactSearchAutocomplete
+            items={[
+              {
+                n: currentSearch,
+              },
+              ...cityList,
+            ]}
+            fuseOptions={{
+              keys: ['n'],
+            }}
+            resultStringKeyName="n"
+            onSelect={(selectedCity) => setCity(selectedCity.n)}
+            onSearch={(search) => setCurrentSearch(search)}
+            styling={{
+              borderRadius: '5px',
+            }}
+            inputSearchString={city ?? 'Loading Your Location...'}
+          />
+        </div>
+        <MyLocationRoundedIcon
+          fontSize="inherit"
+          style={{ fontSize: '46px' }}
+          className="fetchLocationBtn"
+          onClick={() =>
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                const { latitude, longitude } = position.coords;
+                fetch(
+                  `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_APIKEY}`
+                )
+                  .then((res) => res.json())
+                  .then((result) => {
+                    setIsLoaded(true);
+                    setResults(result);
+                    setCity(`${result.name}, ${result.sys.country}`);
+                    setCityCoordinates({
+                      lat: result.coord.lat,
+                      lon: result.coord.lon,
+                    });
+                    setWeatherobject({
+                      weather: result.weather[0],
+                      stats: result.main,
+                    });
+                  })
+                  .catch((err) => {
+                    setIsLoaded(true);
+                    setError(err);
+                  });
+              },
+              () => {
+                setCity('');
+              }
+            )
+          }
         />
       </div>
       <div className="result-map-container">
