@@ -59,6 +59,16 @@ input {
   width: 200px;
 }
 .weather-location-search {
-  width: 100%;
+  width: 98%;
   z-index: 100;
+}
+.searchBar {
+  display: flex;
+}
+.fetchLocationBtn {
+  color: #133667;
+  background-color: white;
+  border-radius: 5px;
+  margin-left: 2%;
+  padding: 10px;
 }
