@@ -37,8 +37,15 @@ function ForecastCarousel() {
         showDots
         responsiveLayout={[
           {
-            breakpoint: 800,
+            breakpoint: 550,
             cols: 2,
+            rows: 1,
+            gap: 10,
+            loop: true,
+          },
+          {
+            breakpoint: 800,
+            cols: 3,
             rows: 1,
             gap: 0,
             loop: true,

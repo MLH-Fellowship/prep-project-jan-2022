@@ -44,7 +44,7 @@ export default function WeatherCard(
             </div>
             <i className={`wi  ${iconClass}`} />
             <div className="low">
-              <span>
+              <span className="humidity-info">
                 Humidity <b>{high}°</b>
               </span>
             </div>

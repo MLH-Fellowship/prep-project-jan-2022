@@ -49,3 +49,23 @@
   border-radius: 10px;
   margin-left: 12px;
 }
+
+@media screen and (max-width: 480px) {
+  .container {
+    font-size: 20px;
+  }
+  .selector .label {
+    margin-left: unset;
+    font-size: 18px;
+  }
+
+  .selector select {
+    font-size: 17px;
+  }
+}
+@media screen and (max-width: 750px) {
+  .lhdcDv {
+    grid-template-columns: repeat(5, 48%);
+    grid-column-gap: calc(50% + 20px);
+  }
+}
