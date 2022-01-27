@@ -7,7 +7,7 @@ import WeatherAlerts from './components/WeatherAlerts/WeatherAlerts';
 import cities from './assets/data/cities.json';
 import Alert from './components/Alert';
 import CurrentStatus from './components/CurrentStatus';
-
+import weatherData from './components/Charts/chartData.json';
 import WeatherSounds from './components/WeatherSounds/WeatherSounds';
 import Charts from './components/Charts/Charts';
 
@@ -163,7 +163,7 @@ function App() {
           <WeatherAlerts weather={Weatherobject.weather} />
         )}
       </div>
-      <Charts />
+      <Charts data={weatherData} />
     </>
   );
 }

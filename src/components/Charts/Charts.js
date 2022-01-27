@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,9 +9,12 @@ import {
   Title,
   Tooltip,
   Legend,
+  Filler,
 } from 'chart.js';
-import { Bar, Line } from 'react-chartjs-2';
-import useIsMounted from '../../hooks/useIsMounted';
+
+import { Line } from 'react-chartjs-2';
+import weatherData from './chartData.json';
+import './chart.css';
 
 ChartJS.register(
   CategoryScale,
@@ -21,7 +24,8 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 );
 
 export const options = {
@@ -32,101 +36,59 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'Chart.js Bar Chart',
+      text: 'Hourly Data',
+    },
+
+    chartAreaBorder: {
+      borderColor: 'red',
+      borderWidth: 2,
+      borderDash: [5, 5],
+      borderDashOffset: 2,
     },
   },
 };
 
-// const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-// const labels = ['temp', 'pressure', 'humidity'];
-
-// export const Bdata = {
-//   labels,
-//   datasets: [
-//     {
-//       label: 'Dataset 1',
-//       data: labels.map(() => number({ min: 0, max: 1000 })),
-//       backgroundColor: 'rgba(255, 99, 132, 0.5)',
-//     },
-//     {
-//       label: 'Dataset 2',
-//       data: labels.map(() => number({ min: 0, max: 1000 })),
-//       backgroundColor: 'rgba(53, 162, 235, 0.5)',
-//     },
-//   ],
-// };
-
-function Charts() {
-  const [chartData, setChartData] = useState({});
-  const isMounted = useIsMounted();
-  const fetchData = async () => {
-    try {
-      const res = await fetch(
-        'https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&appid=150ced7b197627bc73e83666c6875778'
-      ); // https://api.coincap.io/v2/assets/?limit=5
-      const data = await res.json();
-      console.log("console 1 =",data);
-      setChartData({
-        labels: data.daily.map(({dt})=> new Date(dt).toLocaleString()),
-        datasets: [
-          {
-            label: 'Pressure',
-            data: data.daily.map(({ pressure }) => pressure),
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: [
-              // '#ffbb11',
-              '#ecf0f1',
-              // '#50AF95',
-              // '#f3ba2f',
-              // '#2a71d0',
-            ],
-          },
-          {
-            label: 'Humidity',
-            data: data.daily.map(({ humidity }) => humidity),
-            borderColor: 'rgb(53, 162, 235)',
-            backgroundColor: [
-            //   '#ffbb11',
-            //   '#ecf0f1',
-              '#50AF95',
-              // '#f3ba2f',
-            //   '#2a71d0',
-            ],
-          },
-          {
-            label: 'Temperature',
-            data: data.daily.map(({ humidity }) => humidity),
-            borderColor: 'rgb(53, 262, 135)',
-            backgroundColor: [
-              '#ffbb11',
-              // '#ecf0f1',
-              // '#50AF95',
-              // '#f3ba2f',
-              // '#2a7100',
-            ],
-          },
-        ],
-      });
-    } catch (e) {
-      console.log('==> ', e);
-    }
+function Charts({ data }) {
+  const chartData = {
+    labels: data.hourly.slice(0, 10).map(({ dt }) =>
+      new Date(dt * 1000).toLocaleTimeString(navigator.language, {
+        hour: '2-digit',
+        minute: '2-digit',
+      })
+    ),
+    datasets: [
+      {
+        label: 'Pressure',
+        data: weatherData.hourly.map(({ pressure }) => pressure),
+        fill: true,
+        backgroundColor: 'rgba(75,192,192,0.2)',
+        borderColor: 'rgba(75,192,192,1)',
+      },
+      {
+        label: 'Humidity',
+        data: data.hourly.map(({ humidity }) => humidity),
+        borderColor: 'rgb(53, 162, 235)',
+        fill: true,
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+      {
+        label: 'Temperature',
+        data: data.hourly.map(({ humidity }) => humidity),
+        borderColor: 'rgb(53, 262, 135)',
+        fill: true,
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+    ],
   };
 
-  useEffect(() => {
-    // if (isMounted.current) {
-    fetchData();
-    // }
-  }, []);
-  console.log("console 3=",chartData);
   return (
-    <div backgroundColor='yellow'>
-      { chartData && <>
-      <h1>{chartData.labels[1]}</h1> 
-      <Bar data={chartData} options={{responsive:true}}/>
-      <Line data={chartData} options={{responsive:true}} />
-      </>}
+    <div className="chart-container">
+      {chartData && (
+        <>
+          <Line data={chartData} options={options} />
+        </>
+      )}
       <h1>Chart</h1>
-
     </div>
   );
 }
