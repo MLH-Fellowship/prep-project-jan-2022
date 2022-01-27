@@ -3,17 +3,14 @@ import 'weather-icons/css/weather-icons.css';
 import rain from '../assets/images/cs-bg.png';
 
 export default function CurrentStatus({
-  temp = '21C',
-  feelsLike = '20.32',
+  temp,
+  feelsLike,
   iconClass = 'wi-day-sunny',
   background = rain,
-  weatherStatus = 'Raining',
-  otherInfo = [
-    { title: 'VISIBILITY', value: '2 km' },
-    { title: 'AIR QUALITY', value: '24' },
-    { title: 'WIND SPEED', value: '21 km/h' },
-    { title: 'HUMIDITY', value: '652' },
-  ],
+  weatherStatus,
+  visibility,
+  windSpeed,
+  humidity,
 }) {
   return (
     <div className="cs-container">
@@ -33,12 +30,22 @@ export default function CurrentStatus({
           </div>
         </div>
         <div className="cs-more">
-          {otherInfo.map((info) => (
-            <div className="cs-more-content" key={info.title}>
-              <span className="cs-more-title">{info.title}</span>
-              <span className="cs-more-value">{info.value}</span>
-            </div>
-          ))}
+          <div className="cs-more-content">
+            <span className="cs-more-title"> VISIBILITY </span>
+            <span className="cs-more-value"> {visibility} </span>
+          </div>
+          <div className="cs-more-content">
+            <span className="cs-more-title"> AIR QUALITY </span>
+            <span className="cs-more-value"> N.A. </span>
+          </div>
+          <div className="cs-more-content">
+            <span className="cs-more-title"> WIND SPEED </span>
+            <span className="cs-more-value"> {windSpeed} </span>
+          </div>
+          <div className="cs-more-content">
+            <span className="cs-more-title"> HUMIDITY </span>
+            <span className="cs-more-value"> {humidity} </span>
+          </div>
         </div>
       </div>
     </div>
