@@ -8,11 +8,6 @@ export default class LottieControl extends React.Component {
   }
 
   render() {
-    const buttonStyle = {
-      display: 'block',
-      margin: '10px auto',
-    };
-
     const { animationData } = this.props;
 
     const defaultOptions = {
@@ -35,27 +30,6 @@ export default class LottieControl extends React.Component {
           isStopped={isStopped}
           isPaused={isPaused}
         />
-        <button
-          type="button"
-          style={buttonStyle}
-          onClick={() => this.setState({ isStopped: true })}
-        >
-          stop
-        </button>
-        <button
-          type="button"
-          style={buttonStyle}
-          onClick={() => this.setState({ isStopped: false })}
-        >
-          play
-        </button>
-        <button
-          type="button"
-          style={buttonStyle}
-          onClick={() => this.setState({ isPaused: !isPaused })}
-        >
-          pause
-        </button>
       </div>
     );
   }
