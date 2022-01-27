@@ -1,0 +1,14 @@
+#search-bar-container {
+  width: 98%;
+  z-index: 100;
+}
+#search-and-location-pin-container {
+  display: flex;
+}
+.fetchLocationBtn {
+  color: #133667;
+  background-color: white;
+  border-radius: 5px;
+  margin-left: 2%;
+  padding: 10px;
+}
