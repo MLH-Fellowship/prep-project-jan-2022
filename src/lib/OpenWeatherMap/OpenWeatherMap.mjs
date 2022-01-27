@@ -25,6 +25,12 @@ const oneCallEndpoint = 'data/2.5/onecall?lat={lat}&lon={lon}&appid={apiKey}';
 const geocodingEndpoint = 'geo/1.0/direct?q={name}&limit=1&appid={apiKey}';
 
 /**
+ * Relative endpoint for the Reverse
+ * @type {string}
+ */
+const reverseGeocodingEndpoint = 'reverse/1.0/direct?lat={lat}&lon={lon}&limit=1&appid={apiKey}'
+
+/**
  * Minimal API Wrapper for the OpenWeatherMap API with built-in caching.
  *
  * @class
@@ -56,17 +62,20 @@ export default class OpenWeatherMap {
   }
 
   /**
+   * @typedef {Object} LatLng An object {lat, lon}
+   * @property {number} lat The location's latitude.
+   * @property {number} lon The location's longitude.
+   */
+
+  /**
    * Get the one-call API response for a set of coordinates. Checks the cache,
    * calling the API only if the response is not cached.
-   * @param {Geolocation|string} location  The location, either as a string or as a {lat, lon} object.
+   * @param {LatLng|string} location  The location, either as a string or as a {lat, lon} object.
    * @throws {Error} On failure to resolve the location if a string is passed.
    * @returns {object} The API response, somewhat parsed.
    */
   async getData(location) {
-    const geolocation =
-      typeof location === 'string'
-        ? await this._resolveLocationName(location)
-        : location;
+    const geolocation = await this._resolveLocation(location);
 
     // We'll serialise the Geolocation to eliminate duplicity.
     const geolocationSerialized = JSON.stringify(geolocation);
@@ -135,19 +144,36 @@ export default class OpenWeatherMap {
   }
 
   /**
-   * Resolve a location (by name) to a {@see Geolocation} instance.
-   * @param {string} name
+   * Resolve a location (by name or coordinates) to a {@see Geolocation} instance.
+   * @param {string|LatLng} location
    * @throws {Error} On failure to resolve location.
    * @returns {Promise<Geolocation>}
    */
-  async _resolveLocationName(name) {
-    const cleanName = encodeURIComponent(name);
-
-    if (this._geoCodingCache.has(cleanName)) {
-      return this._geoCodingCache.get(cleanName);
+  async _resolveLocation(location) {
+    if (!location) {
+      throw new Error("invalid query");
     }
 
-    const url = this._getGeoCodingEndpointUrl(cleanName);
+    const toKey = (loc) => typeof loc === 'string' ?
+      encodeURIComponent(loc) :
+      JSON.stringify(loc);
+
+    const sanitize = (loc) => typeof loc === 'string' ?
+      encodeURIComponent(loc) :
+      loc;
+
+    const getRequestUrl = (loc) => typeof loc === 'string' ?
+      this._getGeoCodingEndpointUrl(loc) :
+      this._getReverseGeoCodingEndpointUrl(loc);
+
+    const cleanLocation = sanitize(location);
+    const key = toKey(cleanLocation);
+
+    if (this._geoCodingCache.has(key)) {
+      return this._geoCodingCache.get(key);
+    }
+
+    const url = getRequestUrl(cleanLocation);
 
     try {
       const response = await (await fetch(url)).json();
@@ -164,7 +190,7 @@ export default class OpenWeatherMap {
           resolvedName,
           country
         );
-        this._geoCodingCache.set(cleanName, coordinates);
+        this._geoCodingCache.set(key, coordinates);
 
         return coordinates;
       }
@@ -184,5 +210,19 @@ export default class OpenWeatherMap {
     const url = baseUrl + geocodingEndpoint;
 
     return url.replace('{name}', name).replace('{apiKey}', this._apiKey);
+  }
+
+  /**
+   * Get the url for the Reverse Geocoding API endpoint for a set of coordinates
+   * @param {LatLng} coordinates
+   * @returns {string}
+   * @private
+   */
+  _getReverseGeoCodingEndpointUrl(coordinates) {
+    const url = baseUrl + reverseGeocodingEndpoint;
+
+    return url.replace('{lat}', coordinates.lat.toString())
+      .replace('{lon}', coordinates.lon.toString())
+    .replace('{apiKey}', this._apiKey);
   }
 }
