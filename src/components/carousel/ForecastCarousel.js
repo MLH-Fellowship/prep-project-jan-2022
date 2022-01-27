@@ -13,7 +13,13 @@ function ForecastCarousel() {
     <>
       <div className="selector">
         <span className="label">Showing weather for next</span>
-        <select>
+        {/* eslint-disable jsx-a11y/no-onchange */}
+        <select
+          onChange={(e) => {
+            setSelectedValue(e.target.value);
+            // console.log('This is the e ', value);
+          }}
+        >
           {selector.map((value) => (
             <option key={value} value={value}>
               {value}

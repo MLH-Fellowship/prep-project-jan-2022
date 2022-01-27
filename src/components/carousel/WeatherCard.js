@@ -12,47 +12,50 @@ export default function WeatherCard(
 ) {
   // const value = props.value;
 
-
-    return (
-         {value ==='7 Days' &&  <>
-        <div className="container">
-          <div className="time">
-            <span className="day">{day}</span>
-            <span className="date">{date}</span>
+  return (
+    <>
+      {value === '7 Days' && (
+        <>
+          <div className="container">
+            <div className="time">
+              <span className="day">{day}</span>
+              <span className="date">{date}</span>
+            </div>
+            <i className={`wi  ${iconClass}`} />
+            <div className="low">
+              <span>
+                High <b>{high}°</b>
+              </span>
+            </div>
+            <div className="high">
+              <span>
+                Low <b>{low}°</b>
+              </span>
+            </div>
           </div>
-          <i className={`wi  ${iconClass}`} />
-          <div className="low">
-            <span>
-              High <b>{high}°</b>
-            </span>
+        </>
+      )}
+      {value === '7 Hours' && (
+        <>
+          <div className="container">
+            <div className="time">
+              <span className="day">{day}</span>
+              <span className="date">{date}</span>
+            </div>
+            <i className={`wi  ${iconClass}`} />
+            <div className="low">
+              <span>
+                Humidity <b>{high}°</b>
+              </span>
+            </div>
+            <div className="high">
+              <span>
+                Low <b>{low}°</b>
+              </span>
+            </div>
           </div>
-          <div className="high">
-            <span>
-              Low <b>{low}°</b>
-            </span>
-          </div>
-        </div>
-      </>}
-      {value ==='7 Hours' &&  <>
-      <>
-       <div className="container">
-        <div className="time">
-          <span className="day">{day}</span>
-          <span className="date">{date}</span>
-        </div>
-        <i className={`wi  ${iconClass}`} />
-        <div className="low">
-          <span>
-            Humidity <b>{high}°</b>
-          </span>
-        </div>
-        <div className="high">
-          <span>
-            Low <b>{low}°</b>
-          </span>
-        </div>
-      </div>
-      </>}
-    );
-
-    }
+        </>
+      )}
+    </>
+  );
+}
