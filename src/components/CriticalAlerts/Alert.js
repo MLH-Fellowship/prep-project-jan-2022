@@ -1,6 +1,6 @@
 import './Alert.css';
 
-export default function Alert({ item }) {
+export function Alert({ item }) {
   const { event, start, end, senderName, tags, description } = item;
   const startTime = new Date(start);
   const endTime = new Date(end);
@@ -32,3 +32,8 @@ export default function Alert({ item }) {
     </div>
   );
 }
+
+const Alerts = ({ alerts }) =>
+  alerts.map((alert) => <Alert item={alert} key="id" />);
+
+export default Alerts;
