@@ -4,10 +4,10 @@ import './Demo.css';
 import logo from '../../mlh-prep.png';
 import {
   ForecastWrapper,
-  Main,
+  // Main,
   MapWrapper,
   SearchBarWrapper,
-  SuggestionsWrapper,
+  // SuggestionsWrapper,
   WeatherAndMapContainer,
   WeatherCurrentWrapper,
   WeatherWarningsWrapper,
@@ -20,6 +20,7 @@ import PlaceholderSkeleton from '../PlaceholderSkeleton/Placeholder';
 import Loader from '../Loader/Loader';
 import Alerts from '../CriticalAlerts/Alert';
 import ForecastCarousel from '../carousel/ForecastCarousel';
+import Charts from '../Charts/Charts';
 
 function Demo() {
   /* eslint-disable -- @todo get rid of this later */
@@ -103,7 +104,8 @@ function Demo() {
             />
           )}
         </ForecastWrapper>
-        <SuggestionsWrapper></SuggestionsWrapper>
+        {/* <SuggestionsWrapper></SuggestionsWrapper> */}
+        {results && <Charts data={results} />}
         {/* </Main> */}
       </Container>
     </>
