@@ -54,8 +54,8 @@
   border-radius: 10px;
   margin-left: 12px;
 }
-.humidity-info{
-  font-size: 0.78em;
+.humidity-info {
+  font-size: 0.82em;
 }
 
 @media screen and (max-width: 480px) {
