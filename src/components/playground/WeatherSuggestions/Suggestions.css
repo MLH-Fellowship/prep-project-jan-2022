@@ -33,3 +33,11 @@
 .share-heading {
   margin-right: 40%;
 }
+
+.share-container a {
+  display: flex;
+}
+
+.share-container a img {
+  align-items: center;
+}

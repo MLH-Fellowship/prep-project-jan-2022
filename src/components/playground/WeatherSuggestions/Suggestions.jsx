@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import _ from 'lodash';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './Suggestions.css';
@@ -9,11 +10,12 @@ import twitter from '../../../assets/images/twitter.svg';
 
 export default function WeatherSuggestions(results) {
   const [items, setItems] = useState([]);
+  // Sets default value to 'Thunderstorm'
+  const weatherName = results?.results?.weather[0]?.main ?? 'Thunderstorm';
   useEffect(() => {
     // Set items according to the weather
-    const weatherName = results?.results?.weather[0]?.main ?? 'Snow';
     setItems(weatherItems[weatherName]);
-  }, [results?.results?.weather]);
+  }, [weatherName]);
   return (
     <div className="suggestions-container">
       <Carousel
@@ -36,12 +38,21 @@ export default function WeatherSuggestions(results) {
         <div className="suggestions-list">
           <h2>You might want to bring:</h2>
           {Object.keys(items).length > 0 &&
-            Object.keys(items).map((item) => <p key={item}>{item}</p>)}
+            Object.keys(items).map((item) => (
+              <p key={item}>{_.startCase(item)}</p>
+            ))}
         </div>
         <div className="share-container">
           <h2 className="share-heading">Share on</h2>
           <img src={facebook} alt="facebook" />
-          <img src={twitter} alt="twitter" />
+          <a
+            className="twitter-share-button"
+            href={`https://twitter.com/intent/tweet?text=${weatherName}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={twitter} alt="twitter" />
+          </a>
         </div>
       </div>
     </div>
