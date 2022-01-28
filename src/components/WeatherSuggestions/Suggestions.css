@@ -1,6 +1,7 @@
 .suggestions-container {
   display: flex;
   border: 2px solid black;
+  border-radius: 1em;
 }
 .carousel {
   width: 50%;

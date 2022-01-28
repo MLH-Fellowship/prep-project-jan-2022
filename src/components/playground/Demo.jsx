@@ -8,6 +8,7 @@ import {
   // Main,
   MapWrapper,
   SearchBarWrapper,
+  SuggestionsWrapper,
   // SuggestionsWrapper,
   WeatherAndMapContainer,
   WeatherCurrentWrapper,
@@ -22,6 +23,7 @@ import Loader from '../Loader/Loader';
 import Alerts from '../CriticalAlerts/Alert';
 import ForecastCarousel from '../carousel/ForecastCarousel';
 import Charts from '../Charts/Charts';
+import WeatherSuggestions from '../WeatherSuggestions/Suggestions';
 
 function Demo() {
   /* eslint-disable -- @todo get rid of this later */
@@ -94,10 +96,6 @@ function Demo() {
             />
           </MapWrapper>
         </WeatherAndMapContainer>
-
-        <WeatherWarningsWrapper>
-          <Alerts alerts={results?.alerts ?? []} />
-        </WeatherWarningsWrapper>
         <ForecastWrapper>
           {isLoaded && results !== undefined && results !== null && (
             <ForecastCarousel
@@ -105,8 +103,15 @@ function Demo() {
             />
           )}
         </ForecastWrapper>
-        {/* <SuggestionsWrapper></SuggestionsWrapper> */}
         {results && <Charts data={results} />}
+        <SuggestionsWrapper>
+          {isLoaded && results !== undefined && results !== null && (
+            <WeatherSuggestions results={results} />
+          )}
+        </SuggestionsWrapper>
+        <WeatherWarningsWrapper>
+          <Alerts alerts={results?.alerts ?? []} />
+        </WeatherWarningsWrapper>
         {/* </Main> */}
       </Container>
     </>
