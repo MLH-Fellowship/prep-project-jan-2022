@@ -21,12 +21,33 @@ const iconList = {
   '50n': 'wi-night-fog',
 };
 
+function timeConverterTime(unixTimestamp){
+  const a = new Date(unixTimestamp * 1000);
+  const hour = a.getHours();
+  const min = a.getMinutes();
+  const time = `${hour}:${min}` ;
+  return time;
+}
+
+function timeConverterDate(unixTimestamp){
+  const a = new Date(unixTimestamp * 1000);
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const month = months[a.getMonth()];
+  const date = a.getDate();
+  const time = `${month} ${date}` ;
+  return time;
+}
+
 export default function WeatherCard({ value, data }) {
   // const value = props.value;
   console.log('this is data: ', data);
   console.log('this is value: ', value);
 
   const iconClass = iconList[data.weather.icon];
+
+  const todayDate = timeConverterDate(data.dt); 
+  const todayTime = timeConverterTime(data.dt);
+  console.log('this is date new:', todayDate);
   
   return (
     <>
@@ -34,8 +55,8 @@ export default function WeatherCard({ value, data }) {
         <>
           <div className="container">
             <div className="time">
-              <span className="day">Today</span>
-              <span className="date">Feb 22</span>
+              <span className="day">Day</span>
+              <span className="date">{todayDate}</span>
             </div>
             <i className={`wi ${iconClass}`} />
             <div className="low">
@@ -56,7 +77,7 @@ export default function WeatherCard({ value, data }) {
           <div className="container">
             <div className="time">
               <span className="day">Today</span>
-              <span className="date">Feb 22</span>
+              <span className="date">{todayTime}</span>
             </div>
             <i className={`wi ${iconClass}`} />
             <div className="low">
