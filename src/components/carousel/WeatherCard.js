@@ -27,7 +27,7 @@ export default function WeatherCard({ value, data }) {
   console.log('this is value: ', value);
 
   const iconClass = iconList[data.weather.icon];
-  
+
   return (
     <>
       {value === '7 Days' && (

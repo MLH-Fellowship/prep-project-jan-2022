@@ -94,15 +94,16 @@ function Demo() {
         </WeatherAndMapContainer>
 
         <WeatherWarningsWrapper>
-            <Alerts alerts={results?.alerts ?? []} />
-          </WeatherWarningsWrapper>
-          <ForecastWrapper>
-            {isLoaded && results !== undefined && results !== null && (
-              <ForecastCarousel forecastData={{hourly: results.hourly, daily: results.daily}} />
-            )}
-          </ForecastWrapper>
-          <SuggestionsWrapper>
-          </SuggestionsWrapper>
+          <Alerts alerts={results?.alerts ?? []} />
+        </WeatherWarningsWrapper>
+        <ForecastWrapper>
+          {isLoaded && results !== undefined && results !== null && (
+            <ForecastCarousel
+              forecastData={{ hourly: results.hourly, daily: results.daily }}
+            />
+          )}
+        </ForecastWrapper>
+        <SuggestionsWrapper></SuggestionsWrapper>
         {/* </Main> */}
       </Container>
     </>
