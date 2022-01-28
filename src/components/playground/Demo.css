@@ -72,3 +72,6 @@ input {
   margin-left: 2%;
   padding: 10px;
 }
+.fetchLocationBtn:hover {
+  padding: 8px;
+}

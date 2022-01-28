@@ -1,0 +1,26 @@
+{
+  "alerts": [
+    {
+      "id": 1,
+      "senderName": "Advit Anand",
+      "event": "Heat Advisory",
+      "start": 1599941600,
+      "end": 1536766800,
+      "description": "...HEAT ADVISORY REMAINS IN EFFECT FROM 1 PM THIS AFTERNOON TO\n8 PM CDT THIS EVENING...\n* WHAT...Heat index values of 105 to 109 degrees expected.\n* WHERE...Creek, Okfuskee, Okmulgee, McIntosh, Pittsburg,\nLatimer, Pushmataha, and Choctaw Counties.\n* WHEN...From 1 PM to 8 PM CDT Thursday.\n* IMPACTS...The combination of hot temperatures and high\nhumidity will combine to create a dangerous situation in which\nheat illnesses are possible.",
+      "tags": [
+        "Extreme temperature value"
+      ]
+    },
+    {
+      "id": 2,
+      "senderName": "Advit Anand",
+      "event": "Heat Advisory",
+      "start": 1599941600,
+      "end": 1536766800,
+      "description": "\n###\n\nTravel may be hazardous due to sudden changes in the weather.\n\nFor road conditions and other traveller information from the Ministry of Transportation, visit https://www.ontario.ca/511, https://www.twitter.com/511Ontario, or call 5-1-1.\n\nPlease continue to monitor alerts and forecasts issued by Environment Canada. To report severe weather, send an email to ONstorm@ec.gc.ca or tweet reports using #ONStorm.\n",
+      "tags": [
+        "Extreme temperature value"
+      ]
+    }
+  ]
+}

@@ -1,14 +1,19 @@
 .container {
-  font-size: 36px;
+  font-size: 22px;
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1.1fr 0.9fr;
   grid-template-columns: 1fr 1fr;
-  width: 350px;
-  height: 200px;
+  /* width: 245px; */
+  height: 140px;
   border-radius: 10px;
   justify-items: center;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.23);
+
+  -webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;      
+  user-select: none;
 }
 
 .time span {
@@ -19,8 +24,9 @@
 }
 
 .wi {
-  font-size: 84px;
-  align-self: end;
+  font-size: 46px;
+  /* align-self: end; */
+  align-self: center;
 }
 
 /* Styles forr hourly and weekly forecasts toggle button */
@@ -35,10 +41,10 @@
 .selector select {
   box-sizing: border-box;
   background: rgba(246, 251, 255, 1);
-  font-size: 24px;
+  font-size: 22px;
   padding: 8px;
   border-radius: 10px;
-  margin-left: -16px;
+  margin-left: -20px;
 }
 .selector .label {
   box-sizing: border-box;
@@ -46,4 +52,28 @@
   padding: 8px;
   padding-right: 32px;
   border-radius: 10px;
+  margin-left: 12px;
+}
+.humidity-info {
+  font-size: 0.82em;
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    font-size: 20px;
+  }
+  .selector .label {
+    margin-left: unset;
+    font-size: 18px;
+  }
+
+  .selector select {
+    font-size: 17px;
+  }
+}
+@media screen and (max-width: 750px) {
+  .lhdcDv {
+    grid-template-columns: repeat(5, 48%);
+    grid-column-gap: calc(50% + 20px);
+  }
 }

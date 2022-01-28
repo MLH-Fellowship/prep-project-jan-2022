@@ -6,7 +6,8 @@ import WeatherMap from '../WeatherMap/WeatherMap';
 import WeatherAlerts from '../WeatherAlerts/WeatherAlerts';
 import cities from '../../assets/data/cities.json';
 import CurrentStatus from '../CurrentStatus';
-import Alert from '../Alert';
+import Alert from '../CriticalAlerts/Alert';
+import alertsInfo from '../WeatherInfo/info.json';
 import ForecastCarousel from '../carousel/ForecastCarousel';
 import WeatherSuggestions from '../WeatherSuggestions/Suggestions';
 
@@ -44,8 +45,10 @@ function Demo() {
         )
           .then((res) => res.json())
           .then((result) => {
+            console.log(result);
             setIsLoaded(true);
             setResults(result);
+
             setCity(`${result.name}, ${result.sys.country}`);
             setCityCoordinates({
               lat: result.coord.lat,
@@ -77,6 +80,7 @@ function Demo() {
       .then(
         (result) => {
           if (result.cod === 200) {
+            console.log(result);
             setResults(result);
             setCity(`${result.name}, ${result.sys.country}`);
             setCityCoordinates({
@@ -103,6 +107,11 @@ function Demo() {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+
+  const weatherInfo = alertsInfo.alerts.map((item) => (
+    <Alert key="id" item={item} />
+  ));
+
   return (
     <div className="page-container">
       <img className="logo" src="/mlh-prep.png" alt="MLH Prep Logo" />
@@ -168,8 +177,13 @@ function Demo() {
         {!isLoaded && <h2>Loading...</h2>}
         {isLoaded && results && (
           <CurrentStatus
+            temp={results.main.temp}
             weatherStatus={results.weather[0].main}
             feelsLike={results.main.feels_like}
+            visibility={results.visibility}
+            windSpeed={results.wind.speed}
+            humidity={results.main.humidity}
+            pressure={results.main.pressure}
           />
         )}
         {isLoaded && !results && <h2>No Results Found</h2>}
@@ -184,7 +198,7 @@ function Demo() {
           )}
         </div>
       </div>
-      <Alert />
+      <div>{weatherInfo}</div>
       <div className="weather-alerts">
         {isLoaded && results && Weatherobject.weather !== null && (
           <WeatherAlerts weather={Weatherobject.weather} />

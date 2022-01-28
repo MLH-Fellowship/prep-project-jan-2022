@@ -5,10 +5,11 @@ import logo from './mlh-prep.png';
 import WeatherMap from './components/WeatherMap/WeatherMap';
 import WeatherAlerts from './components/WeatherAlerts/WeatherAlerts';
 import cities from './assets/data/cities.json';
-import Alert from './components/Alert';
+import Alert from './components/CriticalAlerts/Alert';
 import CurrentStatus from './components/CurrentStatus';
-
+import weatherData from './components/Charts/chartData.json';
 import WeatherSounds from './components/WeatherSounds/WeatherSounds';
+import Charts from './components/Charts/Charts';
 
 // We need this transformation because ReactSearchAutocomplete only accepts object lists
 const cityList = (() => {
@@ -162,6 +163,7 @@ function App() {
           <WeatherAlerts weather={Weatherobject.weather} />
         )}
       </div>
+      <Charts data={weatherData} />
     </>
   );
 }
