@@ -1,35 +1,27 @@
 import './WeatherCard.css';
 
-export default function WeatherCard(
-  { value },
-  {
-    day = 'Today',
-    date = 'Feb 22',
-    iconClass = 'wi-day-sunny',
-    low = '12',
-    high = '33',
-  }
-) {
+export default function WeatherCard({ value, data }) {
   // const value = props.value;
-
+  console.log('this is data: ', data);
+  console.log('this is value: ', value);
   return (
     <>
       {value === '7 Days' && (
         <>
           <div className="container">
             <div className="time">
-              <span className="day">{day}</span>
-              <span className="date">{date}</span>
+              <span className="day">Today</span>
+              <span className="date">Feb 22</span>
             </div>
-            <i className={`wi  ${iconClass}`} />
+            <i className="wi wi-day-sunny" />
             <div className="low">
               <span>
-                High <b>{high}°C</b>
+                High <b>{data.temp.max}°C</b>
               </span>
             </div>
             <div className="high">
               <span>
-                Low <b>{low}°C</b>
+                Low <b>{data.temp.min}°C</b>
               </span>
             </div>
           </div>
@@ -39,18 +31,18 @@ export default function WeatherCard(
         <>
           <div className="container">
             <div className="time">
-              <span className="day">{day}</span>
-              <span className="date">{date}</span>
+              <span className="day">Today</span>
+              <span className="date">Feb 22</span>
             </div>
-            <i className={`wi  ${iconClass}`} />
+            <i className="wi wi-day-sunny" />
             <div className="low">
               <span className="humidity-info">
-                Humidity <b>{high}%</b>
+                RH <b>{data.humidity}%</b>
               </span>
             </div>
             <div className="high">
-              <span>
-                Temp <b>{low}°C</b>
+              <span className="humidity-info">
+                Temp <b>{data.temp}°C</b>
               </span>
             </div>
           </div>
