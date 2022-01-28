@@ -7,8 +7,8 @@ import {
   MapContainer,
   TileLayer,
   Marker,
-  Popup,
   useMapEvent,
+  Tooltip,
 } from 'react-leaflet';
 import { Geolocation } from '../../lib/OpenWeatherMap';
 import './WeatherMap.css';
@@ -17,7 +17,6 @@ import './WeatherMap.css';
  * Default coordinates for the map to pin on.
  * @type {Object}
  */
-// const defaultLocation = { lat: -14.235, lon: -51.9253, city: 'Sao Paulo' };
 const defaultLocation = new Geolocation(
   -14.235,
   -51.9253,
@@ -40,16 +39,21 @@ const WeatherMap = ({
   /** @type {Geolocation} */
   location,
 }) => {
-  const [map, setMap] = useState();
+  const [map] = useState();
 
-  const SetMarkerDynamically = ({ city, setCity, cityCoordinates }) => {
+  const SetMarkerDynamically = ({ loc, setLocQuery}) => {
     useMapEvent('click', (e) => {
-      setCity({ lat: e.latlng.lat, lon: e.latlng.lng });
+      setLocQuery({ lat: e.latlng.lat, lon: e.latlng.lng });
     });
 
     return (
-      <Marker position={[cityCoordinates.lat, cityCoordinates.lon]}>
-        <Popup>{city}</Popup>
+      <Marker position={[loc.lat, loc.lon]}>
+        <Tooltip
+          direction="right"
+          offset={[0, 0]}
+          opacity={1}
+          permanent
+        >{`${loc.name}, ${loc.country}`}</Tooltip>
       </Marker>
     );
   };
@@ -75,14 +79,13 @@ const WeatherMap = ({
       <div>
         <MapContainer
           className="map"
-          whenCreated={setMap}
           center={
             location
               ? [location.lat, location.lon]
               : [defaultLocation.lat, defaultLocation.lon]
           }
           doubleClickZoom
-          scrollWheelZoom
+          scrollWheelZoom={false}
           zoom={7}
         >
           <TileLayer
@@ -90,9 +93,9 @@ const WeatherMap = ({
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <SetMarkerDynamically
-            city={locationQuery}
-            setCity={setLocationQuery}
-            cityCoordinates={location ?? defaultLocation}
+            locQ={locationQuery}
+            setLocQuery={setLocationQuery}
+            loc={location ?? defaultLocation}
           />
         </MapContainer>
       </div>

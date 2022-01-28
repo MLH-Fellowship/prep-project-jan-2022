@@ -14,7 +14,7 @@ const cityList = (() => {
   return objectList;
 })();
 
-export default function SearchBar({ setCity, autoFocus = true }) {
+export default function SearchBar({ setLocationQuery, autoFocus = true }) {
   const [currentSearch, setSearch] = useState(null);
 
   return (
@@ -31,14 +31,13 @@ export default function SearchBar({ setCity, autoFocus = true }) {
             keys: ['n'],
           }}
           resultStringKeyName="n"
-          onSelect={(selectedCity) => setCity(selectedCity.n)}
+          onSelect={(selection) => setLocationQuery(selection.n)}
           onSearch={(search) => setSearch(search)}
           styling={{
             borderRadius: '5px',
           }}
           autoFocus={autoFocus}
-          inputDebounce={400}
-          // inputSearchString={city ?? 'Loading Your Location...'}
+          inputDebounce={500}
         />
       </div>
       <MyLocationRounded
@@ -55,7 +54,7 @@ export default function SearchBar({ setCity, autoFocus = true }) {
              * work perfectly since {@see OpenWeatherMap::getData()} supports
              * {lat, lon}.
              */
-            setCity({ lat, lon });
+            setLocationQuery({ lat, lon });
           });
         }}
       />
