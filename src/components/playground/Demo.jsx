@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Container } from '@mui/material';
+import { Container, Stack } from '@mui/material';
 import './Demo.css';
 import logo from '../../mlh-prep.png';
 import {
   ForecastWrapper,
-  Main,
+  // Main,
   MapWrapper,
   SearchBarWrapper,
-  SuggestionsWrapper,
+  // SuggestionsWrapper,
   WeatherAndMapContainer,
   WeatherCurrentWrapper,
   WeatherWarningsWrapper,
@@ -16,8 +16,11 @@ import { OpenWeatherMap } from '../../lib/OpenWeatherMap';
 import SearchBar from '../SearchBar/SearchBar';
 import CurrentStatus from '../CurrentStatus';
 import WeatherMap from '../WeatherMap/WeatherMap';
+import PlaceholderSkeleton from '../PlaceholderSkeleton/Placeholder';
+import Loader from '../Loader/Loader';
 import Alerts from '../CriticalAlerts/Alert';
 import ForecastCarousel from '../carousel/ForecastCarousel';
+import Charts from '../Charts/Charts';
 
 function Demo() {
   /* eslint-disable -- @todo get rid of this later */
@@ -67,36 +70,43 @@ function Demo() {
         <img src={logo} alt="" className="logo" />
       </header>
       <Container maxWidth={'lg'}>
-        <Main>
-          <SearchBarWrapper id={'search-wrapper'}>
-            <SearchBar setLocationQuery={setLocationQuery} />
-          </SearchBarWrapper>
-          <WeatherAndMapContainer id={'map-and-current-status-container'}>
-            <WeatherCurrentWrapper id={'current-status-wrapper'}>
-              {!isLoaded && <h2>Loading...</h2>}
-              {isLoaded && (
-                <CurrentStatus currentWeather={results?.current} />
+        {/* <Main> */}
+        <SearchBarWrapper id={'search-wrapper'}>
+          <SearchBar setLocationQuery={setLocationQuery} />
+        </SearchBarWrapper>
+        <WeatherAndMapContainer id={'map-and-current-status-container'}>
+          {/* This is broken. Need help fixing the layout for this. */}
+          <WeatherCurrentWrapper id={'current-status-wrapper'}>
+            <div className="result-map-container">
+              {!isLoaded && <Loader />}
+              {isLoaded && !results && <PlaceholderSkeleton />}
+              {isLoaded && results && (
+                <CurrentStatus currentWeather={results.current} />
               )}
-            </WeatherCurrentWrapper>
-            <MapWrapper id={'map-wrapper'}>
-              <WeatherMap
-                locationQuery={locationQuery}
-                setLocationQuery={setLocationQuery}
-                location={location}
-              />
-            </MapWrapper>
-          </WeatherAndMapContainer>
-          <WeatherWarningsWrapper>
-            <Alerts alerts={results?.alerts ?? []} />
-          </WeatherWarningsWrapper>
-          <ForecastWrapper>
-            {isLoaded && results !== undefined && results !== null && (
-              <ForecastCarousel forecastData={{hourly: results.hourly, daily: results.daily}} />
-            )}
-          </ForecastWrapper>
-          <SuggestionsWrapper>
-          </SuggestionsWrapper>
-        </Main>
+            </div>
+          </WeatherCurrentWrapper>
+          <MapWrapper id={'map-wrapper'}>
+            <WeatherMap
+              locationQuery={locationQuery}
+              setLocationQuery={setLocationQuery}
+              location={location}
+            />
+          </MapWrapper>
+        </WeatherAndMapContainer>
+
+        <WeatherWarningsWrapper>
+          <Alerts alerts={results?.alerts ?? []} />
+        </WeatherWarningsWrapper>
+        <ForecastWrapper>
+          {isLoaded && results !== undefined && results !== null && (
+            <ForecastCarousel
+              forecastData={{ hourly: results.hourly, daily: results.daily }}
+            />
+          )}
+        </ForecastWrapper>
+        {/* <SuggestionsWrapper></SuggestionsWrapper> */}
+        {results && <Charts data={results} />}
+        {/* </Main> */}
       </Container>
     </>
   );
