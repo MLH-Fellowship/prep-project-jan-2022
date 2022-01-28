@@ -50,8 +50,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "format": "yarn prettier \"src/**/*.{js,jsx,css,scss,html}\" --write ",
-    "lint": "yarn eslint src --ext .js,.jsx --quiet"
+    "format": "yarn prettier \"src/**/*.{js,mjs,jsx,css,scss,html}\" --write ",
+    "lint": "yarn eslint src --ext .js,.mjs,.jsx --quiet"
   },
   "eslintConfig": {
     "extends": [

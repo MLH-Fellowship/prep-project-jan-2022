@@ -1,212 +1,115 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Container } from '@mui/material';
+import '../../App.css';
 import './Demo.css';
-import { ReactSearchAutocomplete } from 'react-search-autocomplete';
-import MyLocationRoundedIcon from '@mui/icons-material/MyLocationRounded';
-import WeatherMap from '../WeatherMap/WeatherMap';
-import WeatherAlerts from '../WeatherAlerts/WeatherAlerts';
-import cities from '../../assets/data/cities.json';
+import logo from '../../mlh-prep.png';
+import {
+  ForecastWrapper,
+  // Main,
+  MapWrapper,
+  SearchBarWrapper,
+  // SuggestionsWrapper,
+  WeatherAndMapContainer,
+  WeatherCurrentWrapper,
+  WeatherWarningsWrapper,
+} from './Elements';
+import { OpenWeatherMap } from '../../lib/OpenWeatherMap';
+import SearchBar from '../SearchBar/SearchBar';
 import CurrentStatus from '../CurrentStatus';
-import Alert from '../CriticalAlerts/Alert';
-import alertsInfo from '../WeatherInfo/info.json';
+import WeatherMap from '../WeatherMap/WeatherMap';
+import PlaceholderSkeleton from '../PlaceholderSkeleton/Placeholder';
+import Loader from '../Loader/Loader';
+import Alerts from '../CriticalAlerts/Alert';
 import ForecastCarousel from '../carousel/ForecastCarousel';
-import WeatherSuggestions from '../WeatherSuggestions/Suggestions';
-
-// We need this transformation because ReactSearchAutocomplete only accepts object lists
-const cityList = (() => {
-  const objectList = [];
-  cities.forEach((city) => {
-    objectList.push({ n: city });
-  });
-
-  return objectList;
-})();
+import Charts from '../Charts/Charts';
 
 function Demo() {
+  /* eslint-disable -- @todo get rid of this later */
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [city, setCity] = useState(null);
+  const [/** @type {string|LatLng} */ locationQuery, setLocationQuery] =
+    useState('');
+  const [location, setLocation] = useState(null);
   const [results, setResults] = useState(null);
-  const [cityCoordinates, setCityCoordinates] = useState({
-    lat: '51.505',
-    lon: '-0.09',
-  });
 
-  const [currentSearch, setCurrentSearch] = useState('');
-  const [Weatherobject, setWeatherobject] = useState({
-    weather: null,
-  });
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_APIKEY}`
-        )
-          .then((res) => res.json())
-          .then((result) => {
-            console.log(result);
-            setIsLoaded(true);
-            setResults(result);
-
-            setCity(`${result.name}, ${result.sys.country}`);
-            setCityCoordinates({
-              lat: result.coord.lat,
-              lon: result.coord.lon,
-            });
-            setWeatherobject({
-              weather: result.weather[0],
-              stats: result.main,
-            });
-          })
-          .catch((err) => {
-            setIsLoaded(true);
-            setError(err);
-          });
-      },
-      () => {
-        setCity('');
-      }
-    );
-  }, []);
-
-  useEffect(() => {
-    setResults(null);
+  const openWeatherMap = new OpenWeatherMap(process.env.REACT_APP_APIKEY);
+  const updateState = () => {
     setIsLoaded(false);
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.REACT_APP_APIKEY}`
-    )
-      .then((res) => res.json())
+    openWeatherMap
+      .getData(locationQuery)
       .then(
-        (result) => {
-          if (result.cod === 200) {
-            console.log(result);
-            setResults(result);
-            setCity(`${result.name}, ${result.sys.country}`);
-            setCityCoordinates({
-              lat: result.coord.lat,
-              lon: result.coord.lon,
-            });
-            setWeatherobject({
-              weather: result.weather[0],
-              stats: result.main,
-            });
-          } else {
-            setResults(null);
-          }
+        (data) => {
+          // ! This section needs a refactor
+          setResults(data);
+          setLocation(data.location);
+
+          // dbg
+          console.log('rendering', data);
+          // some setWeatherObject()
         },
         (err) => {
           setError(err);
+          setResults(null);
         }
       )
       .finally(() => {
         setIsLoaded(true);
       });
-  }, [city]);
+  };
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  const weatherInfo = alertsInfo.alerts.map((item) => (
-    <Alert key="id" item={item} />
-  ));
+  // Set things in motion whenever a new `city` is set
+  useEffect(updateState, [locationQuery]);
 
   return (
-    <div className="page-container">
-      <img className="logo" src="/mlh-prep.png" alt="MLH Prep Logo" />
-      <div className="searchBar">
-        <div className="weather-location-search">
-          <ReactSearchAutocomplete
-            items={[
-              {
-                n: currentSearch,
-              },
-              ...cityList,
-            ]}
-            fuseOptions={{
-              keys: ['n'],
-            }}
-            resultStringKeyName="n"
-            onSelect={(selectedCity) => setCity(selectedCity.n)}
-            onSearch={(search) => setCurrentSearch(search)}
-            styling={{
-              borderRadius: '5px',
-            }}
-            inputSearchString={city ?? 'Loading Your Location...'}
-          />
-        </div>
-        <MyLocationRoundedIcon
-          fontSize="inherit"
-          style={{ fontSize: '46px' }}
-          className="fetchLocationBtn"
-          onClick={() =>
-            navigator.geolocation.getCurrentPosition(
-              (position) => {
-                const { latitude, longitude } = position.coords;
-                fetch(
-                  `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_APIKEY}`
-                )
-                  .then((res) => res.json())
-                  .then((result) => {
-                    setIsLoaded(true);
-                    setResults(result);
-                    setCity(`${result.name}, ${result.sys.country}`);
-                    setCityCoordinates({
-                      lat: result.coord.lat,
-                      lon: result.coord.lon,
-                    });
-                    setWeatherobject({
-                      weather: result.weather[0],
-                      stats: result.main,
-                    });
-                  })
-                  .catch((err) => {
-                    setIsLoaded(true);
-                    setError(err);
-                  });
-              },
-              () => {
-                setCity('');
-              }
-            )
-          }
-        />
-      </div>
-      <div className="result-map-container">
-        {!isLoaded && <h2>Loading...</h2>}
-        {isLoaded && results && (
-          <CurrentStatus
-            temp={results.main.temp}
-            weatherStatus={results.weather[0].main}
-            feelsLike={results.main.feels_like}
-            visibility={results.visibility}
-            windSpeed={results.wind.speed}
-            humidity={results.main.humidity}
-            pressure={results.main.pressure}
-          />
-        )}
-        {isLoaded && !results && <h2>No Results Found</h2>}
-        <div className="weather-map">
-          {(!isLoaded || results) && (
+    <>
+      <header
+        style={{
+          //  For now... @todo remove
+          marginBottom: '2em',
+        }}
+      >
+        <img src={logo} alt="" className="logo" />
+      </header>
+      <Container maxWidth={'lg'}>
+        {/* <Main> */}
+        <SearchBarWrapper id={'search-wrapper'}>
+          <SearchBar setLocationQuery={setLocationQuery} />
+        </SearchBarWrapper>
+        <WeatherAndMapContainer id={'map-and-current-status-container'}>
+          {/* This is broken. Need help fixing the layout for this. */}
+          <WeatherCurrentWrapper id={'current-status-wrapper'}>
+            <div className="result-map-container">
+              {!isLoaded && <Loader />}
+              {isLoaded && !results && <PlaceholderSkeleton />}
+              {isLoaded && results && (
+                <CurrentStatus currentWeather={results.current} />
+              )}
+            </div>
+          </WeatherCurrentWrapper>
+          <MapWrapper id={'map-wrapper'}>
             <WeatherMap
-              city={city}
-              setCity={setCity}
-              cityCoordinates={cityCoordinates}
-              setCityCoordinates={setCityCoordinates}
+              locationQuery={locationQuery}
+              setLocationQuery={setLocationQuery}
+              location={location}
+            />
+          </MapWrapper>
+        </WeatherAndMapContainer>
+
+        <WeatherWarningsWrapper>
+          <Alerts alerts={results?.alerts ?? []} />
+        </WeatherWarningsWrapper>
+        <ForecastWrapper>
+          {isLoaded && results !== undefined && results !== null && (
+            <ForecastCarousel
+              forecastData={{ hourly: results.hourly, daily: results.daily }}
             />
           )}
-        </div>
-      </div>
-      <div>{weatherInfo}</div>
-      <div className="weather-alerts">
-        {isLoaded && results && Weatherobject.weather !== null && (
-          <WeatherAlerts weather={Weatherobject.weather} />
-        )}
-      </div>
-      <ForecastCarousel />
-      <WeatherSuggestions />
-    </div>
+        </ForecastWrapper>
+        {/* <SuggestionsWrapper></SuggestionsWrapper> */}
+        {results && <Charts data={results} />}
+        {/* </Main> */}
+      </Container>
+    </>
   );
 }
 

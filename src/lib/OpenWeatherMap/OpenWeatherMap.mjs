@@ -28,7 +28,8 @@ const geocodingEndpoint = 'geo/1.0/direct?q={name}&limit=1&appid={apiKey}';
  * Relative endpoint for the Reverse
  * @type {string}
  */
-const reverseGeocodingEndpoint = 'reverse/1.0/direct?lat={lat}&lon={lon}&limit=1&appid={apiKey}'
+const reverseGeocodingEndpoint =
+  'geo/1.0/reverse?lat={lat}&lon={lon}&limit=1&appid={apiKey}';
 
 /**
  * Minimal API Wrapper for the OpenWeatherMap API with built-in caching.
@@ -151,20 +152,19 @@ export default class OpenWeatherMap {
    */
   async _resolveLocation(location) {
     if (!location) {
-      throw new Error("invalid query");
+      throw new Error('invalid query');
     }
 
-    const toKey = (loc) => typeof loc === 'string' ?
-      encodeURIComponent(loc) :
-      JSON.stringify(loc);
+    const toKey = (loc) =>
+      typeof loc === 'string' ? encodeURIComponent(loc) : JSON.stringify(loc);
 
-    const sanitize = (loc) => typeof loc === 'string' ?
-      encodeURIComponent(loc) :
-      loc;
+    const sanitize = (loc) =>
+      typeof loc === 'string' ? encodeURIComponent(loc) : loc;
 
-    const getRequestUrl = (loc) => typeof loc === 'string' ?
-      this._getGeoCodingEndpointUrl(loc) :
-      this._getReverseGeoCodingEndpointUrl(loc);
+    const getRequestUrl = (loc) =>
+      typeof loc === 'string'
+        ? this._getGeoCodingEndpointUrl(loc)
+        : this._getReverseGeoCodingEndpointUrl(loc);
 
     const cleanLocation = sanitize(location);
     const key = toKey(cleanLocation);
@@ -221,8 +221,9 @@ export default class OpenWeatherMap {
   _getReverseGeoCodingEndpointUrl(coordinates) {
     const url = baseUrl + reverseGeocodingEndpoint;
 
-    return url.replace('{lat}', coordinates.lat.toString())
+    return url
+      .replace('{lat}', coordinates.lat.toString())
       .replace('{lon}', coordinates.lon.toString())
-    .replace('{apiKey}', this._apiKey);
+      .replace('{apiKey}', this._apiKey);
   }
 }

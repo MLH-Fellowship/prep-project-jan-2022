@@ -4,83 +4,10 @@ import Carousel from 'react-grid-carousel';
 
 import WeatherCard from './WeatherCard';
 
-const dummyData = {
-  hourly: [
-    {
-      humidity: 200,
-      temp: 20,
-      pressure: 400,
-    },
-    {
-      humidity: 200,
-      temp: 20,
-      pressure: 400,
-    },
-    {
-      humidity: 200,
-      temp: 20,
-      pressure: 400,
-    },
-    {
-      humidity: 200,
-      temp: 20,
-      pressure: 400,
-    },
-    {
-      humidity: 200,
-      temp: 20,
-      pressure: 400,
-    },
-    {
-      humidity: 200,
-      temp: 20,
-      pressure: 400,
-    },
-  ],
-  daily: [
-    {
-      temp: {
-        min: 12,
-        max: 33,
-      },
-    },
-    {
-      temp: {
-        min: 12,
-        max: 33,
-      },
-    },
-    {
-      temp: {
-        min: 12,
-        max: 33,
-      },
-    },
-    {
-      temp: {
-        min: 12,
-        max: 33,
-      },
-    },
-    {
-      temp: {
-        min: 12,
-        max: 33,
-      },
-    },
-    {
-      temp: {
-        min: 12,
-        max: 33,
-      },
-    },
-  ],
-};
-
-function ForecastCarousel() {
-  const [items, setItems] = useState(dummyData);
-  const [selector, setSelector] = useState(['7 Days', '7 Hours']);
-  const [selectedValue, setSelectedValue] = useState('7 Days');
+function ForecastCarousel({ forecastData }) {
+  const [items] = useState(forecastData);
+  const [selector, setSelector] = useState(['Daily', 'Hourly']);
+  const [selectedValue, setSelectedValue] = useState('Daily');
 
   return (
     <>
@@ -125,13 +52,13 @@ function ForecastCarousel() {
           },
         ]}
       >
-        {selectedValue === '7 Days' &&
+        {selectedValue === 'Daily' &&
           items.daily.map((item) => (
             <Carousel.Item key={item}>
               <WeatherCard value={selectedValue} data={item} />
             </Carousel.Item>
           ))}
-        {selectedValue === '7 Hours' &&
+        {selectedValue === 'Hourly' &&
           items.hourly.map((item) => (
             <Carousel.Item key={item}>
               <WeatherCard value={selectedValue} data={item} />

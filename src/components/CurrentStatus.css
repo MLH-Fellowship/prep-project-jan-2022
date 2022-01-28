@@ -5,8 +5,10 @@
 .cs-container {
   overflow: hidden;
   position: relative;
+  top: 5px;
   border-radius: 10px;
   width: 100%;
+  height: 100%;
 
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -27,7 +29,6 @@
   position: relative;
   padding: 24px 48px;
 }
-
 .cs-basics {
   display: flex;
   align-items: center;
@@ -68,8 +69,64 @@
   justify-content: center;
   gap: 24px;
   font-size: 18px;
+  font-weight: bold;
 }
 .cs-more .cs-more-content span {
   display: block;
   text-align: center;
+}
+
+.cs-more .cs-more-content .cs-more-title {
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 450px) {
+  .cs-basics .temp {
+    font-size: 3.5em;
+  }
+
+  .cs-basics .cs-info {
+    font-size: 1.5em;
+  }
+
+  .cs-more {
+    font-size: 1em;
+  }
+
+  .cs-bg {
+    height: 100%;
+  }
+
+  .cs-info {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .cs-basics .temp {
+    font-size: 3.5em;
+  }
+
+  .cs-basics .cs-info {
+    font-size: 1.5em;
+  }
+
+  .cs-more {
+    padding-top: 15%;
+    font-size: 1em;
+    font-weight: unset;
+  }
+
+  .cs-content {
+    position: relative;
+    padding: 12% 10%;
+  }
+
+  .cs-bg {
+    height: 100%;
+  }
+
+  .cs-info {
+    font-size: 1em;
+  }
 }
