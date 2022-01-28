@@ -8,7 +8,7 @@ import cities from '../../assets/data/cities.json';
 import CurrentStatus from '../CurrentStatus';
 import Alert from '../Alert';
 import ForecastCarousel from '../carousel/ForecastCarousel';
-import WeatherSuggestions from './WeatherSuggestions/Suggestions';
+import WeatherSuggestions from '../WeatherSuggestions/Suggestions';
 
 // We need this transformation because ReactSearchAutocomplete only accepts object lists
 const cityList = (() => {

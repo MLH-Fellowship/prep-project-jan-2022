@@ -5,8 +5,8 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './Suggestions.css';
 import weatherItems from './constants/Items';
 import LottieControl from './Lottie';
-import facebook from '../../../assets/images/fb.svg';
-import twitter from '../../../assets/images/twitter.svg';
+import facebook from '../../assets/images/fb.svg';
+import twitter from '../../assets/images/twitter.svg';
 
 export default function WeatherSuggestions(results) {
   const [items, setItems] = useState([]);
@@ -44,7 +44,14 @@ export default function WeatherSuggestions(results) {
         </div>
         <div className="share-container">
           <h2 className="share-heading">Share on</h2>
-          <img src={facebook} alt="facebook" />
+          <a
+            className="twitter-share-button"
+            href="https://facebook.com/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={facebook} alt="facebook" />
+          </a>
           <a
             className="twitter-share-button"
             href={`https://twitter.com/intent/tweet?text=${weatherName}`}
