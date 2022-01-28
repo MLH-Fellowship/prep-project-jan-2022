@@ -1,6 +1,7 @@
 import './Alert.css';
 
 export default function Alert({ item }) {
+  console.log(item);
   const { event, start, end, senderName, tags, description } = item;
   const startTime = new Date(start);
   const endTime = new Date(end);

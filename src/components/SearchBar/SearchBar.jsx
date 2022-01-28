@@ -45,7 +45,7 @@ export default function SearchBar({ setCity, autoFocus = true }) {
         className="fetchLocationBtn"
         font="inherit"
         style={{
-          fontSize: '2em',
+          fontSize: '2.9em',
         }}
         onClick={() => {
           navigator.geolocation.getCurrentPosition((position) => {
@@ -59,7 +59,6 @@ export default function SearchBar({ setCity, autoFocus = true }) {
           });
         }}
       />
-      ;
     </div>
   );
 }

@@ -10,8 +10,8 @@ import Demo from './components/playground/Demo';
 ReactDOM.render(
   <Router>
     <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/playground" element={<Demo />} />
+      <Route path="/" element={<Demo />} />
+      <Route path="/playground" element={<App />} />
     </Routes>
   </Router>,
   document.getElementById('root')

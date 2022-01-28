@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container } from '@mui/material';
+import { Container, Stack } from '@mui/material';
 import './Demo.css';
 import logo from '../../mlh-prep.png';
 import {
@@ -16,6 +16,8 @@ import { OpenWeatherMap } from '../../lib/OpenWeatherMap';
 import SearchBar from '../SearchBar/SearchBar';
 import CurrentStatus from '../CurrentStatus';
 import WeatherMap from '../WeatherMap/WeatherMap';
+import PlaceholderSkeleton from '../PlaceholderSkeleton/Placeholder';
+import Loader from '../Loader/Loader';
 
 function Demo() {
   /* eslint-disable -- @todo get rid of this later */
@@ -67,34 +69,35 @@ function Demo() {
         <img src={logo} alt="" className="logo" />
       </header>
       <Container maxWidth={'lg'}>
-        <Main>
-          <SearchBarWrapper>
-            <SearchBar setCity={setCity} />
-          </SearchBarWrapper>
-          <WeatherAndMapContainer>
-            {/* This is broken. Need help fixing the layout for this. */}
-            <WeatherCurrentWrapper>
-              <div className="result-map-container">
-                {!isLoaded && <h2>Loading...</h2>}
-                {isLoaded && results && (
-                  <CurrentStatus currentWeather={results.current} />
-                )}
-              </div>
-            </WeatherCurrentWrapper>
-            <MapWrapper>
-              <WeatherMap
-                city={city}
-                setCity={setCity}
-                cityCoordinates={cityCoordinates}
-                setCityCoordinates={setCityCoordinates}
-              />
-            </MapWrapper>
-          </WeatherAndMapContainer>
+        {/* <Main> */}
+        <SearchBarWrapper>
+          <SearchBar setCity={setCity} />
+        </SearchBarWrapper>
+        <WeatherAndMapContainer>
+          {/* This is broken. Need help fixing the layout for this. */}
+          <WeatherCurrentWrapper>
+            <div className="result-map-container">
+              {!isLoaded && <Loader />}
+              {isLoaded && !results && <PlaceholderSkeleton />}
+              {isLoaded && results && (
+                <CurrentStatus currentWeather={results.current} />
+              )}
+            </div>
+          </WeatherCurrentWrapper>
+          <MapWrapper>
+            <WeatherMap
+              city={city}
+              setCity={setCity}
+              cityCoordinates={cityCoordinates}
+              setCityCoordinates={setCityCoordinates}
+            />
+          </MapWrapper>
+        </WeatherAndMapContainer>
 
-          <WeatherWarningsWrapper></WeatherWarningsWrapper>
-          <ForecastWrapper></ForecastWrapper>
-          <SuggestionsWrapper></SuggestionsWrapper>
-        </Main>
+        <WeatherWarningsWrapper></WeatherWarningsWrapper>
+        <ForecastWrapper></ForecastWrapper>
+        <SuggestionsWrapper></SuggestionsWrapper>
+        {/* </Main> */}
       </Container>
     </>
   );

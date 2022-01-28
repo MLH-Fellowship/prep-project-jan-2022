@@ -4,6 +4,7 @@
 }
 #search-and-location-pin-container {
   display: flex;
+  align-items: center;
 }
 .fetchLocationBtn {
   color: #133667;
@@ -11,4 +12,6 @@
   border-radius: 5px;
   margin-left: 2%;
   padding: 10px;
+  cursor: pointer;
+  width: 1em;
 }
