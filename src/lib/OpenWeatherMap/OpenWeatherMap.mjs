@@ -28,7 +28,7 @@ const geocodingEndpoint = 'geo/1.0/direct?q={name}&limit=1&appid={apiKey}';
  * Relative endpoint for the Reverse
  * @type {string}
  */
-const reverseGeocodingEndpoint = 'reverse/1.0/direct?lat={lat}&lon={lon}&limit=1&appid={apiKey}'
+const reverseGeocodingEndpoint = 'geo/1.0/reverse?lat={lat}&lon={lon}&limit=1&appid={apiKey}'
 
 /**
  * Minimal API Wrapper for the OpenWeatherMap API with built-in caching.

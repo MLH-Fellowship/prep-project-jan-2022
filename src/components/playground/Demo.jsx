@@ -18,36 +18,36 @@ import CurrentStatus from '../CurrentStatus';
 import WeatherMap from '../WeatherMap/WeatherMap';
 import PlaceholderSkeleton from '../PlaceholderSkeleton/Placeholder';
 import Loader from '../Loader/Loader';
+import Alerts from '../CriticalAlerts/Alert';
+import ForecastCarousel from '../carousel/ForecastCarousel';
 
 function Demo() {
   /* eslint-disable -- @todo get rid of this later */
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [city, setCity] = useState('');
+  const [/** @type {string|LatLng} */ locationQuery, setLocationQuery] =
+    useState('');
+  const [location, setLocation] = useState(null);
   const [results, setResults] = useState(null);
-  const [cityCoordinates, setCityCoordinates] = useState({
-    lat: '51.505',
-    lon: '-0.09',
-  });
 
   const openWeatherMap = new OpenWeatherMap(process.env.REACT_APP_APIKEY);
   const updateState = () => {
     setIsLoaded(false);
-    setResults(null);
     openWeatherMap
-      .getData(city)
+      .getData(locationQuery)
       .then(
         (data) => {
           // ! This section needs a refactor
           setResults(data);
-          setCityCoordinates(data.location);
+          setLocation(data.location);
 
           // dbg
-          console.log(data);
+          console.log('rendering', data);
           // some setWeatherObject()
         },
         (err) => {
           setError(err);
+          setResults(null);
         }
       )
       .finally(() => {
@@ -56,7 +56,7 @@ function Demo() {
   };
 
   // Set things in motion whenever a new `city` is set
-  useEffect(updateState, [city]);
+  useEffect(updateState, [locationQuery]);
 
   return (
     <>
@@ -70,12 +70,12 @@ function Demo() {
       </header>
       <Container maxWidth={'lg'}>
         {/* <Main> */}
-        <SearchBarWrapper>
-          <SearchBar setCity={setCity} />
+        <SearchBarWrapper id={'search-wrapper'}>
+          <SearchBar setLocationQuery={setLocationQuery} />
         </SearchBarWrapper>
-        <WeatherAndMapContainer>
+        <WeatherAndMapContainer id={'map-and-current-status-container'}>
           {/* This is broken. Need help fixing the layout for this. */}
-          <WeatherCurrentWrapper>
+          <WeatherCurrentWrapper id={'current-status-wrapper'}>
             <div className="result-map-container">
               {!isLoaded && <Loader />}
               {isLoaded && !results && <PlaceholderSkeleton />}
@@ -84,19 +84,25 @@ function Demo() {
               )}
             </div>
           </WeatherCurrentWrapper>
-          <MapWrapper>
+          <MapWrapper id={'map-wrapper'}>
             <WeatherMap
-              city={city}
-              setCity={setCity}
-              cityCoordinates={cityCoordinates}
-              setCityCoordinates={setCityCoordinates}
+              locationQuery={locationQuery}
+              setLocationQuery={setLocationQuery}
+              location={location}
             />
           </MapWrapper>
         </WeatherAndMapContainer>
 
-        <WeatherWarningsWrapper></WeatherWarningsWrapper>
-        <ForecastWrapper></ForecastWrapper>
-        <SuggestionsWrapper></SuggestionsWrapper>
+        <WeatherWarningsWrapper>
+            <Alerts alerts={results?.alerts ?? []} />
+          </WeatherWarningsWrapper>
+          <ForecastWrapper>
+            {isLoaded && results !== undefined && results !== null && (
+              <ForecastCarousel forecastData={{hourly: results.hourly, daily: results.daily}} />
+            )}
+          </ForecastWrapper>
+          <SuggestionsWrapper>
+          </SuggestionsWrapper>
         {/* </Main> */}
       </Container>
     </>

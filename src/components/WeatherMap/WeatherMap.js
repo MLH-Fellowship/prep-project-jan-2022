@@ -7,77 +7,64 @@ import {
   MapContainer,
   TileLayer,
   Marker,
-  Popup,
   useMapEvent,
+  Tooltip,
 } from 'react-leaflet';
+import { Geolocation } from '../../lib/OpenWeatherMap';
 import './WeatherMap.css';
 
-const DefaultIcon = leaflet.icon({
+/**
+ * Default coordinates for the map to pin on.
+ * @type {Object}
+ */
+const defaultLocation = new Geolocation(
+  -14.235,
+  -51.9253,
+  'Sao Paulo',
+  'Brazil'
+);
+
+const defaultIcon = leaflet.icon({
   iconUrl: icon,
   shadowUrl: iconShadow,
   iconSize: [25, 41],
   iconAnchor: [12, 41],
 });
 
-leaflet.Marker.prototype.options.icon = DefaultIcon;
+leaflet.Marker.prototype.options.icon = defaultIcon;
 
-const SetMarkerDynamically = ({
-  city,
-  setCity,
-  cityCoordinates,
-  setCityCoordinates,
+const WeatherMap = ({
+  locationQuery,
+  setLocationQuery,
+  /** @type {Geolocation} */
+  location,
 }) => {
-  // eslint-disable-next-line no-unused-vars
-  const [position, setPosition] = useState([
-    cityCoordinates.lat,
-    cityCoordinates.lon,
-  ]);
-
-  useEffect(() => {
-    if (cityCoordinates) {
-      setPosition([cityCoordinates.lat, cityCoordinates.lon]);
-    }
-  }, [cityCoordinates]);
-
-  useMapEvent('click', (e) => {
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${e.latlng.lat}&lon=${e.latlng.lng}&appid=${process.env.REACT_APP_APIKEY}`
-    )
-      .then((res) => res.json())
-      .then(
-        (res) => {
-          setCityCoordinates({ lat: e.latlng.lat, lon: e.latlng.lng });
-          setCity(res.name);
-        },
-        (err) => console.warn(err)
-      );
-  });
-
-  return (
-    <Marker position={[cityCoordinates.lat, cityCoordinates.lon]}>
-      <Popup>{city}</Popup>
-    </Marker>
-  );
-};
-
-const WeatherMap = ({ city, setCity, cityCoordinates, setCityCoordinates }) => {
   const [map, setMap] = useState();
-  const [position, setPosition] = useState({ Lat: 0, Long: 0, City: '' });
 
-  useEffect(() => {
-    setPosition({
-      Lat: cityCoordinates.lat,
-      Long: cityCoordinates.lon,
-      City: city,
+  const SetMarkerDynamically = ({ loc, setLocQuery }) => {
+    useMapEvent('click', (e) => {
+      setLocQuery({ lat: e.latlng.lat, lon: e.latlng.lng });
     });
-  }, [cityCoordinates, city]);
+
+    return (
+      <Marker position={[loc.lat, loc.lon]}>
+        <Tooltip
+          direction="right"
+          offset={[0, 0]}
+          opacity={1}
+          permanent
+        >{`${loc.name}, ${loc.country}`}</Tooltip>
+      </Marker>
+    );
+  };
 
   useEffect(() => {
-    setMap(map);
-  }, [map]);
+    if (!location) {
+      return;
+    }
 
-  useEffect(() => {
-    const mapCenter = [position.Lat, position.Long];
+    const mapCenter = [location.lat, location.lon];
+
     if (map) {
       if (map.getZoom() < 4) {
         map.setView(mapCenter, 7);
@@ -85,17 +72,21 @@ const WeatherMap = ({ city, setCity, cityCoordinates, setCityCoordinates }) => {
         map.setView(mapCenter, map.getZoom());
       }
     }
-  }, [map, position]);
+  }, [map, location]);
 
   return (
     <>
       <div>
         <MapContainer
           className="map"
-          whenCreated={setMap}
-          center={[position.Lat, position.Long]}
+          whenCreated={(m) => setMap(m)}
+          center={
+            location
+              ? [location.lat, location.lon]
+              : [defaultLocation.lat, defaultLocation.lon]
+          }
           doubleClickZoom
-          scrollWheelZoom
+          scrollWheelZoom={false}
           zoom={7}
         >
           <TileLayer
@@ -103,10 +94,9 @@ const WeatherMap = ({ city, setCity, cityCoordinates, setCityCoordinates }) => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <SetMarkerDynamically
-            city={city}
-            setCity={setCity}
-            cityCoordinates={cityCoordinates}
-            setCityCoordinates={setCityCoordinates}
+            locQ={locationQuery}
+            setLocQuery={setLocationQuery}
+            loc={location ?? defaultLocation}
           />
         </MapContainer>
       </div>

@@ -12,6 +12,9 @@ import shower from '../assets/images/shower.jpg';
 import mist from '../assets/images/mist.jpeg';
 import smoke from '../assets/images/smoke.jpg';
 import sunny from '../assets/images/sunny.jpg';
+import haze from '../assets/images/haze.jpg';
+import tornado from '../assets/images/tornado.jpg';
+import squall from '../assets/images/squall.png';
 
 const KelvinToCelsius = (k) => (k - 273.15).toFixed(2);
 
@@ -62,7 +65,7 @@ export default function CurrentStatus({ currentWeather }) {
     background = fog;
     iconClass = 'wi-fog';
   } else if (weatherStatus === 'Haze') {
-    background = rain;
+    background = haze;
     iconClass = 'wi-haze';
   } else if (weatherStatus === 'Mist') {
     background = mist;
@@ -83,13 +86,13 @@ export default function CurrentStatus({ currentWeather }) {
     background = sunny;
     iconClass = 'wi-day-sunny';
   } else if (weatherStatus === 'Squall') {
-    background = rain;
+    background = squall;
     iconClass = 'wi-strong-wind';
   } else if (weatherStatus === 'Thunderstorm') {
     background = thunderstorm;
     iconClass = 'wi-thunderstorm';
   } else if (weatherStatus === 'Tornado') {
-    background = rain;
+    background = tornado;
     iconClass = 'wi-tornado';
   }
 
@@ -99,7 +102,7 @@ export default function CurrentStatus({ currentWeather }) {
       <div className="cs-content">
         <div className="cs-main">
           <div className="cs-basics">
-            <span className="temp">{temp}</span>
+            <span className="temp">{temp}°</span>
             <div className="cs-info">
               <span className="weather">{weatherStatus}</span>
               <span className="feels-like">{`FEELS LIKE ${parseInt(
