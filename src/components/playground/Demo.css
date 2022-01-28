@@ -58,19 +58,12 @@ input {
   border: 10px;
   width: 200px;
 }
-.weather-location-search {
-  width: 98%;
-  z-index: 100;
-}
-.searchBar {
+
+.result-map-container {
   display: flex;
-}
-.fetchLocationBtn {
-  color: #133667;
-  background-color: white;
-  border-radius: 5px;
-  margin-left: 2%;
-  padding: 10px;
+  flex-direction: row;
+  width: 100%;
+  gap: 14px;
 }
 .fetchLocationBtn:hover{
   padding: 8px;
