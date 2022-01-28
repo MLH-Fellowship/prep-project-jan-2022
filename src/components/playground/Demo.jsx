@@ -8,8 +8,8 @@ import cities from '../../assets/data/cities.json';
 import CurrentStatus from '../CurrentStatus';
 import Alert from '../CriticalAlerts/Alert';
 import alertsInfo from '../WeatherInfo/info.json';
-
 import ForecastCarousel from '../carousel/ForecastCarousel';
+import WeatherSuggestions from '../WeatherSuggestions/Suggestions';
 
 // We need this transformation because ReactSearchAutocomplete only accepts object lists
 const cityList = (() => {
@@ -205,6 +205,7 @@ function Demo() {
         )}
       </div>
       <ForecastCarousel />
+      <WeatherSuggestions />
     </div>
   );
 }
