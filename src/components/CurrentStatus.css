@@ -17,7 +17,6 @@
   width: 100%;
   height: auto;
 }
-    
 
 .cs-content {
   position: relative;
@@ -75,7 +74,6 @@
 }
 
 @media screen and (max-width: 450px) {
-    
   .cs-basics .temp {
     font-size: 3.5em;
   }
@@ -92,15 +90,12 @@
     height: 100%;
   }
 
-  .cs-info{
+  .cs-info {
     font-size: 1em;
   }
-
 }
 
-
 @media screen and (max-width: 800px) {
-  
   .cs-basics .temp {
     font-size: 3.5em;
   }
@@ -114,7 +109,7 @@
     font-size: 1em;
     font-weight: unset;
   }
-    
+
   .cs-content {
     position: relative;
     padding: 12% 10%;
@@ -123,8 +118,8 @@
   .cs-bg {
     height: 100%;
   }
-  
-  .cs-info{
+
+  .cs-info {
     font-size: 1em;
   }
 }
