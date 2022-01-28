@@ -92,7 +92,7 @@ export default function WeatherCard({ value, data }) {
         <>
           <div className="container">
             <div className="time">
-              <span className="day">Today</span>
+              <span className="day">{todayDate}</span>
               <span className="date">{todayTime}</span>
             </div>
             <i className={`wi ${iconClass}`} />
