@@ -8,23 +8,24 @@ export const Main = styled.main`
   gap: 2% 2%;
   grid-auto-flow: row;
 
-  & * {
+  & > *,
+  & > * > * {
     border: 1px solid red;
     position: relative;
   }
 
   /* @remove Content placeholders -- remove once we have things in place */
-  & *:after {
-    content: attr(class);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: grid;
-    align-items: center;
-    justify-content: center;
-  }
+  //& *:after {
+  //  content: attr(class);
+  //  position: absolute;
+  //  top: 0;
+  //  left: 0;
+  //  width: 100%;
+  //  height: 100%;
+  //  display: grid;
+  //  align-items: center;
+  //  justify-content: center;
+  //}
 `;
 export const SearchBarWrapper = styled.div`
   height: 2em;
@@ -39,13 +40,13 @@ export const WeatherAndMapContainer = styled.div`
   }
 `;
 export const WeatherCurrentWrapper = styled.div`
-  height: 469px;
+  height: 300px;
   width: 100%;
   min-width: 300px;
   flex: 2;
 `;
 export const MapWrapper = styled.div`
-  height: 469px;
+  height: 300px;
   width: 100%;
   min-width: 300px;
   flex: 1;
