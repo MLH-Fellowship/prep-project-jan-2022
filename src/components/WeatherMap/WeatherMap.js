@@ -39,9 +39,9 @@ const WeatherMap = ({
   /** @type {Geolocation} */
   location,
 }) => {
-  const [map] = useState();
+  const [map, setMap] = useState();
 
-  const SetMarkerDynamically = ({ loc, setLocQuery}) => {
+  const SetMarkerDynamically = ({ loc, setLocQuery }) => {
     useMapEvent('click', (e) => {
       setLocQuery({ lat: e.latlng.lat, lon: e.latlng.lng });
     });
@@ -79,6 +79,7 @@ const WeatherMap = ({
       <div>
         <MapContainer
           className="map"
+          whenCreated={(m) => setMap(m)}
           center={
             location
               ? [location.lat, location.lon]
