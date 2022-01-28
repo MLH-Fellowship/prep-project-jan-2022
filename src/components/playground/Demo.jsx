@@ -58,30 +58,28 @@ function Demo() {
 
   return (
     <>
-      <header style={{
-      //  For now... @todo remove
-        marginBottom: '2em',
-      }}>
-        <img src={logo} alt='' className='logo' />
+      <header
+        style={{
+          //  For now... @todo remove
+          marginBottom: '2em',
+        }}
+      >
+        <img src={logo} alt="" className="logo" />
       </header>
       <Container maxWidth={'lg'}>
         <Main>
           <SearchBarWrapper>
-            <SearchBar
-              setCity={setCity}
-            />
+            <SearchBar setCity={setCity} />
           </SearchBarWrapper>
           <WeatherAndMapContainer>
-              {/* This is broken. Need help fixing the layout for this. */}
-              <WeatherCurrentWrapper>
-            <div className='result-map-container'>
-              {!isLoaded && <h2>Loading...</h2>}
-              {isLoaded && results && (
-                <CurrentStatus
-                  currentWeather={results.current}
-                />
-              )}
-            </div>
+            {/* This is broken. Need help fixing the layout for this. */}
+            <WeatherCurrentWrapper>
+              <div className="result-map-container">
+                {!isLoaded && <h2>Loading...</h2>}
+                {isLoaded && results && (
+                  <CurrentStatus currentWeather={results.current} />
+                )}
+              </div>
             </WeatherCurrentWrapper>
             <MapWrapper>
               <WeatherMap
@@ -93,15 +91,9 @@ function Demo() {
             </MapWrapper>
           </WeatherAndMapContainer>
 
-          <WeatherWarningsWrapper>
-
-          </WeatherWarningsWrapper>
-          <ForecastWrapper>
-
-          </ForecastWrapper>
-          <SuggestionsWrapper>
-
-          </SuggestionsWrapper>
+          <WeatherWarningsWrapper></WeatherWarningsWrapper>
+          <ForecastWrapper></ForecastWrapper>
+          <SuggestionsWrapper></SuggestionsWrapper>
         </Main>
       </Container>
     </>
