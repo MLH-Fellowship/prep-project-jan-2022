@@ -21,34 +21,50 @@ const iconList = {
   '50n': 'wi-night-fog',
 };
 
-function timeConverterTime(unixTimestamp){
+function timeConverterTime(unixTimestamp) {
   const a = new Date(unixTimestamp * 1000);
   const hour = a.getHours();
   const min = a.getMinutes();
-  const time = `${hour}:${min}` ;
+  const time = `${hour}:${min}`;
   return time;
 }
 
-function timeConverterDate(unixTimestamp){
+function timeConverterDate(unixTimestamp) {
   const a = new Date(unixTimestamp * 1000);
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
   const month = months[a.getMonth()];
   const date = a.getDate();
-  const time = `${month} ${date}` ;
+  const time = `${month} ${date}`;
   return time;
 }
+
+const KelvinToCelsius = (k) => (k - 273.15).toFixed(2);
 
 export default function WeatherCard({ value, data }) {
   // const value = props.value;
   console.log('this is data: ', data);
   console.log('this is value: ', value);
 
-  const iconClass = iconList[data.weather.icon];
+  const iconClass = iconList[data.weather[0].icon];
+  console.log("this is a icon", {iconClass});
 
-  const todayDate = timeConverterDate(data.dt); 
+  const todayDate = timeConverterDate(data.dt);
   const todayTime = timeConverterTime(data.dt);
   console.log('this is date new:', todayDate);
-  
+
   return (
     <>
       {value === 'Daily' && (
@@ -61,12 +77,12 @@ export default function WeatherCard({ value, data }) {
             <i className={`wi ${iconClass}`} />
             <div className="low">
               <span>
-                High <b>{data.temp.max}°C</b>
+                High <b>{KelvinToCelsius(data.temp.max)}°C</b>
               </span>
             </div>
             <div className="high">
               <span>
-                Low <b>{data.temp.min}°C</b>
+                Low <b>{KelvinToCelsius(data.temp.min)}°C</b>
               </span>
             </div>
           </div>
@@ -87,7 +103,7 @@ export default function WeatherCard({ value, data }) {
             </div>
             <div className="high">
               <span className="humidity-info">
-                Temp <b>{data.temp}°C</b>
+                Temp <b>{KelvinToCelsius(data.temp)}°C</b>
               </span>
             </div>
           </div>
