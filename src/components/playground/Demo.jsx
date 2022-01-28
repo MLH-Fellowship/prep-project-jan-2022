@@ -14,7 +14,6 @@ import {
 } from './Elements';
 import { OpenWeatherMap } from '../../lib/OpenWeatherMap';
 import SearchBar from '../SearchBar/SearchBar';
-import WeatherCard from '../carousel/WeatherCard';
 import CurrentStatus from '../CurrentStatus';
 import WeatherMap from '../WeatherMap/WeatherMap';
 
