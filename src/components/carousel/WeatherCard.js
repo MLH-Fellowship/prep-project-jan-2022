@@ -30,7 +30,7 @@ export default function WeatherCard({ value, data }) {
   
   return (
     <>
-      {value === '7 Days' && (
+      {value === 'Daily' && (
         <>
           <div className="container">
             <div className="time">
@@ -51,7 +51,7 @@ export default function WeatherCard({ value, data }) {
           </div>
         </>
       )}
-      {value === '7 Hours' && (
+      {value === 'Hourly' && (
         <>
           <div className="container">
             <div className="time">
