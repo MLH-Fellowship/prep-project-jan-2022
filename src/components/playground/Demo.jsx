@@ -16,6 +16,8 @@ import { OpenWeatherMap } from '../../lib/OpenWeatherMap';
 import SearchBar from '../SearchBar/SearchBar';
 import CurrentStatus from '../CurrentStatus';
 import WeatherMap from '../WeatherMap/WeatherMap';
+import Alerts from '../CriticalAlerts/Alert';
+import ForecastCarousel from '../carousel/ForecastCarousel';
 
 function Demo() {
   /* eslint-disable -- @todo get rid of this later */
@@ -72,8 +74,8 @@ function Demo() {
           <WeatherAndMapContainer id={'map-and-current-status-container'}>
             <WeatherCurrentWrapper id={'current-status-wrapper'}>
               {!isLoaded && <h2>Loading...</h2>}
-              {isLoaded && results !== null && (
-                <CurrentStatus currentWeather={results.current} />
+              {isLoaded && (
+                <CurrentStatus currentWeather={results?.current} />
               )}
             </WeatherCurrentWrapper>
             <MapWrapper id={'map-wrapper'}>
@@ -84,10 +86,16 @@ function Demo() {
               />
             </MapWrapper>
           </WeatherAndMapContainer>
-
-          <WeatherWarningsWrapper></WeatherWarningsWrapper>
-          <ForecastWrapper></ForecastWrapper>
-          <SuggestionsWrapper></SuggestionsWrapper>
+          <WeatherWarningsWrapper>
+            <Alerts alerts={results?.alerts ?? []} />
+          </WeatherWarningsWrapper>
+          <ForecastWrapper>
+            {isLoaded && results !== undefined && results !== null && (
+              <ForecastCarousel forecastData={{hourly: results.hourly, daily: results.daily}} />
+            )}
+          </ForecastWrapper>
+          <SuggestionsWrapper>
+          </SuggestionsWrapper>
         </Main>
       </Container>
     </>
