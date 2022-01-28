@@ -13,7 +13,7 @@ import mist from '../assets/images/mist.jpeg';
 import smoke from '../assets/images/smoke.jpg';
 import sunny from '../assets/images/sunny.jpg';
 
-const KelvinToCelsius = (k) => (k - 273.15).toFixed(3);
+const KelvinToCelsius = (k) => (k - 273.15).toFixed(2);
 
 export default function CurrentStatus({ currentWeather }) {
   // We should still return a skeleton or something
@@ -27,8 +27,7 @@ export default function CurrentStatus({ currentWeather }) {
     humidity,
     visibility,
     wind_speed: windSpeed,
-    // Is this supposed to be a dummy? (API doesn't offer this metric)
-    airQuality = '24',
+    pressure,
     weather,
   } = currentWeather;
 
@@ -39,7 +38,7 @@ export default function CurrentStatus({ currentWeather }) {
 
   const otherInfo = [
     { title: 'Visibility', value: visibility },
-    { title: 'Air Quality', value: airQuality },
+    { title: 'Pressure', value: pressure },
     { title: 'Wind Speed', value: windSpeed },
     { title: 'Humidity', value: humidity },
   ];
