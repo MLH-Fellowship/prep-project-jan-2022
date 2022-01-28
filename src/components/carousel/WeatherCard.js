@@ -25,8 +25,7 @@ function timeConverterTime(unixTimestamp) {
   const a = new Date(unixTimestamp * 1000);
   const hour = a.getHours();
   const min = a.getMinutes();
-  const time = `${hour}:${min}`;
-  return time;
+  return `${hour}:${min}`;
 }
 
 function timeConverterDate(unixTimestamp) {
@@ -47,8 +46,7 @@ function timeConverterDate(unixTimestamp) {
   ];
   const month = months[a.getMonth()];
   const date = a.getDate();
-  const time = `${month} ${date}`;
-  return time;
+  return `${month} ${date}`;
 }
 
 const KelvinToCelsius = (k) => (k - 273.15).toFixed(2);
@@ -59,7 +57,7 @@ export default function WeatherCard({ value, data }) {
   console.log('this is value: ', value);
 
   const iconClass = iconList[data.weather[0].icon];
-  console.log("this is a icon", {iconClass});
+  console.log('this is a icon', { iconClass });
 
   const todayDate = timeConverterDate(data.dt);
   const todayTime = timeConverterTime(data.dt);
