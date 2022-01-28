@@ -45,11 +45,12 @@ export const MapWrapper = styled.div`
 `;
 export const WeatherWarningsWrapper = styled.div`
   /**@todo remove this static height when placing the component */
-  height: 400px;
+  height: fit-content;
+  margin-top: 1em;
 `;
 export const ForecastWrapper = styled.div`
-  height: 400px;
+  height: fit-content;
 `;
 export const SuggestionsWrapper = styled.div`
-  height: 371px;
+  height: fit-content;
 `;
