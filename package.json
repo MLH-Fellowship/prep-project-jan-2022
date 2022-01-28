@@ -11,8 +11,8 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "howler": "^2.2.3",
     "chart.js": "^3.7.0",
+    "howler": "^2.2.3",
     "leaflet": "^1.7.1",
     "lodash": "^4.17.21",
     "react": "^17.0.2",
@@ -26,7 +26,12 @@
     "react-scripts": "4.0.3",
     "react-search-autocomplete": "^5.4.4",
     "weather-icons": "^1.3.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "workbox-core": "^6.4.2",
+    "workbox-expiration": "^6.4.2",
+    "workbox-precaching": "^6.4.2",
+    "workbox-routing": "^6.4.2",
+    "workbox-strategies": "^6.4.2"
   },
   "devDependencies": {
     "@types/leaflet": "^1.7.8",

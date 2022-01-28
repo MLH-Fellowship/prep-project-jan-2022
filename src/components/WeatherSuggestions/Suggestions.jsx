@@ -10,8 +10,12 @@ import twitter from '../../assets/images/twitter.svg';
 
 export default function WeatherSuggestions(results) {
   const [items, setItems] = useState([]);
+  const { results: result = {} } = results;
+  const { weather = [] } = result;
+
   // Sets default value to 'Thunderstorm'
-  const weatherName = results?.results?.weather[0]?.main ?? 'Thunderstorm';
+  const [firstWeather = { main: 'Thunderstorm' }] = weather;
+  const weatherName = firstWeather.main;
   useEffect(() => {
     // Set items according to the weather
     setItems(weatherItems[weatherName]);
