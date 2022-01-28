@@ -4,40 +4,47 @@
 }
 .carousel {
   width: 50%;
-  height: 30em;
+  /* flex: 1; */
+  height: 22em;
 }
 .suggestions-list-container {
   padding: 1.5em 2em;
   background-color: black;
+  /* flex: 1; */
   width: 50%;
-  height: 30em;
+  height: 22em;
   text-align: start;
 }
 
 .suggestions-list-container h2 {
-  font-size: 34px;
+  font-size: 1.2rem;
 }
 
 .suggestions-list-container p {
-  font-size: 24px;
+  font-size: 1rem;
 }
 
 .suggestions-list {
-  height: 65%;
+  height: 80%;
 }
 
 .share-container {
   display: flex;
-}
-
-.share-heading {
-  margin-right: 40%;
-}
-
-.share-container a {
-  display: flex;
-}
-
-.share-container a img {
+  justify-content: space-between;
   align-items: center;
 }
+
+.share-container div a img {
+  aspect-ratio: 1;
+  width: 2em;
+}
+
+/* @media (max-width: 600px) {
+  .suggestions-container {
+     flex-direction: column;
+     width: 100%;
+  }
+  .suggestions-list-container {
+    height: 10em;
+  }
+} */

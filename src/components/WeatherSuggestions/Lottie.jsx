@@ -25,8 +25,8 @@ export default class LottieControl extends React.Component {
       <div>
         <Lottie
           options={defaultOptions}
-          height={400}
-          width={400}
+          height="15rem"
+          width="15rem"
           isStopped={isStopped}
           isPaused={isPaused}
         />

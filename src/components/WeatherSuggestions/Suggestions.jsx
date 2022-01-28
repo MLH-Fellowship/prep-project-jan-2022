@@ -48,22 +48,24 @@ export default function WeatherSuggestions(results) {
         </div>
         <div className="share-container">
           <h2 className="share-heading">Share on</h2>
-          <a
-            className="twitter-share-button"
-            href="https://facebook.com/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img src={facebook} alt="facebook" />
-          </a>
-          <a
-            className="twitter-share-button"
-            href={`https://twitter.com/intent/tweet?text=${weatherName}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img src={twitter} alt="twitter" />
-          </a>
+          <div>
+            <a
+              className="twitter-share-button"
+              href="https://facebook.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img src={facebook} alt="facebook" />
+            </a>
+            <a
+              className="twitter-share-button"
+              href={`https://twitter.com/intent/tweet?text=${weatherName}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img src={twitter} alt="twitter" />
+            </a>
+          </div>
         </div>
       </div>
     </div>
