@@ -10,31 +10,49 @@ const dummyData = {
       humidity: 200,
       temp: 20,
       pressure: 400,
+      weather: {
+        icon: '10d',
+      },
     },
     {
       humidity: 200,
       temp: 20,
       pressure: 400,
+      weather: {
+        icon: '10d',
+      },
     },
     {
       humidity: 200,
       temp: 20,
       pressure: 400,
+      weather: {
+        icon: '10d',
+      },
     },
     {
       humidity: 200,
       temp: 20,
       pressure: 400,
+      weather: {
+        icon: '10d',
+      },
     },
     {
       humidity: 200,
       temp: 20,
       pressure: 400,
+      weather: {
+        icon: '10d',
+      },
     },
     {
       humidity: 200,
       temp: 20,
       pressure: 400,
+      weather: {
+        icon: '10d',
+      },
     },
   ],
   daily: [
@@ -43,11 +61,8 @@ const dummyData = {
         min: 12,
         max: 33,
       },
-    },
-    {
-      temp: {
-        min: 12,
-        max: 33,
+      weather: {
+        icon: '10d',
       },
     },
     {
@@ -55,11 +70,8 @@ const dummyData = {
         min: 12,
         max: 33,
       },
-    },
-    {
-      temp: {
-        min: 12,
-        max: 33,
+      weather: {
+        icon: '10d',
       },
     },
     {
@@ -67,11 +79,35 @@ const dummyData = {
         min: 12,
         max: 33,
       },
+      weather: {
+        icon: '10d',
+      },
     },
     {
       temp: {
         min: 12,
         max: 33,
+      },
+      weather: {
+        icon: '10d',
+      },
+    },
+    {
+      temp: {
+        min: 12,
+        max: 33,
+      },
+      weather: {
+        icon: '10d',
+      },
+    },
+    {
+      temp: {
+        min: 12,
+        max: 33,
+      },
+      weather: {
+        icon: '10d',
       },
     },
   ],
