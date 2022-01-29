@@ -48,13 +48,8 @@ export default function SearchBar({ setLocationQuery, autoFocus = true }) {
         }}
         onClick={() => {
           navigator.geolocation.getCurrentPosition((position) => {
-            const { lat, lon } = position.coords;
-            /**
-             * ! Need the logic to accommodate this behavior, but it should
-             * work perfectly since {@see OpenWeatherMap::getData()} supports
-             * {lat, lon}.
-             */
-            setLocationQuery({ lat, lon });
+            const { latitude, longitude } = position.coords;
+            setLocationQuery({ lat: latitude, lon: longitude });
           });
         }}
       />
