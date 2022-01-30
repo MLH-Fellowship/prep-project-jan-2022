@@ -3,30 +3,41 @@ import styled from '@emotion/styled';
 import { Skeleton } from '@mui/material';
 
 const Wrapper = styled.div`
-  margin: 5px auto;
-  padding: 3px;
   border: 2px solid #4fbdba;
+  border-radius: 1vw;
+  height: 100%;
+  width: 100%;
 `;
 
 const FlexContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px auto;
+  height: 30%;
+  width: 100%;
+  padding: 0.5em;
+  gap: 1em;
+`;
+
+const CircularContainer = styled.div`
+  height: 100%;
+  aspect-ratio: 1;
 `;
 
 function PlaceholderSkeleton() {
   return (
     <Wrapper>
       <FlexContainer>
-        <Skeleton variant="circular" width={75} height={75} />
-        <Skeleton variant="text" width={800} height={30} />
+        <CircularContainer>
+          <Skeleton variant="circular" height="100%" />
+        </CircularContainer>
+        <Skeleton variant="text" height="70%" style={{ flex: '1' }} />
       </FlexContainer>
       <Skeleton
         variant="rectangular"
         animation="wave"
-        width={900}
-        height={180}
+        width="100%"
+        height="70%"
       />
     </Wrapper>
   );

@@ -52,16 +52,9 @@ function timeConverterDate(unixTimestamp) {
 const KelvinToCelsius = (k) => (k - 273.15).toFixed(2);
 
 export default function WeatherCard({ value, data }) {
-  // const value = props.value;
-  console.log('this is data: ', data);
-  console.log('this is value: ', value);
-
   const iconClass = iconList[data.weather[0].icon];
-  console.log('this is a icon', { iconClass });
-
   const todayDate = timeConverterDate(data.dt);
   const todayTime = timeConverterTime(data.dt);
-  console.log('this is date new:', todayDate);
 
   return (
     <>

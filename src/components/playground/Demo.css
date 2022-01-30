@@ -6,6 +6,7 @@ body {
   color: white;
   text-align: center;
 }
+
 .page-container {
   display: flex;
   flex-direction: column;
@@ -13,12 +14,7 @@ body {
   margin: 0 auto;
   gap: 14px;
 }
-.result-map-container {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  gap: 14px;
-}
+
 .Results {
   background-color: white;
   width: 66%;
@@ -41,9 +37,6 @@ body {
   .page-container {
     width: 95%;
   }
-  .result-map-container {
-    flex-direction: column;
-  }
   .Results {
     width: 100%;
   }
@@ -59,12 +52,6 @@ input {
   width: 200px;
 }
 
-.result-map-container {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  gap: 14px;
-}
 .fetchLocationBtn:hover {
   padding: 8px;
 }

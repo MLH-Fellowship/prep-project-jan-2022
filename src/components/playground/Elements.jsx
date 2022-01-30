@@ -3,21 +3,13 @@ import styled from '@emotion/styled';
 export const Main = styled.main`
   /** @todo: Get rid of the min height later */
   min-height: 100vh;
-
-  & > *,
-  & > * > * {
-    ${
-      '' /* border: 1px solid red;
-    position: relative; */
-    }
-  }
 `;
 export const SearchBarWrapper = styled.div`
   height: 2em;
 `;
 export const WeatherAndMapContainer = styled.div`
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 2fr 1fr;
   grid-gap: 14px;
   margin: 40px auto;
 
@@ -28,11 +20,11 @@ export const WeatherAndMapContainer = styled.div`
 export const WeatherCurrentWrapper = styled.div`
   height: 100%;
   width: 100%;
+  min-height: 15em;
 `;
 export const MapWrapper = styled.div`
   width: 100%;
   position: relative;
-  top: 10px;
 
   .leaflet-container {
     contain: paint;

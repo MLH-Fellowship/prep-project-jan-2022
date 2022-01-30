@@ -8,6 +8,7 @@
   flex-direction: column;
   align-items: flex-start;
   padding: 24px;
+  margin: 5em auto;
   border-radius: 20px;
   gap: 8px;
   background-color: rgba(255, 0, 0, 0.5);
@@ -18,6 +19,10 @@
 }
 
 @media screen and (min-width: 301px) {
+  .alert-container {
+    margin: 3em auto;
+  }
+
   .alert-container .alert-title {
     font-size: 1.9em;
   }

@@ -6,7 +6,7 @@ import WeatherCard from './WeatherCard';
 
 function ForecastCarousel({ forecastData }) {
   const [items] = useState(forecastData);
-  const [selector, setSelector] = useState(['Daily', 'Hourly']);
+  const [selector] = useState(['Daily', 'Hourly']);
   const [selectedValue, setSelectedValue] = useState('Daily');
 
   return (
@@ -17,14 +17,12 @@ function ForecastCarousel({ forecastData }) {
         <select
           onChange={(e) => {
             setSelectedValue(e.target.value);
-            console.log('This is the e ', e.target.value);
           }}
         >
           {selector.map((value) => (
             <option key={value} value={value} className="option-card">
               {value}
             </option>
-            // {setSelectedValue(value)}
           ))}
         </select>
       </div>
