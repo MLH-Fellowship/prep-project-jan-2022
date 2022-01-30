@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Container } from '@mui/material';
 import '../../App.css';
 import './Demo.css';
 import logo from '../../mlh-prep.png';
 import {
   ForecastWrapper,
-  // Main,
   MapWrapper,
   SearchBarWrapper,
   SuggestionsWrapper,
-  // SuggestionsWrapper,
   WeatherAndMapContainer,
   WeatherCurrentWrapper,
   WeatherWarningsWrapper,
@@ -26,7 +24,7 @@ import Charts from '../Charts/Charts';
 import WeatherSuggestions from '../WeatherSuggestions/Suggestions';
 
 function Demo() {
-  /* eslint-disable -- @todo get rid of this later */
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [/** @type {string|LatLng} */ locationQuery, setLocationQuery] =
@@ -41,13 +39,8 @@ function Demo() {
       .getData(locationQuery)
       .then(
         (data) => {
-          // ! This section needs a refactor
           setResults(data);
           setLocation(data.location);
-
-          // dbg
-          console.log('rendering', data);
-          // some setWeatherObject()
         },
         (err) => {
           setError(err);
@@ -66,19 +59,16 @@ function Demo() {
     <>
       <header
         style={{
-          //  For now... @todo remove
           marginBottom: '2em',
         }}
       >
         <img src={logo} alt="" className="logo" />
       </header>
       <Container maxWidth="lg">
-        {/* <Main> */}
         <SearchBarWrapper id="search-wrapper">
           <SearchBar setLocationQuery={setLocationQuery} />
         </SearchBarWrapper>
         <WeatherAndMapContainer id="map-and-current-status-container">
-          {/* This is broken. Need help fixing the layout for this. */}
           <WeatherCurrentWrapper id="current-status-wrapper">
             {!isLoaded && <Loader />}
             {isLoaded && !results && <PlaceholderSkeleton />}
@@ -110,7 +100,6 @@ function Demo() {
         <WeatherWarningsWrapper>
           <Alerts alerts={results?.alerts ?? []} />
         </WeatherWarningsWrapper>
-        {/* </Main> */}
       </Container>
     </>
   );
