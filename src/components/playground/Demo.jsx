@@ -72,23 +72,21 @@ function Demo() {
       >
         <img src={logo} alt="" className="logo" />
       </header>
-      <Container maxWidth={'lg'}>
+      <Container maxWidth="lg">
         {/* <Main> */}
-        <SearchBarWrapper id={'search-wrapper'}>
+        <SearchBarWrapper id="search-wrapper">
           <SearchBar setLocationQuery={setLocationQuery} />
         </SearchBarWrapper>
-        <WeatherAndMapContainer id={'map-and-current-status-container'}>
+        <WeatherAndMapContainer id="map-and-current-status-container">
           {/* This is broken. Need help fixing the layout for this. */}
-          <WeatherCurrentWrapper id={'current-status-wrapper'}>
-            <div className="result-map-container">
-              {!isLoaded && <Loader />}
-              {isLoaded && !results && <PlaceholderSkeleton />}
-              {isLoaded && results && (
-                <CurrentStatus currentWeather={results.current} />
-              )}
-            </div>
+          <WeatherCurrentWrapper id="current-status-wrapper">
+            {!isLoaded && <Loader />}
+            {isLoaded && !results && <PlaceholderSkeleton />}
+            {isLoaded && results && (
+              <CurrentStatus currentWeather={results.current} />
+            )}
           </WeatherCurrentWrapper>
-          <MapWrapper id={'map-wrapper'}>
+          <MapWrapper id="map-wrapper">
             <WeatherMap
               locationQuery={locationQuery}
               setLocationQuery={setLocationQuery}
