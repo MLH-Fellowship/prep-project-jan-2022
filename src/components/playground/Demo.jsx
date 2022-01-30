@@ -32,7 +32,11 @@ function Demo() {
   const [location, setLocation] = useState(null);
   const [results, setResults] = useState(null);
 
-  const openWeatherMap = new OpenWeatherMap(process.env.REACT_APP_APIKEY);
+  const openWeatherMap = useMemo(
+    () => new OpenWeatherMap(process.env.REACT_APP_APIKEY),
+    []
+  );
+
   const updateState = () => {
     setIsLoaded(false);
     openWeatherMap
@@ -53,7 +57,7 @@ function Demo() {
   };
 
   // Set things in motion whenever a new `city` is set
-  useEffect(updateState, [locationQuery]);
+  useEffect(updateState, [locationQuery, openWeatherMap]);
 
   return (
     <>
