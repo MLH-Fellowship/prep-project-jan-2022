@@ -1,6 +1,5 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-restricted-syntax */
-import React, { useEffect, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './Suggestions.css';
@@ -10,14 +9,21 @@ import facebook from '../../assets/images/fb.svg';
 import twitter from '../../assets/images/twitter.svg';
 
 export default function WeatherSuggestions({ results }) {
-  const [items, setItems] = useState({});
+  const items = (() => {
+    let r;
+    data.some(({ animations, type, weatherItems }) => {
+      if (type === results?.weather[0].main.toLowerCase()) {
+        r = { animations, weatherItems };
+        return true;
+      }
+      return false;
+    });
+    return r;
+  })();
 
-  useEffect(() => {
-    for (let i = 0; i < data.length; i += 1) {
-      if (data[i].type === results.weather[0].main.toLowerCase())
-        setItems(data[i]);
-    }
-  }, [results, items]);
+  if (!items) {
+    return null;
+  }
 
   return (
     <div className="suggestions-container">
