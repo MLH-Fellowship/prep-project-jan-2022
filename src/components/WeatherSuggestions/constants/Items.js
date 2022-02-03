@@ -10,42 +10,47 @@ import BaseballCap from '../../../assets/lottiefiles/cap.json';
 import SunCream from '../../../assets/lottiefiles/beach.json';
 import Watch from '../../../assets/lottiefiles/watch.json';
 
-const items = {
-  Thunderstorm: {
-    RainCoat: RainCoat,
-    RubberBoots: RubberBoots,
-    Flashlight: Flashlight,
+const items = [
+  {
+    type: 'clouds',
+    weatherItems: ['Baseball Cap', 'Watch'],
+    animations: [BaseballCap, Watch],
   },
-  Drizzle: {
-    Umbrella: Umbrella,
+  {
+    type: 'storm',
+    weatherItems: ['Raincoat', 'Rubber Boots', 'Flash Light'],
+    animations: [RainCoat, RubberBoots, Flashlight],
   },
-  Rain: {
-    RainCoat: RainCoat,
-    Umbrella: Umbrella,
+  {
+    type: 'drizzle',
+    weatherItems: ['Umbrella'],
+    animations: [Umbrella],
   },
-  Snow: {
-    Jacket: Jacket,
-    Gloves: Gloves,
-    SnowBoots: SnowBoots,
+  {
+    type: 'rain',
+    weatherItems: ['Raincoat', 'Umbrella'],
+    animations: [RainCoat, Umbrella],
   },
-  Clear: {
-    Sunglasses: Sunglasses,
-    BaseballCap: BaseballCap,
-    SunCream: SunCream,
+  {
+    type: 'snow',
+    weatherItems: ['Jacket', 'Gloves', 'Snowboots'],
+    animations: [Jacket, Gloves, SnowBoots],
   },
-  Clouds: {
-    BaseballCap: BaseballCap,
-    Watch: Watch,
+  {
+    type: 'clear',
+    weatherItems: ['Sunglasses', 'Baseball Cap', 'Sun Cream'],
+    animations: [Sunglasses, BaseballCap, SunCream],
   },
-  Mist: {},
-  Smoke: {},
-  Haze: {},
-  Dust: {},
-  Fog: {},
-  Sand: {},
-  Ash: {},
-  Squall: {},
-  Tornado: {},
-};
+];
+
+//   Mist: {},
+//   Smoke: {},
+//   Haze: {},
+//   Dust: {},
+//   Fog: {},
+//   Sand: {},
+//   Ash: {},
+//   Squall: {},
+//   Tornado: {}
 
 export default items;
