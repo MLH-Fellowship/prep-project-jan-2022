@@ -22,6 +22,7 @@ import Alerts from '../CriticalAlerts/Alert';
 import ForecastCarousel from '../carousel/ForecastCarousel';
 import Charts from '../Charts/Charts';
 import WeatherSuggestions from '../WeatherSuggestions/Suggestions';
+import IpApi from '../../lib/IpApi/IpApi.mjs';
 
 function Demo() {
   // eslint-disable-next-line no-unused-vars
@@ -36,6 +37,25 @@ function Demo() {
     () => new OpenWeatherMap(process.env.REACT_APP_APIKEY),
     []
   );
+
+  // Initialise by setting location to an approximate obtained through the user's IP address
+  const initState = () => {
+    setIsLoaded(false);
+    new IpApi()
+      .query()
+      .then((res) => {
+        setLocationQuery({ lat: res.latitude, lon: res.longitude });
+      })
+      .catch(() => {
+        setResults(null);
+      })
+      .finally(() => {
+        setIsLoaded(true);
+      });
+  };
+
+  // Initialise app state
+  useEffect(initState, []);
 
   const updateState = () => {
     setIsLoaded(false);
