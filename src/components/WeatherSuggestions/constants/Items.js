@@ -9,6 +9,9 @@ import Sunglasses from '../../../assets/lottiefiles/sunglasses.json';
 import BaseballCap from '../../../assets/lottiefiles/cap.json';
 import SunCream from '../../../assets/lottiefiles/beach.json';
 import Watch from '../../../assets/lottiefiles/watch.json';
+import Fog from '../../../assets/lottiefiles/fog.json';
+import Mist from '../../../assets/lottiefiles/mist.json';
+import Warm from '../../../assets/lottiefiles/warm.json';
 
 const items = [
   {
@@ -22,14 +25,19 @@ const items = [
     animations: [RainCoat, RubberBoots, Flashlight],
   },
   {
-    type: 'drizzle',
-    weatherItems: ['Umbrella'],
-    animations: [Umbrella],
+    type: 'fog',
+    weatherItems: ['Drive slowly', 'Stay warm'],
+    animations: [Fog, Warm],
   },
   {
     type: 'rain',
     weatherItems: ['Raincoat', 'Umbrella'],
     animations: [RainCoat, Umbrella],
+  },
+  {
+    type: 'mist',
+    weatherItems: ['Jacket', 'Gloves'],
+    animations: [Mist, Jacket, Gloves],
   },
   {
     type: 'snow',

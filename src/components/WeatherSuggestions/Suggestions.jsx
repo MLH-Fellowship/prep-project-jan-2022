@@ -56,7 +56,7 @@ export default function WeatherSuggestions({ results }) {
             </a>
             <a
               className="twitter-share-button"
-              href="https://twitter.com/intent/tweet?text=clouds"
+              href="https://twitter.com"
               target="_blank"
               rel="noreferrer"
             >
