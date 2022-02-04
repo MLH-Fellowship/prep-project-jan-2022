@@ -109,7 +109,7 @@ function Demo() {
           </MapWrapper>
         </WeatherAndMapContainer>
         <ForecastWrapper>
-          {isLoaded && results !== undefined && results !== null && (
+          {results !== null && (
             <ForecastCarousel
               forecastData={{ hourly: results.hourly, daily: results.daily }}
             />
@@ -117,9 +117,7 @@ function Demo() {
         </ForecastWrapper>
         {results && <Charts data={results} />}
         <SuggestionsWrapper>
-          {isLoaded && results !== undefined && results !== null && (
-            <WeatherSuggestions results={results} />
-          )}
+          {results && <WeatherSuggestions results={results.current} />}
         </SuggestionsWrapper>
         <WeatherWarningsWrapper>
           <Alerts alerts={results?.alerts ?? []} />

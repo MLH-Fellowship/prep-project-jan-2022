@@ -9,43 +9,56 @@ import Sunglasses from '../../../assets/lottiefiles/sunglasses.json';
 import BaseballCap from '../../../assets/lottiefiles/cap.json';
 import SunCream from '../../../assets/lottiefiles/beach.json';
 import Watch from '../../../assets/lottiefiles/watch.json';
+import Fog from '../../../assets/lottiefiles/fog.json';
+import Mist from '../../../assets/lottiefiles/mist.json';
+import Warm from '../../../assets/lottiefiles/warm.json';
 
-const items = {
-  Thunderstorm: {
-    RainCoat: RainCoat,
-    RubberBoots: RubberBoots,
-    Flashlight: Flashlight,
+const items = [
+  {
+    type: 'clouds',
+    weatherItems: ['Baseball Cap', 'Watch'],
+    animations: [BaseballCap, Watch],
   },
-  Drizzle: {
-    Umbrella: Umbrella,
+  {
+    type: 'storm',
+    weatherItems: ['Raincoat', 'Rubber Boots', 'Flash Light'],
+    animations: [RainCoat, RubberBoots, Flashlight],
   },
-  Rain: {
-    RainCoat: RainCoat,
-    Umbrella: Umbrella,
+  {
+    type: 'fog',
+    weatherItems: ['Drive slowly', 'Stay warm'],
+    animations: [Fog, Warm],
   },
-  Snow: {
-    Jacket: Jacket,
-    Gloves: Gloves,
-    SnowBoots: SnowBoots,
+  {
+    type: 'rain',
+    weatherItems: ['Raincoat', 'Umbrella'],
+    animations: [RainCoat, Umbrella],
   },
-  Clear: {
-    Sunglasses: Sunglasses,
-    BaseballCap: BaseballCap,
-    SunCream: SunCream,
+  {
+    type: 'mist',
+    weatherItems: ['Jacket', 'Gloves'],
+    animations: [Mist, Jacket, Gloves],
   },
-  Clouds: {
-    BaseballCap: BaseballCap,
-    Watch: Watch,
+  {
+    type: 'snow',
+    weatherItems: ['Jacket', 'Gloves', 'Snowboots'],
+    animations: [Jacket, Gloves, SnowBoots],
   },
-  Mist: {},
-  Smoke: {},
-  Haze: {},
-  Dust: {},
-  Fog: {},
-  Sand: {},
-  Ash: {},
-  Squall: {},
-  Tornado: {},
-};
+  {
+    type: 'clear',
+    weatherItems: ['Sunglasses', 'Baseball Cap', 'Sun Cream'],
+    animations: [Sunglasses, BaseballCap, SunCream],
+  },
+];
+
+//   Mist: {},
+//   Smoke: {},
+//   Haze: {},
+//   Dust: {},
+//   Fog: {},
+//   Sand: {},
+//   Ash: {},
+//   Squall: {},
+//   Tornado: {}
 
 export default items;
