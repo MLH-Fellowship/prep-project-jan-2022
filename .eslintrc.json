@@ -21,7 +21,8 @@
       "no-process-exit": "off",
       "object-shorthand": "off",
       "class-methods-use-this": "off",
-      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+      "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.ts", "src/setupTests.js"]}]
     },
     "plugins": ["prettier","react", "import", "jsx-a11y","react-hooks"],
     "parserOptions": {
