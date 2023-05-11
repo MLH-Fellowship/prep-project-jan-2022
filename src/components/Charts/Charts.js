@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,6 +12,7 @@ import {
   Filler,
 } from 'chart.js';
 import Carousel from 'react-grid-carousel';
+import axios from 'axios';
 
 import { Line } from 'react-chartjs-2';
 import weatherData from './chartData.json';
@@ -37,7 +38,7 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'Hourly Data',
+      text: 'Predicted Data',
     },
 
     chartAreaBorder: {
@@ -50,19 +51,56 @@ export const options = {
 };
 
 function Charts({ data }) {
-  const labelData = data.hourly.slice(0, 10).map(({ dt }) =>
-    new Date(dt * 1000).toLocaleTimeString(navigator.language, {
-      hour: '2-digit',
-      minute: '2-digit',
-    })
-  );
+  const [airQualityData, setAirQualityData] = useState([]);
+  const  [tempData,setTempData] = useState([]);
+  const [humiditydata, sethumiditydata] = useState([]);
+
+  
+  useEffect(() => {
+    axios
+      .get('http://127.0.0.1:5000/air_pred')
+      .then((res) => {
+        console.log(res);
+        const data3 = res.data[0].air_quality;
+        const data2 = res.data[0].humidity;
+        const data1 = res.data[0].temperature;
+        console.log(data, 'Data');
+        setAirQualityData(data3);
+        sethumiditydata(data2);
+        setTempData(data1);
+        console.log(airQualityData, "airQualityData");
+      })
+      .catch((err) => console.log(err));
+
+    // const fetchdata = async () => {
+    //   const response = await axios.get('http://127.0.0.1:5000/air_pred');
+    //   console.log(await response.data?.air_quality);
+    //   console.log(response);
+    //   setAirQualityData([...response.data?.air_quality]);
+    // };
+
+    // fetchdata();
+  }, []);
+
+  const labelData = [
+    'Day 1',
+    'Day 2',
+    'Day 3',
+    'Day 4',
+    'Day 5',
+    'Day 6',
+    'Day 7',
+    'Day 8',
+    'Day 9',
+    'Day 10',
+  ];
 
   const chartDataOne = {
     labels: labelData,
     datasets: [
       {
         label: 'Humidity',
-        data: data.hourly.map(({ humidity }) => humidity),
+        data: humiditydata ? humiditydata.map((data) => data) : [],
         borderColor: 'rgb(53, 162, 235)',
         fill: true,
         backgroundColor: 'rgba(53, 162, 235, 0.4)',
@@ -74,7 +112,7 @@ function Charts({ data }) {
     datasets: [
       {
         label: 'Temperature',
-        data: data.hourly.map(({ humidity }) => humidity),
+        data: tempData ? tempData.map((data) => data) : [],
         borderColor: 'rgb(255, 99, 132)',
         fill: true,
         backgroundColor: 'rgba(255, 99, 132, 0.4)',
@@ -85,8 +123,8 @@ function Charts({ data }) {
     labels: labelData,
     datasets: [
       {
-        label: 'Pressure',
-        data: weatherData.hourly.map(({ pressure }) => pressure),
+        label: 'Air Quality',
+        data: airQualityData ? airQualityData.map((data) => data) : [],
         fill: true,
         borderColor: 'rgba(75,192,192,1)',
         backgroundColor: 'rgba(75,192,192,0.4)',

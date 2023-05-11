@@ -9,7 +9,7 @@ export const SearchBarWrapper = styled.div`
 `;
 export const WeatherAndMapContainer = styled.div`
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 2fr;
   grid-gap: 14px;
   margin: 40px auto;
 
