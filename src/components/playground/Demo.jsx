@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Container } from '@mui/material';
 import '../../App.css';
 import './Demo.css';
-import logo from '../../mlh-prep.png';
 import {
   ForecastWrapper,
   MapWrapper,
@@ -23,6 +22,7 @@ import ForecastCarousel from '../carousel/ForecastCarousel';
 import Charts from '../Charts/Charts';
 import WeatherSuggestions from '../WeatherSuggestions/Suggestions';
 import IpApi from '../../lib/IpApi/IpApi.mjs';
+import axios from 'axios';
 
 function Demo() {
   // eslint-disable-next-line no-unused-vars
@@ -32,12 +32,14 @@ function Demo() {
     useState('');
   const [location, setLocation] = useState(null);
   const [results, setResults] = useState(null);
+  const [currState, setCurrState] = useState(null);
 
   const openWeatherMap = useMemo(
     () => new OpenWeatherMap(process.env.REACT_APP_APIKEY),
     []
   );
 
+  
   // Initialise by setting location to an approximate obtained through the user's IP address
   const initState = () => {
     setIsLoaded(false);
@@ -52,6 +54,21 @@ function Demo() {
       .finally(() => {
         setIsLoaded(true);
       });
+
+      setIsLoaded(false);
+      axios
+        .get('http://127.0.0.1:5000/air_current_status')
+        .then((res) => {
+          setCurrState(res.data);
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setIsLoaded(true);
+        });
+
   };
 
   // Initialise app state
@@ -79,49 +96,66 @@ function Demo() {
   // Set things in motion whenever a new `city` is set
   useEffect(updateState, [locationQuery, openWeatherMap]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      axios
+        .get('http://127.0.0.1:5000/air_current_status')
+        .then((res) => {
+          setCurrState(res.data);
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+        });
+    }, 1000);
+  });
+
   return (
     <>
       <header
         style={{
-          marginBottom: '2em',
+          marginTop: '1em',
+          fontSize: "4em"
         }}
       >
-        <img src={logo} alt="" className="logo" />
+        Weather 8
       </header>
       <Container maxWidth="lg">
-        <SearchBarWrapper id="search-wrapper">
+        {/* <SearchBarWrapper id="search-wrapper">
           <SearchBar setLocationQuery={setLocationQuery} />
-        </SearchBarWrapper>
+        </SearchBarWrapper> */}
         <WeatherAndMapContainer id="map-and-current-status-container">
           <WeatherCurrentWrapper id="current-status-wrapper">
             {!isLoaded && <Loader />}
             {isLoaded && !results && <PlaceholderSkeleton />}
             {isLoaded && results && (
-              <CurrentStatus currentWeather={results.current} />
+              <CurrentStatus currentWeather={results.current} currStatus={currState}/>
             )}
           </WeatherCurrentWrapper>
-          <MapWrapper id="map-wrapper">
+          {/* <MapWrapper id="map-wrapper">
             <WeatherMap
               locationQuery={locationQuery}
               setLocationQuery={setLocationQuery}
               location={location}
             />
-          </MapWrapper>
+          </MapWrapper> */}
         </WeatherAndMapContainer>
-        <ForecastWrapper>
+        {/* <ForecastWrapper>
           {results !== null && (
             <ForecastCarousel
               forecastData={{ hourly: results.hourly, daily: results.daily }}
             />
           )}
-        </ForecastWrapper>
+        </ForecastWrapper> */}
         {results && <Charts data={results} />}
-        <SuggestionsWrapper>
+        {/* <SuggestionsWrapper>
           {results && <WeatherSuggestions results={results.current} />}
         </SuggestionsWrapper>
         <WeatherWarningsWrapper>
           <Alerts alerts={results?.alerts ?? []} />
-        </WeatherWarningsWrapper>
+        </WeatherWarningsWrapper> */}
       </Container>
     </>
   );
